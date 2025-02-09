@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7217319600589772226}
   - component: {fileID: 1084493147534808828}
   - component: {fileID: 1138584922483359641}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 5942223765251945867}
   - component: {fileID: 3259897582491174816}
   - component: {fileID: 6234246735302245345}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Collider (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ GameObject:
   - component: {fileID: -223947872032834038}
   - component: {fileID: 8598716228631726753}
   - component: {fileID: 8849315922947246967}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Log2Base
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -225,7 +225,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 7, y: 7, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7217319600589772226}

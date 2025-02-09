@@ -56,6 +56,7 @@ public class PickUpBehaviour : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player"))
         {
+            Debug.Log("Collided with: " + collision.transform.name);
             OnReturn?.Invoke(this);
         }
     }

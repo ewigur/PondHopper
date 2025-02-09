@@ -534,8 +534,9 @@ GameObject:
   - component: {fileID: 4332532788205347900}
   - component: {fileID: 6330757712665308741}
   - component: {fileID: 3718817431582798091}
+  - component: {fileID: 2997874982092492614}
   m_Layer: 5
-  m_Name: NamePrompt 1
+  m_Name: NamePromptUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -601,6 +602,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2997874982092492614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4569567430273886821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c56d024d658df3428f00f70cb14d09f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  namePrompt: {fileID: 0}
+  nameInputField: {fileID: 0}
+  doneButton: {fileID: 0}
 --- !u!1 &5389805911402858802
 GameObject:
   m_ObjectHideFlags: 0

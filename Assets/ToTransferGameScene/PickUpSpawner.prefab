@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3817866205505584570}
   m_Layer: 0
   m_Name: PickUpSpawner
-  m_TagString: Untagged
+  m_TagString: PickUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3497974650198009469}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.5143123, y: 0.54, z: 0.025881054}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -45,10 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickUpItems:
-  - {fileID: 11400000, guid: 13193a7c348ca3d4481cd30e4e58171a, type: 2}
-  - {fileID: 11400000, guid: 112df2d8d5a412c4a8241581a4fefd50, type: 2}
-  - {fileID: 11400000, guid: a8a6ac79fd6640944a3f7ca11c875b8a, type: 2}
+  - {fileID: 11400000, guid: 78fb18e043f7a834986705d5f4279f0d, type: 2}
+  - {fileID: 11400000, guid: 15a08d1ac93b2cd4985132098b386946, type: 2}
   defaultCapacity: 5
-  maxActivePickUps: 10
-  timeBetweenSpawns: 1
+  maxActivePickUps: 7
+  timeBetweenSpawns: 4
   startSpawnTime: 0.2

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3864862557878089365}
   - component: {fileID: 8224624599380271741}
   - component: {fileID: 8434008613543460594}
-  m_Layer: 7
+  m_Layer: 11
   m_Name: PickUpBaseFireFly
   m_TagString: PickUp
   m_Icon: {fileID: 0}
