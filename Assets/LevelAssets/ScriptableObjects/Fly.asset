@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 454ea64aefbb9654784f45b43e67481b, type: 3}
+  m_Name: Fly
+  m_EditorClassIdentifier: 
+  itemName: Fly
+  prefab: {fileID: 4782697800001587379, guid: 00890cc18709798439408fa56b9dbba7, type: 3}
+  value: 5
+  spawnAmount: 6
+  flockMovement: 5
+  pickUpAnimator: {fileID: 8434008613543460594, guid: 00890cc18709798439408fa56b9dbba7, type: 3}
+  spawnProbability: 0.6

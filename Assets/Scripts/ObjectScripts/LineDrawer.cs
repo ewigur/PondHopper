@@ -1,0 +1,35 @@
+using UnityEngine;
+/*
+ * Placeholder arc for jumping
+ * TODO: Find out how to make a better type of indication for jump force
+ * TODO: Fix Line to correspond with jump
+ */
+[RequireComponent(typeof(LineRenderer))]
+public class LineDrawer : MonoBehaviour
+{
+    private LineRenderer lineRenderer;
+    
+    void Awake()
+    {
+        lineRenderer = GetComponent<LineRenderer>();
+        
+        lineRenderer.positionCount = 2;
+        //lineRenderer.useWorldSpace = true;
+    }
+
+    public void DrawLine(Vector2 direction, float magnitude)
+    {
+        Vector2 start = transform.position;
+        lineRenderer.SetPosition(0, new Vector2(start.x, start.y));
+        
+        Vector2 end = start + direction.normalized * magnitude;
+        lineRenderer.SetPosition(1, new Vector2(end.x, end.y));
+
+        lineRenderer.enabled = true;
+    }
+
+    public void ClearLine()
+    {
+        lineRenderer.enabled = false;
+    }
+}

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 454ea64aefbb9654784f45b43e67481b, type: 3}
+  m_Name: FireFly
+  m_EditorClassIdentifier: 
+  itemName: FireFly
+  prefab: {fileID: 4782697800001587379, guid: fe1669259ea77b74181b069c40b18c37, type: 3}
+  value: 10
+  spawnAmount: 3
+  flockMovement: 5
+  pickUpAnimator: {fileID: 0}
+  spawnProbability: 0.4

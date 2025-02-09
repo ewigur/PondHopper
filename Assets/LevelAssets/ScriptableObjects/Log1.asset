@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca4f352f8e479a14ead60a579a770708, type: 3}
+  m_Name: Log1
+  m_EditorClassIdentifier: 
+  typeOfLog: Log1
+  MaxLogSpeed: 4
+  MinLogSpeed: 2
+  prefab: {fileID: 8006631875471704464, guid: 9ee918b21e69bc742adc56110349fa44, type: 3}
+  spawnPercent: 0.5
