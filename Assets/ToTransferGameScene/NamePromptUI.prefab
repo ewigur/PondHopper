@@ -541,7 +541,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4332532788205347900
 RectTransform:
   m_ObjectHideFlags: 0
@@ -614,9 +614,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c56d024d658df3428f00f70cb14d09f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  namePrompt: {fileID: 0}
-  nameInputField: {fileID: 0}
-  doneButton: {fileID: 0}
+  namePrompt: {fileID: 4569567430273886821}
+  nameInputField: {fileID: 8368151957150069084}
+  doneButton: {fileID: 3931660109965687785}
 --- !u!1 &5389805911402858802
 GameObject:
   m_ObjectHideFlags: 0

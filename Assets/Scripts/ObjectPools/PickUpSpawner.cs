@@ -12,10 +12,10 @@ public class PickUpSpawner : MonoBehaviour
     [SerializeField] private float timeBetweenSpawns = 0.2f;
     [SerializeField] private float startSpawnTime = 0.2f;
 
-    private float minX = -16f;
-    private float maxX = 16f;
-    private float minY = 2f;
-    private float maxY = 7f;
+    [SerializeField] private float minX = -7f;
+    [SerializeField] private float maxX = 7f;
+    [SerializeField] private float minY = 2f;
+    [SerializeField] private float maxY = 4f;
 
     private int currentActivePickUps;
     

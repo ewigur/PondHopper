@@ -32,10 +32,19 @@ public class EnterNameManager : MonoBehaviour
 
     private void ShowNamePrompt(int score)
     {
-        namePrompt.SetActive(true);
-        nameInputField.text = "";
-        doneButton.interactable = false;
-        nameInputField.Select();
+        if (namePrompt != null && !namePrompt.activeSelf)
+        {
+            namePrompt.SetActive(true);
+            nameInputField.text = "";
+            doneButton.interactable = false;
+            nameInputField.Select();
+            
+            Debug.Log("EnterName triggered");
+        }
+
+        else
+            Debug.Log("Cannot Find name prompt");
+        
     }
     
     public void ValidateInput(string input)
