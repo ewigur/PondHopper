@@ -84,8 +84,9 @@ public class PickUpSpawner : MonoBehaviour
     {
         float randomX = Random.Range(minX, maxX);
         float randomY = Random.Range(minY, maxY);
-        Vector2 randomSpawn = new Vector2(randomX, randomY);
-        return randomSpawn;
+        Vector2 spawnPosition = new Vector2(randomX, randomY);
+        
+        return spawnPosition;
     }
 
     private PickUpItem GetRandomPickUpItem()

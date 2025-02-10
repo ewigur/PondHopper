@@ -10,8 +10,7 @@ public class LogBehaviour : MonoBehaviour
     private Rigidbody2D rb;
     private LogItem logItemData;
     private LogSpawner logSpawner;
-    private readonly float minBounds = -30f;
-    private readonly float maxBounds = 20f;
+    private readonly float minBounds = -13f;
     
     public void Initialize(LogItem data)
     {
@@ -46,8 +45,7 @@ public class LogBehaviour : MonoBehaviour
 
     private void CheckBounds()
     {
-        if (transform.position.x <= minBounds || transform.position.x >= maxBounds
-            || transform.position.y <= minBounds || transform.position.y >= maxBounds)
+        if (transform.position.x <= minBounds)
         {
             Debug.Log("Log out of bounds, returning to pool");
             logSpawner.ReturnLogToPool(gameObject, logItemData);

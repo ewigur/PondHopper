@@ -5,12 +5,12 @@ public class LogSpawner : MonoBehaviour
 {
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private List<LogItem> logItems;
-    [SerializeField] private float timeBetweenLogs = 0.5f;
+    [SerializeField] private float timeBetweenLogs = 3f;
     [SerializeField] private float minTimeBetweenLogs = 1.5f;
     [SerializeField] private float maxTimeBetweenLogs = 2f;
 
-    [SerializeField] private int poolSizePerLog = 10;
-    [SerializeField] private int maxActiveLogs = 3;
+    [SerializeField] private int poolSizePerLog = 5;
+    [SerializeField] private int maxActiveLogs = 5;
 
     private float totalSpawnRate;
     private int currentActiveLogs = 0;

@@ -1,23 +1,39 @@
+using System.Numerics;
+using Unity.VisualScripting;
 using UnityEngine;
-using Random = UnityEngine.Random;
+using UnityEngine.Serialization;
+using Vector2 = UnityEngine.Vector2;
+
 
 //TODO: Add better movement in FixedUpdate when I have a clearer view of what animations I should have
 //TODO: Code Cleanup
 public delegate void Return(PickUpBehaviour pickUp);
 public class PickUpBehaviour : MonoBehaviour
 {
+    private Vector2 targetPosition;
+    private readonly float firstPositionY = 1f;
+    private float newPositionY;
+    
+    private float minMoveRangeX = -7f;
+    private float maxMoveRangeX = 7f;
+    private float minMoveRangeY = 0f;
+    private float maxMoveRangeY = 4f;
+
     [HideInInspector]
     public PickUpItem itemData;
-    private readonly float screenBoundsMargin = 1f; 
+    private readonly float screenBoundsMarginY = 6f;
     
     private Rigidbody2D rb;
+    private SpriteRenderer spriteRenderer;
     private Camera cam;
     
     public Return OnReturn;
     private void Start()
     {
+        targetPosition = new Vector2(transform.position.x, firstPositionY);
         cam = Camera.main;
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public void Initialize(PickUpItem data)
@@ -32,21 +48,32 @@ public class PickUpBehaviour : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (rb != null)
+        if (!Mathf.Approximately(transform.position.y, targetPosition.y))
         {
-            Vector2 randomMovement = Random.insideUnitCircle * (itemData.flockMovement * Time.fixedDeltaTime);
-            rb.MovePosition(rb.position + randomMovement);
+            transform.position = Vector2.MoveTowards(transform.position, targetPosition,
+                Time.fixedDeltaTime * itemData.flockMovement);
         }
-        
+
+        else
+        {
+            targetPosition = new Vector2(Random.Range(minMoveRangeX, maxMoveRangeX), Random.Range(minMoveRangeY, maxMoveRangeY));
+            DirectionFlipper(targetPosition);
+            transform.position = Vector2.MoveTowards(transform.position, targetPosition, Time.fixedDeltaTime * itemData.flockMovement);
+        }
+
         CheckOutOfBounds();
+    }
+
+    private void DirectionFlipper(Vector2 direction)
+    {
+        rb.linearVelocity = (direction - (Vector2)transform.position).normalized * itemData.flockMovement;
+        spriteRenderer.flipX = direction.x > transform.position.x;
+
     }
 
     private void CheckOutOfBounds()
     {
-        Vector2 screenPosition = cam.WorldToViewportPoint(transform.position);
-
-        if (screenPosition.x < -screenBoundsMargin || screenPosition.x > screenBoundsMargin ||
-            screenPosition.y < -screenBoundsMargin || screenPosition.y > screenBoundsMargin)
+        if(transform.position.y < -screenBoundsMarginY)
         {
             OnReturn?.Invoke(this);
         }

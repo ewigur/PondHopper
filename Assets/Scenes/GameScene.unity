@@ -2079,13 +2079,37 @@ PrefabInstance:
       propertyPath: m_Name
       value: PickUpSpawner
       objectReference: {fileID: 0}
+    - target: {fileID: 3817866205505584570, guid: 613816afaff428d4787315a851fdebc4, type: 3}
+      propertyPath: maxX
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3817866205505584570, guid: 613816afaff428d4787315a851fdebc4, type: 3}
+      propertyPath: maxY
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3817866205505584570, guid: 613816afaff428d4787315a851fdebc4, type: 3}
+      propertyPath: minX
+      value: -9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3817866205505584570, guid: 613816afaff428d4787315a851fdebc4, type: 3}
+      propertyPath: minY
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3817866205505584570, guid: 613816afaff428d4787315a851fdebc4, type: 3}
+      propertyPath: maxActivePickUps
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3817866205505584570, guid: 613816afaff428d4787315a851fdebc4, type: 3}
+      propertyPath: timeBetweenSpawns
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5328728016202839988, guid: 613816afaff428d4787315a851fdebc4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5328728016202839988, guid: 613816afaff428d4787315a851fdebc4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5328728016202839988, guid: 613816afaff428d4787315a851fdebc4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2309,7 +2333,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4569567430273886821, guid: 4d809fcc4c1754b4fb7f44bc3b1a29ab, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8663034312337778773, guid: 4d809fcc4c1754b4fb7f44bc3b1a29ab, type: 3}
       propertyPath: m_text
