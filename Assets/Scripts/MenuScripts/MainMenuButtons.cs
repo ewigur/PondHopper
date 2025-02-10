@@ -5,20 +5,16 @@ public class MainMenuButtons : MonoBehaviour
 {
     [SerializeField] private GameObject menuPanel;
     [SerializeField] private GameObject leaderBoardTable;
+    [SerializeField] private GameObject settingsPanel;
+    [SerializeField] private GameObject creditsPanel;
 
     private void Awake()
     {
-        if (menuPanel != null)
-        {
-            menuPanel.SetActive(true);
-        }
-        
-        if (leaderBoardTable != null)
-        {
-            leaderBoardTable.SetActive(false);
-        }
+        menuPanel.SetActive(true);
+        leaderBoardTable.SetActive(false);
+        settingsPanel.SetActive(false);
+        creditsPanel.SetActive(false);
     }
-
 
     public void onStartPressed()
     {
@@ -35,12 +31,18 @@ public class MainMenuButtons : MonoBehaviour
 
     public void onSettingsPressed()
     {
-        Debug.Log("Settings was pressed");
+        if(menuPanel.activeSelf)
+            menuPanel.SetActive(false);
+        
+        settingsPanel.SetActive(true);
     }
 
     public void onCreditsPressed()
     {
-        Debug.Log("Credits was pressed");
+        if(menuPanel.activeSelf)
+            menuPanel.SetActive(false);
+        
+        creditsPanel.SetActive(true);
     }
 
     public void onQuitPressed()
@@ -52,6 +54,14 @@ public class MainMenuButtons : MonoBehaviour
     public void onReturnPressed()
     {
         menuPanel.SetActive(true);
-        leaderBoardTable.SetActive(false);
+        
+        if(leaderBoardTable.activeSelf)
+            leaderBoardTable.SetActive(false);
+        
+        if(settingsPanel.activeSelf)
+            settingsPanel.SetActive(false);
+        
+        if(creditsPanel.activeSelf)
+            creditsPanel.SetActive(false);
     }
 }
