@@ -16,6 +16,6 @@ MonoBehaviour:
   prefab: {fileID: 4782697800001587379, guid: fe1669259ea77b74181b069c40b18c37, type: 3}
   value: 10
   spawnAmount: 3
-  flockMovement: 0.5
+  flockMovement: 1
   pickUpAnimator: {fileID: 8434008613543460594, guid: fe1669259ea77b74181b069c40b18c37, type: 3}
   spawnProbability: 0.4

@@ -11,7 +11,6 @@ public delegate void Return(PickUpBehaviour pickUp);
 public class PickUpBehaviour : MonoBehaviour
 {
     private Vector2 targetPosition;
-    private readonly float firstPositionY = 1f;
     private float newPositionY;
     
     private float minMoveRangeX = -7f;
@@ -30,7 +29,6 @@ public class PickUpBehaviour : MonoBehaviour
     public Return OnReturn;
     private void Start()
     {
-        targetPosition = new Vector2(transform.position.x, firstPositionY);
         cam = Camera.main;
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -48,13 +46,10 @@ public class PickUpBehaviour : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!Mathf.Approximately(transform.position.y, targetPosition.y))
-        {
             transform.position = Vector2.MoveTowards(transform.position, targetPosition,
                 Time.fixedDeltaTime * itemData.flockMovement);
-        }
 
-        else
+        if((Vector2)transform.position == targetPosition)
         {
             targetPosition = new Vector2(Random.Range(minMoveRangeX, maxMoveRangeX), Random.Range(minMoveRangeY, maxMoveRangeY));
             DirectionFlipper(targetPosition);
