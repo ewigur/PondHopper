@@ -1,7 +1,4 @@
-using System.Numerics;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Vector2 = UnityEngine.Vector2;
 
 
@@ -11,7 +8,6 @@ public delegate void Return(PickUpBehaviour pickUp);
 public class PickUpBehaviour : MonoBehaviour
 {
     private Vector2 targetPosition;
-    private float newPositionY;
     
     private float minMoveRangeX = -7f;
     private float maxMoveRangeX = 7f;
@@ -27,11 +23,13 @@ public class PickUpBehaviour : MonoBehaviour
     private Camera cam;
     
     public Return OnReturn;
+    
     private void Start()
     {
         cam = Camera.main;
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        DirectionFlipper(targetPosition);
     }
 
     public void Initialize(PickUpItem data)
@@ -78,7 +76,6 @@ public class PickUpBehaviour : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player"))
         {
-            Debug.Log("Collided with: " + collision.transform.name);
             OnReturn?.Invoke(this);
         }
     }

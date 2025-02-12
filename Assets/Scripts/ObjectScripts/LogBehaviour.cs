@@ -47,7 +47,6 @@ public class LogBehaviour : MonoBehaviour
     {
         if (transform.position.x <= minBounds)
         {
-            Debug.Log("Log out of bounds, returning to pool");
             logSpawner.ReturnLogToPool(gameObject, logItemData);
         }
     }

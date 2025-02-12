@@ -77,7 +77,6 @@ public class PickUpSpawner : MonoBehaviour
             pickUp.OnReturn += DisablePrefab;
         }
         
-        Debug.Log("Spawned: " + randomPickUpItem.name);
     }
     
     private Vector2 GetRandomSpawnPosition()
