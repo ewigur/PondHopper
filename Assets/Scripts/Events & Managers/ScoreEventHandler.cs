@@ -38,8 +38,6 @@ public class ScoreManager : MonoBehaviour
 
     private void FinalScore()
     {
-        Debug.Log("Final Score" + score);
-        
         if (HsManager != null)
         {
             HsManager.AddHighScore(score);
