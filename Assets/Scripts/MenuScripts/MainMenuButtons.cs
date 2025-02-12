@@ -35,7 +35,6 @@ public class MainMenuButtons : MonoBehaviour
     {
         GameManager.instance.ChangeState(GameManager.GameStates.GamePlay);
         SceneManager.LoadScene(1);
-        Debug.Log("Change to Game Play State");
     }
 
     public void onHighScorePressed()

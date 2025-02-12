@@ -9,8 +9,7 @@ public class EnterNameManager : MonoBehaviour
     [SerializeField] private GameObject namePrompt;
     [SerializeField] private TMP_InputField nameInputField;
     [SerializeField] private Button doneButton;
-
-    private TouchScreenKeyboard screenKeyboard;
+    
     private const int maxNameLength = 10;
 
     private int currentScore;
@@ -36,7 +35,6 @@ public class EnterNameManager : MonoBehaviour
             nameInputField.text = "";
             doneButton.interactable = false;
             nameInputField.Select();
-            
         }
     }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 
+// TODO: Find why the name promt enables on 0 points (score).
 public class HighScoreManager : MonoBehaviour
 {
     private static HighScoreManager highScoreManagerInstance;
