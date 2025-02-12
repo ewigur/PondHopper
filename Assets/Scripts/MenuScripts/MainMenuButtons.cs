@@ -7,8 +7,23 @@ public class MainMenuButtons : MonoBehaviour
     [SerializeField] private GameObject leaderBoardTable;
     [SerializeField] private GameObject settingsPanel;
     [SerializeField] private GameObject creditsPanel;
+    
+    private void OnEnable()
+    {
+        GameManager.onGameStateChanged += HandleStateChange;
+    }
 
-    private void Awake()
+    private void HandleStateChange(GameManager.GameStates state)
+    {
+        if (state != GameManager.GameStates.MainMenu) 
+            return;
+        
+        Debug.Log("Change to MainMenu State");
+        
+        UiToggle();
+    }
+    
+    private void UiToggle()
     {
         menuPanel.SetActive(true);
         leaderBoardTable.SetActive(false);
@@ -18,7 +33,9 @@ public class MainMenuButtons : MonoBehaviour
 
     public void onStartPressed()
     {
+        GameManager.instance.ChangeState(GameManager.GameStates.GamePlay);
         SceneManager.LoadScene(1);
+        Debug.Log("Change to Game Play State");
     }
 
     public void onHighScorePressed()
@@ -63,5 +80,10 @@ public class MainMenuButtons : MonoBehaviour
         
         if(creditsPanel.activeSelf)
             creditsPanel.SetActive(false);
+    }
+
+    private void OnDisable()
+    {
+        GameManager.onGameStateChanged -= HandleStateChange;
     }
 }

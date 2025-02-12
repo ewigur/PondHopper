@@ -18,7 +18,6 @@ public class HighScoreManager : MonoBehaviour
     {
         if (highScoreManagerInstance != null)
         {
-
             Destroy(gameObject);
         }
         else

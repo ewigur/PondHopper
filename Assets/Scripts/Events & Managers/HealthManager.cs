@@ -32,7 +32,7 @@ public class HealthManager : MonoBehaviour
 
     private void PlayerDeath()
     {
-        Debug.Log("YOU DIED");
+        
         OnDeath?.Invoke();
         //Do cool death stuff
         //Trigger game over -screen (Action?)

@@ -2,8 +2,6 @@ using System;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-
-// TODO: Why doesn't keyboard on phone work?!?!??!
 public class EnterNameManager : MonoBehaviour
 {
     public static Action<string> OnNameEntered;
@@ -39,15 +37,10 @@ public class EnterNameManager : MonoBehaviour
             doneButton.interactable = false;
             nameInputField.Select();
             
-            Debug.Log("EnterName triggered");
         }
-
-        else
-            Debug.Log("Cannot Find name prompt");
-        
     }
-    
-    public void ValidateInput(string input)
+
+    private void ValidateInput(string input)
     {
         doneButton.interactable = !string.IsNullOrEmpty(input);
     }

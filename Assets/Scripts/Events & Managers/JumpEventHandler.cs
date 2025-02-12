@@ -13,7 +13,7 @@ public class JumpEventHandler : MonoBehaviour
     
     private void JumpEvent()
     {
-        Debug.Log("JumpEvent triggered");
+        
     }
     
     private void OnDisable()
