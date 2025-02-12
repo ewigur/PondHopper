@@ -55,6 +55,9 @@ public class HighScoreManager : MonoBehaviour
     public void AddHighScore(int newScore)
     {
         LoadScore();
+
+        if (newScore <= 0)
+            return;
         
         
         if (highScores.Count < MaxListedScores || newScore > highScores[highScores.Count - 1].Value)
@@ -103,7 +106,7 @@ public class HighScoreManager : MonoBehaviour
             int score = PlayerPrefs.GetInt($"HighScore{i}", 0);
             string playerName = PlayerPrefs.GetString($"HighScoreName{i}");
             
-            if (score > 0)  // Only add non-zero scores (optional check)
+            if (score > 0)
                 highScores.Add(new KeyValuePair<string, int>(playerName, score));
         }
     }

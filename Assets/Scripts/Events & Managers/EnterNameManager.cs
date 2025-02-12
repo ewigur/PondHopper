@@ -29,7 +29,7 @@ public class EnterNameManager : MonoBehaviour
 
     private void ShowNamePrompt(int score)
     {
-        if (namePrompt != null && !namePrompt.activeSelf)
+        if (!namePrompt.activeSelf)
         {
             namePrompt.SetActive(true);
             nameInputField.text = "";
@@ -51,12 +51,6 @@ public class EnterNameManager : MonoBehaviour
         {
             OnNameEntered?.Invoke(playerName);
             namePrompt.SetActive(false);
-
-            Debug.Log("Player name saved: " + playerName);
-        }
-        else
-        {
-            Debug.Log("Player name is empty");
         }
     }
 
