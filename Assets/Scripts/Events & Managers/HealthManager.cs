@@ -9,7 +9,6 @@ public class HealthManager : MonoBehaviour
 {
     [SerializeField] private Slider healthBar;
     
-    public static Action OnDeath;
     private void OnEnable()
     {
         PlayerCollision.OnPlayerHit+= UpdateHealthBar;
@@ -32,8 +31,7 @@ public class HealthManager : MonoBehaviour
 
     private void PlayerDeath()
     {
-        
-        OnDeath?.Invoke();
+        Debug.Log("YOU DIED!");
         //Do cool death stuff
         //Trigger game over -screen (Action?)
     }

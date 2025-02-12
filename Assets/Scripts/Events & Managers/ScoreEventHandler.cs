@@ -27,7 +27,7 @@ public class ScoreManager : MonoBehaviour
     private void OnEnable()
     {
         PlayerCollision.OnScoreCollected += ScoreCollected;
-        HealthManager.OnDeath += FinalScore;
+        PlayerCollision.OnPlayerDeath += FinalScore;
     }
     
     private void ScoreCollected(PickUpItem pickUpItem)
@@ -52,6 +52,6 @@ public class ScoreManager : MonoBehaviour
     private void OnDisable()
     {
         PlayerCollision.OnScoreCollected -= ScoreCollected;
-        HealthManager.OnDeath -= FinalScore;
+        PlayerCollision.OnPlayerDeath -= FinalScore;
     }
 }
