@@ -12,7 +12,7 @@ public class HighScoreManager : MonoBehaviour
     public static Action OnHighScoreUpdated;
     
     private readonly List<KeyValuePair<string, int>> highScores = new();
-    private const int MaxScore = 5;
+    private const int MaxListedScores = 5;
     private int pendingHighScore;
     
     private void Awake()
@@ -41,7 +41,7 @@ public class HighScoreManager : MonoBehaviour
     {
         PlayerPrefs.DeleteKey("ScoreCount");
         
-        for (int i = 0; i < MaxScore; i++)
+        for (int i = 0; i < MaxListedScores; i++)
         {
             PlayerPrefs.DeleteKey($"HighScore{i}");
             PlayerPrefs.DeleteKey($"HighScoreName{i}");
@@ -55,8 +55,9 @@ public class HighScoreManager : MonoBehaviour
     public void AddHighScore(int newScore)
     {
         LoadScore();
-
-        if (highScores.Count < MaxScore || newScore > highScores[highScores.Count - 1].Value)
+        
+        
+        if (highScores.Count < MaxListedScores || newScore > highScores[highScores.Count - 1].Value)
         {
             pendingHighScore = newScore;
             OnNewHighScore?.Invoke(newScore);
@@ -69,9 +70,9 @@ public class HighScoreManager : MonoBehaviour
             highScores.Add(new KeyValuePair<string, int>(playerName, pendingHighScore));
             highScores.Sort((a, b ) => b.Value.CompareTo(a.Value));
             
-            if (highScores.Count > MaxScore)
+            if (highScores.Count > MaxListedScores)
             {
-                highScores.RemoveAt(MaxScore);
+                highScores.RemoveAt(MaxListedScores);
             }
             
             SaveScores();
