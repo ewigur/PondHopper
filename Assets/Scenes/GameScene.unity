@@ -3204,7 +3204,7 @@ GameObject:
   - component: {fileID: 1757015402}
   - component: {fileID: 1757015403}
   m_Layer: 0
-  m_Name: PauseHandler
+  m_Name: InGameStates
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3239,6 +3239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 1946490435}
   gameOverMenu: {fileID: 1711335113}
+  frogLr: {fileID: 836032492871099515}
 --- !u!1 &1804154560
 GameObject:
   m_ObjectHideFlags: 0
@@ -4108,6 +4109,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8492984397814902994, guid: 30ce4e098fe3641479c5975c3bd9da9d, type: 3}
   m_PrefabInstance: {fileID: 836032492871099513}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &836032492871099515 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2630182428778921069, guid: 30ce4e098fe3641479c5975c3bd9da9d, type: 3}
+  m_PrefabInstance: {fileID: 836032492871099513}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3074257461936774020
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4226,7 +4232,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4569567430273886821, guid: 4d809fcc4c1754b4fb7f44bc3b1a29ab, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7680328205943026525, guid: 4d809fcc4c1754b4fb7f44bc3b1a29ab, type: 3}
       propertyPath: m_AnchoredPosition.y

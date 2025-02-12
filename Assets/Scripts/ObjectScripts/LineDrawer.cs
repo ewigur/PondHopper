@@ -1,6 +1,5 @@
 using UnityEngine;
 /*
- * Placeholder arc for jumping
  * TODO: Find out how to make a better type of indication for jump force
  * TODO: Fix Line to correspond with jump
  */
@@ -12,9 +11,7 @@ public class LineDrawer : MonoBehaviour
     void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        
         lineRenderer.positionCount = 2;
-        //lineRenderer.useWorldSpace = true;
     }
 
     public void DrawLine(Vector2 direction, float magnitude)

@@ -867,7 +867,7 @@ GameObject:
   - component: {fileID: 394608877}
   - component: {fileID: 394608878}
   m_Layer: 5
-  m_Name: -- HighScoreManager ---
+  m_Name: --- HighScoreManager ---
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1996,7 +1996,7 @@ GameObject:
   - component: {fileID: 2030300893}
   - component: {fileID: 2030300896}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: --- Main Camera ---
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2168,8 +2168,8 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1718241263}
   - {fileID: 394608877}
+  - {fileID: 1718241263}
   - {fileID: 2030300895}
   - {fileID: 174780926}
   - {fileID: 1304862110}

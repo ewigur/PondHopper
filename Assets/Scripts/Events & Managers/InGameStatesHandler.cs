@@ -1,10 +1,11 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PauseGameHandler : MonoBehaviour
+public class InGameStatesHandler : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject gameOverMenu;
+    [SerializeField] private GameObject frogLr;
     
     private string currentScene;
 
@@ -35,12 +36,14 @@ public class PauseGameHandler : MonoBehaviour
     public void OnPauseClicked()
     {
         GameManager.instance.ChangeState(GameManager.GameStates.GamePaused);
+        frogLr.SetActive(false);
         pauseMenu.SetActive(true);
     }
 
     public void OnResumeClicked()
     {
         GameManager.instance.ChangeState(GameManager.GameStates.GamePlay);
+        frogLr.SetActive(true);
         pauseMenu.SetActive(false);
     }
 
@@ -60,6 +63,7 @@ public class PauseGameHandler : MonoBehaviour
     private void GameOver()
     {
         GameManager.instance.ChangeState(GameManager.GameStates.GameOver);
+        frogLr.SetActive(false);
         gameOverMenu.SetActive(true);
     }
 

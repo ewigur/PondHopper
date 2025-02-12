@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
     
     public static Action<GameStates> onGameStateChanged;
     
-    
     public enum GameStates
     {
         MainMenu,
