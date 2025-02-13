@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Log1
   m_EditorClassIdentifier: 
   typeOfLog: Log1
-  MaxLogSpeed: 3.5
-  MinLogSpeed: 3
+  MaxLogSpeed: 2.5
+  MinLogSpeed: 2
   prefab: {fileID: 8006631875471704464, guid: 9ee918b21e69bc742adc56110349fa44, type: 3}
   spawnPercent: 0.5

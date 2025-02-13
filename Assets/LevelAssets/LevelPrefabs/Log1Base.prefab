@@ -244,8 +244,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 886fe5877a3fca340aabfdf987bf9921, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPosition1: -4
-  startPosition2: -3
+  minStartPos: -2
+  maxStartPos: -1
 --- !u!212 &8598716228631726753
 SpriteRenderer:
   m_ObjectHideFlags: 0

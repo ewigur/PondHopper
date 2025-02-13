@@ -3,14 +3,14 @@ using Random = UnityEngine.Random;
 
 public class LogBehaviour : MonoBehaviour
 {
-    [SerializeField] private float startPosition1;
-    [SerializeField] private float startPosition2;
+    [SerializeField] private float minStartPos;
+    [SerializeField] private float maxStartPos;
 
     private SpriteRenderer sr;
     private Rigidbody2D rb;
     private LogItem logItemData;
     private LogSpawner logSpawner;
-    private readonly float minBounds = -13f;
+    private readonly float minBounds = -15f;
     
     public void Initialize(LogItem data)
     {
@@ -20,7 +20,7 @@ public class LogBehaviour : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         logSpawner = FindFirstObjectByType<LogSpawner>();
         
-        float spawnPositionY = Random.Range(startPosition1, startPosition2);
+        float spawnPositionY = Random.Range(minStartPos, maxStartPos);
         rb.position = new Vector2(rb.position.x, spawnPositionY);
         
         float randomSpeed = Random.Range(logItemData.MinLogSpeed, logItemData.MaxLogSpeed);
