@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
+    public static GameManager gameManagerInstance;
     
     public static Action<GameStates> onGameStateChanged;
     
@@ -17,14 +17,14 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null)
+        if (gameManagerInstance != null)
         {
             Destroy(gameObject);
         }
 
         else
         {
-            instance = this;
+            gameManagerInstance = this;
             DontDestroyOnLoad(gameObject);
             ChangeState(GameStates.MainMenu);
             Debug.Log("Started in Main Menu");

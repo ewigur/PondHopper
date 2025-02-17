@@ -2,30 +2,25 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
-
-// TODO: Find why the name promt enables on 0 points (score).
 public class HighScoreManager : MonoBehaviour
 {
-    private static HighScoreManager highScoreManagerInstance;
-    
     public static Action<int> OnNewHighScore;
-    public static Action OnHighScoreUpdated;
     
     private readonly List<KeyValuePair<string, int>> highScores = new();
-    private const int MaxListedScores = 5;
+    private const int MaxListedScores = 10;
     private int pendingHighScore;
     
     private void Awake()
     {
-        if (highScoreManagerInstance != null)
+        HighScoreManager existingInstance = FindFirstObjectByType<HighScoreManager>();
+        
+        if (existingInstance != null && existingInstance != this)
         {
             Destroy(gameObject);
+            return;
         }
-        else
-        {
-            highScoreManagerInstance = this;
-            DontDestroyOnLoad(gameObject);
-        }
+        
+        DontDestroyOnLoad(gameObject);
         
         LoadScore();
     }
@@ -80,7 +75,6 @@ public class HighScoreManager : MonoBehaviour
             
             SaveScores();
             pendingHighScore = 0;
-            OnHighScoreUpdated?.Invoke();
     }
 
     private void SaveScores()

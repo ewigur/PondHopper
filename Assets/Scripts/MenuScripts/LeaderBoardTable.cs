@@ -9,7 +9,7 @@ public class LeaderBoardTable : MonoBehaviour
     [SerializeField] private Transform entryTemplate;
     
     private HighScoreManager highScoreManager;
-    private const int maxEntries = 5;
+    private const int maxEntries = 8;
 
     private void Start()
     {
@@ -23,12 +23,7 @@ public class LeaderBoardTable : MonoBehaviour
 
         DisplayLeaderBoard();
     }
-
-    private void OnEnable()
-    {
-        HighScoreManager.OnHighScoreUpdated += DisplayLeaderBoard;
-    }
-
+    
     private void DisplayLeaderBoard()
     {
         foreach (Transform child in entryContainer)
@@ -96,10 +91,5 @@ public class LeaderBoardTable : MonoBehaviour
                 Debug.LogError("PlayerNameText not found.");
             }
         }
-    }
-        
-    private void OnDisable()
-    {
-        HighScoreManager.OnHighScoreUpdated -= DisplayLeaderBoard;
     }
 }

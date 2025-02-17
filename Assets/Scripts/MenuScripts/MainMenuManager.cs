@@ -38,7 +38,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void onStartPressed()
     {
-        GameManager.instance.ChangeState(GameManager.GameStates.GamePlay);
+        GameManager.gameManagerInstance.ChangeState(GameManager.GameStates.GamePlay);
         SceneManager.LoadScene(1);
     }
 
