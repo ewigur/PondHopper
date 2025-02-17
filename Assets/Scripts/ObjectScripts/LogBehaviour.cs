@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -26,6 +27,7 @@ public class LogBehaviour : MonoBehaviour
         float randomSpeed = Random.Range(logItemData.MinLogSpeed, logItemData.MaxLogSpeed);
         rb.linearVelocity = Vector2.left * randomSpeed;
 
+        SetScale(spawnPositionY);
         SetSortingOrder(spawnPositionY);
     }
 
@@ -35,6 +37,16 @@ public class LogBehaviour : MonoBehaviour
         {
             int sortingOrder = Mathf.RoundToInt(-yPosition * 10);
             sr.sortingOrder = sortingOrder;
+        }
+    }
+
+    private void SetScale(float yPos)
+    {
+        Vector2 depthIllusion = new Vector2(0.9f, 0.9f);
+
+        if (yPos <= minStartPos)
+        {
+            transform.localScale *= depthIllusion;
         }
     }
 

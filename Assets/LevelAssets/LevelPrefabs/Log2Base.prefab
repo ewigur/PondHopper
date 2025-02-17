@@ -26,13 +26,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1333718698239573060}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0.07580311, w: 0.9971229}
-  m_LocalPosition: {x: -0.234, y: 0.0175, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0.059429966, w: 0.99823254}
+  m_LocalPosition: {x: -0.26472503, y: 0.013, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1323602428832420542}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -8.695}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -6.814}
 --- !u!61 &1084493147534808828
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -77,7 +77,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.56, y: 0.03}
+  m_Size: {x: 1.56, y: 0.12}
   m_EdgeRadius: 0
 --- !u!251 &1138584922483359641
 PlatformEffector2D:
@@ -125,7 +125,7 @@ Transform:
   m_GameObject: {fileID: 3436175251336496016}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.045816313, w: 0.9989499}
-  m_LocalPosition: {x: -0.07229508, y: -0.0185, z: 0}
+  m_LocalPosition: {x: -0.099, y: -0.0185, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -175,7 +175,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.61, y: 0.04}
+  m_Size: {x: 0.61, y: 0.12}
   m_EdgeRadius: 0
 --- !u!251 &6234246735302245345
 PlatformEffector2D:
@@ -225,7 +225,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 0}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 0}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7217319600589772226}
@@ -244,8 +244,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 886fe5877a3fca340aabfdf987bf9921, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minStartPos: -1.6
-  maxStartPos: -0.6
+  minStartPos: -0.8
+  maxStartPos: -0.5
 --- !u!212 &8598716228631726753
 SpriteRenderer:
   m_ObjectHideFlags: 0
