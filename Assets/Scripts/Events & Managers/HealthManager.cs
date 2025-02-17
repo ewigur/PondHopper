@@ -11,7 +11,7 @@ public class HealthManager : MonoBehaviour
     
     private void OnEnable()
     {
-        PlayerCollision.OnPlayerHit+= UpdateHealthBar;
+        PlayerCollision.OnLifeLost+= UpdateHealthBar;
         PlayerCollision.OnPlayerDeath += PlayerDeath;
     }
     
@@ -38,7 +38,7 @@ public class HealthManager : MonoBehaviour
     
     private void OnDisable()
     {
-        PlayerCollision.OnPlayerHit -= UpdateHealthBar;
+        PlayerCollision.OnLifeLost -= UpdateHealthBar;
         PlayerCollision.OnPlayerDeath -= PlayerDeath;
     }
 }

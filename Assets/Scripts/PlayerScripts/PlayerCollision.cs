@@ -1,10 +1,13 @@
 using UnityEngine;
 using System;
 using NaughtyAttributes;
+
+// TODO: Add list of Lives instead of health bar, deathground triggers lives lost
 public class PlayerCollision : MonoBehaviour
 {  
     public static Action<PickUpItem> OnScoreCollected;
-    public static Action OnPlayerHit;
+    public static Action TriggerPickUpSound;
+    public static Action OnLifeLost;
     public static Action OnPlayerDeath;
     
     private PlayerHealth playerHealth;
@@ -20,6 +23,7 @@ public class PlayerCollision : MonoBehaviour
         
         if (other.gameObject.CompareTag("PickUp") && pickUpBehaviour != null)
         {
+            TriggerPickUpSound?.Invoke();
             AddingScore(pickUpBehaviour.itemData);
         }
 
@@ -48,7 +52,7 @@ public class PlayerCollision : MonoBehaviour
     public void TakeDamage(int damage)
     {
         PlayerHealth.currentHealth -= damage;
-        OnPlayerHit.Invoke();
+        OnLifeLost.Invoke();
         
         Debug.Log("Damage Taken: " + playerHealth.damageTaken+ "Current Health: " + PlayerHealth.currentHealth);
     }

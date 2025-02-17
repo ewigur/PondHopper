@@ -1,7 +1,6 @@
 using UnityEngine;
 using Vector2 = UnityEngine.Vector2;
 
-
 //TODO: Add better movement in FixedUpdate when I have a clearer view of what animations I should have
 //TODO: Code Cleanup
 public delegate void Return(PickUpBehaviour pickUp);

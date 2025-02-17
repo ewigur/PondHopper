@@ -1,7 +1,6 @@
 using UnityEngine;
 /*
  * TODO: JumpParticles
- * TODO: JumpSounds
  * TODO: JumpAnimations
  */
 public class JumpEventHandler : MonoBehaviour

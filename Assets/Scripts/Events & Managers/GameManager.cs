@@ -6,6 +6,9 @@ public class GameManager : MonoBehaviour
     public static GameManager gameManagerInstance;
     
     public static Action<GameStates> onGameStateChanged;
+    public static Action TriggerMenuMusic;
+    public static Action TriggerGameMusic;
+    public static Action TriggerPauseMusic;
     
     public enum GameStates
     {
@@ -49,10 +52,12 @@ public class GameManager : MonoBehaviour
         switch (newState)
         {
             case GameStates.MainMenu:
+                TriggerMenuMusic?.Invoke();
                 Time.timeScale = 1;
                 break;
             
             case GameStates.GamePlay:
+                TriggerGameMusic?.Invoke();
                 Time.timeScale = 1f;
                 break;
             

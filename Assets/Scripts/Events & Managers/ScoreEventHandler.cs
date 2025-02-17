@@ -1,7 +1,6 @@
 using TMPro;
 using UnityEngine;
 
-// TODO: Add name input for highscore
 // TODO: Add effects when player gets on HS -leaderboard
 
 public class ScoreManager : MonoBehaviour

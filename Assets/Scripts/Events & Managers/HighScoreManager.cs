@@ -5,6 +5,7 @@ using NaughtyAttributes;
 public class HighScoreManager : MonoBehaviour
 {
     public static Action<int> OnNewHighScore;
+    public static Action TriggerHighScoreSound;
     
     private readonly List<KeyValuePair<string, int>> highScores = new();
     private const int MaxListedScores = 10;
@@ -59,6 +60,7 @@ public class HighScoreManager : MonoBehaviour
         {
             pendingHighScore = newScore;
             OnNewHighScore?.Invoke(newScore);
+            TriggerHighScoreSound?.Invoke();
         }
     }
 

@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-
-// TODO: Remove Debugs and redundant conditions when I'm sure everything works
 public class LeaderBoardTable : MonoBehaviour
 {
     [SerializeField] private float tempHeight = 25.2f;
@@ -67,28 +65,15 @@ public class LeaderBoardTable : MonoBehaviour
             {
                 posCountText.text = rankText;
             }
-            else
-            {
-                Debug.LogError("PosCountText not found in entry template.");
-            }
 
             if (scoreCountText != null)
             {
                 scoreCountText.text = highScores[i].Value.ToString();
             }
-            else
-            {
-                Debug.LogError("ScoreCountText not found in entry template.");
-            }
 
             if (PlayerName != null)
             {
                 PlayerName.text = highScores[i].Key;
-            }
-
-            else
-            {
-                Debug.LogError("PlayerNameText not found.");
             }
         }
     }
