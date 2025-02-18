@@ -9,15 +9,16 @@ public class GameManager : MonoBehaviour
     public static Action TriggerMenuMusic;
     public static Action TriggerGameMusic;
     public static Action TriggerPauseMusic;
+    public static Action TriggerResumeMusic;
     
     public static Action<bool> onToggleInput;
-    
     
     public enum GameStates
     {
         MainMenu,
-        GamePlay,
+        GameLoop,
         GamePaused,
+        GameResumed,
         GameOver,
     }
 
@@ -47,7 +48,7 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Game State Changed: {state}");
         
         onGameStateChanged?.Invoke(state);
-        onToggleInput?.Invoke(state == GameStates.GamePlay);
+        onToggleInput?.Invoke(state == GameStates.GameLoop);
         HandleStates(newState);
 
     }
@@ -61,13 +62,19 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 1;
                 break;
             
-            case GameStates.GamePlay:
+            case GameStates.GameLoop:
                 TriggerGameMusic?.Invoke();
                 Time.timeScale = 1f;
                 break;
             
             case GameStates.GamePaused:
+                TriggerPauseMusic?.Invoke();
                 Time.timeScale = 0f;
+                break;
+            
+            case GameStates.GameResumed:
+                TriggerResumeMusic?.Invoke();
+                Time.timeScale = 1f;
                 break;
             
             case GameStates.GameOver:

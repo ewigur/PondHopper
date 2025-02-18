@@ -26,7 +26,7 @@ public class JumpMechanic : MonoBehaviour
     private LineDrawer lineDrawer;
     
     private bool isDragging;
-    private bool canReceiveInput = true;
+    public static bool canReceiveInput = true;
     
     void Awake()
     {

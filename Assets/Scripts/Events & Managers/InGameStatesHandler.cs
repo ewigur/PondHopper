@@ -1,13 +1,9 @@
-using System;
 using UnityEngine;
+using static GameManager;
 using UnityEngine.SceneManagement;
 
 public class InGameStatesHandler : MonoBehaviour
 {
-    public static Action OnResumeGame;
-    public static Action OnPauseGame;
-    public static Action OnQuitToMainMenu;
-    
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject gameOverMenu;
     
@@ -23,51 +19,56 @@ public class InGameStatesHandler : MonoBehaviour
     private void OnEnable()
     {
         PlayerCollision.OnPlayerDeath += GameOver;
-        GameManager.onGameStateChanged += StateChanger;
+        onGameStateChanged += StateChanger;
     }
 
-    private void StateChanger(GameManager.GameStates state)
+    
+    private void StateChanger(GameStates state)
     {
-        if (state != GameManager.GameStates.GamePlay)
-            return;
+        if (state == GameStates.GameLoop)
+        {
+            if (gameManagerInstance.state != GameStates.GamePaused)
+            {
+                OnPauseClicked();
+            }
+        }
     }
+    
 
     public void OnPauseClicked()
     {
-        OnPauseGame?.Invoke();
-        GameManager.gameManagerInstance.ChangeState(GameManager.GameStates.GamePaused);
+        gameManagerInstance.ChangeState(GameStates.GamePaused);
         pauseMenu.SetActive(true);
     }
 
     public void OnResumeClicked()
     {
-        OnResumeGame?.Invoke();
-        GameManager.gameManagerInstance.ChangeState(GameManager.GameStates.GamePlay);
+        gameManagerInstance.ChangeState(GameStates.GameResumed);
+        JumpMechanic.canReceiveInput = true;
         pauseMenu.SetActive(false);
     }
 
     public void onRetryClicked()
     {
-        GameManager.gameManagerInstance.ChangeState(GameManager.GameStates.GamePlay);
+        gameManagerInstance.ChangeState(GameStates.GameLoop);
         SceneManager.LoadScene(currentScene);
     }
 
     public void OnQuitClicked()
     {
-        OnQuitToMainMenu?.Invoke();
-        GameManager.gameManagerInstance.ChangeState(GameManager.GameStates.MainMenu);
+        gameManagerInstance.ChangeState(GameStates.MainMenu);
         SceneManager.LoadScene(0);
     }
 
     private void GameOver()
     {
-        GameManager.gameManagerInstance.ChangeState(GameManager.GameStates.GameOver);
+        gameManagerInstance.ChangeState(GameStates.GameOver);
         gameOverMenu.SetActive(true);
     }
 
     private void OnDisable()
     {
         PlayerCollision.OnPlayerDeath -= GameOver;
-        GameManager.onGameStateChanged -= StateChanger;
+        onGameStateChanged -= StateChanger;
     }
 }

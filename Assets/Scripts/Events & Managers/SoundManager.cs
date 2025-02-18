@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using System.Collections;
 using Random = UnityEngine.Random;
@@ -8,11 +7,10 @@ using Random = UnityEngine.Random;
 
 public class SoundManager : MonoBehaviour
 {
-    
-    
     [Header("Tracks")]
     [SerializeField]private AudioSource menuMusic;
     [SerializeField]private AudioSource gameMusic;
+    [SerializeField]private AudioSource pauseAmbience;
     
     [Header("Action Sounds")]
     [SerializeField]private AudioSource highScoreSound;
@@ -26,16 +24,13 @@ public class SoundManager : MonoBehaviour
     [SerializeField]private AudioSource menuButtonSound;
     [SerializeField]private AudioSource backButtonSound;
 
-    private float storedGameMusicTime = 0f;
+    [SerializeField] private float fadeDuration = 1.5f;
     
     private const float pitchVarLow = 0.9f;
     private const float pitchVarHigh = 1.1f;
     
-
     private Coroutine crossFade;
     
-    [SerializeField]
-    private float fadeDuration = 1.5f;
 
     private void Awake()
     {
@@ -43,7 +38,6 @@ public class SoundManager : MonoBehaviour
         
         if (existingSoundInstance != null && existingSoundInstance != this)
         {
-            Debug.Log("Sound Manager already exists, yikes. Removing it!");
             Destroy(gameObject);
             return;
         }
@@ -65,10 +59,8 @@ public class SoundManager : MonoBehaviour
         
         GameManager.TriggerGameMusic += PlayGameMusic;
         GameManager.TriggerMenuMusic += PlayMenuMusic;
-        
-        InGameStatesHandler.OnPauseGame += PauseMusic;
-        InGameStatesHandler.OnResumeGame+= ResumeMusic;
-        InGameStatesHandler.OnQuitToMainMenu += PlayMenuMusic;
+        GameManager.TriggerPauseMusic += PlayPauseAmbience;
+        GameManager.TriggerResumeMusic += ResumeGameMusic;
     }
 
     #region Music
@@ -80,7 +72,6 @@ public class SoundManager : MonoBehaviour
 
     private void PlayGameMusic()
     {
-        Debug.Log("Playing Game Music");
         StartCrossFade(gameMusic, menuMusic);
     }
     
@@ -99,11 +90,12 @@ public class SoundManager : MonoBehaviour
     private IEnumerator FadeTracks(AudioSource fadeIn, AudioSource fadeOut)
     {
         fadeIn.Play();
-        float timer = 0f;
+        
+        var timer = 0f;
 
         while (timer < fadeDuration)
         {
-            float elapsedTime = timer / fadeDuration;
+            var elapsedTime = timer / fadeDuration;
             fadeIn.volume = Mathf.Lerp(0, 1f, elapsedTime);
             fadeOut.volume = Mathf.Lerp(1, 0f, elapsedTime);
             timer += Time.deltaTime;
@@ -114,22 +106,17 @@ public class SoundManager : MonoBehaviour
         fadeOut.volume = 0f;
         fadeOut.Stop();
     }
-
-    private void PauseMusic()
+    private void PlayPauseAmbience()
     {
-        if (gameMusic.isPlaying)
-        {
-            storedGameMusicTime = gameMusic.time;
-            gameMusic.Pause();
-        }
+        gameMusic.Pause();
+        pauseAmbience.Play();
     }
-
-    private void ResumeMusic()
+    private void ResumeGameMusic()
     {
-        gameMusic.time = storedGameMusicTime;
-        gameMusic.Play();
+        pauseAmbience.Stop();
+        gameMusic.UnPause();
     }
-
+    
     #endregion
 
     #region SFX
@@ -191,8 +178,7 @@ public class SoundManager : MonoBehaviour
         
         GameManager.TriggerGameMusic -= PlayGameMusic;
         GameManager.TriggerMenuMusic -= PlayMenuMusic;
-        
-        InGameStatesHandler.OnPauseGame -= PauseMusic;
-        InGameStatesHandler.OnResumeGame -= ResumeMusic;
+        GameManager.TriggerPauseMusic -= PlayPauseAmbience;
+        GameManager.TriggerResumeMusic -= ResumeGameMusic;
     }
 }
