@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using Random = UnityEngine.Random;
 
 // TODO: JumpSound plays on button press inGame. Find out why!
@@ -29,8 +30,8 @@ public class SoundManager : MonoBehaviour
     private const float pitchVarLow = 0.9f;
     private const float pitchVarHigh = 1.1f;
     
+    private AudioSliderHandler audioHandler;
     private Coroutine crossFade;
-    
 
     private void Awake()
     {
@@ -42,6 +43,8 @@ public class SoundManager : MonoBehaviour
             return;
         }
 
+        audioHandler = FindFirstObjectByType<AudioSliderHandler>();
+        
         menuMusic.volume = 1;
         menuMusic.Play();
         gameMusic.volume = 0;
@@ -81,11 +84,16 @@ public class SoundManager : MonoBehaviour
         {
             StopCoroutine(crossFade);
         }
+
+        if (audioHandler != null)
+        {
+            fadeIn.volume = 0;
+            fadeOut.volume = 1;
+        }
         
-        fadeIn.volume = 0;
-        fadeOut.volume = 1;
         crossFade = StartCoroutine(FadeTracks(fadeIn, fadeOut));
     }
+    
 
     private IEnumerator FadeTracks(AudioSource fadeIn, AudioSource fadeOut)
     {
