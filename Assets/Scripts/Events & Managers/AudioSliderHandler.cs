@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine;
 
 //TODO: Add bool for music instead
+//TODO: Add slider for button sounds
 
 public class AudioSliderHandler : MonoBehaviour
 {

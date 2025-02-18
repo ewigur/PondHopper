@@ -33,6 +33,8 @@ public class JumpMechanic : MonoBehaviour
         mCamera = Camera.main;
         frogRigidBody = GetComponent<Rigidbody2D>();
         lineDrawer = GetComponentInChildren<LineDrawer>();
+        
+        canReceiveInput = true;
     }
 
     private void OnEnable()

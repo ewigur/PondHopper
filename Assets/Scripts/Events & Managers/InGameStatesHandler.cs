@@ -1,7 +1,7 @@
 using UnityEngine;
-using static GameManager;
 using UnityEngine.SceneManagement;
 
+using static GameManager;
 public class InGameStatesHandler : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenu;

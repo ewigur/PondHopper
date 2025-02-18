@@ -3,9 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
 
-// TODO: JumpSound plays on button press inGame. Find out why!
-// TODO: Add sounds to gameplay scene!
-
 public class SoundManager : MonoBehaviour
 {
     [Header("Tracks")]
@@ -70,6 +67,7 @@ public class SoundManager : MonoBehaviour
 
     private void PlayMenuMusic()
     {
+        pauseAmbience.Stop();
         StartCrossFade(menuMusic, gameMusic);
     }
 
