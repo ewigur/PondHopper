@@ -7,8 +7,8 @@ public class PlayerCollision : MonoBehaviour
 {  
     public static Action<PickUpItem> OnScoreCollected;
     public static Action TriggerPickUpSound;
-    public static Action OnLifeLost;
     public static Action OnPlayerDeath;
+    public static Action OnLifeLost;
     
     private PlayerHealth playerHealth;
 
