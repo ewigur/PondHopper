@@ -1,5 +1,6 @@
-using System.Collections;
+using System;
 using UnityEngine;
+using System.Collections;
 using Random = UnityEngine.Random;
 
 // TODO: JumpSound plays on button press inGame. Find out why!
@@ -7,6 +8,8 @@ using Random = UnityEngine.Random;
 
 public class SoundManager : MonoBehaviour
 {
+    
+    
     [Header("Tracks")]
     [SerializeField]private AudioSource menuMusic;
     [SerializeField]private AudioSource gameMusic;
@@ -19,13 +22,15 @@ public class SoundManager : MonoBehaviour
     [SerializeField]private AudioSource jumpSound;
     
     [Header("UI sounds")]
-    [SerializeField]private AudioSource submitButtonSound;
     [SerializeField]private AudioSource startButtonSound;
     [SerializeField]private AudioSource menuButtonSound;
     [SerializeField]private AudioSource backButtonSound;
 
+    private float storedGameMusicTime = 0f;
+    
     private const float pitchVarLow = 0.9f;
     private const float pitchVarHigh = 1.1f;
+    
 
     private Coroutine crossFade;
     
@@ -38,7 +43,7 @@ public class SoundManager : MonoBehaviour
         
         if (existingSoundInstance != null && existingSoundInstance != this)
         {
-            Debug.Log("Sound Manager already exists, yikes");
+            Debug.Log("Sound Manager already exists, yikes. Removing it!");
             Destroy(gameObject);
             return;
         }
@@ -46,8 +51,6 @@ public class SoundManager : MonoBehaviour
         menuMusic.volume = 1;
         menuMusic.Play();
         gameMusic.volume = 0;
-        
-        Debug.Log("No double of Sound Manager not found, good");
         
         DontDestroyOnLoad(gameObject);
     }
@@ -63,6 +66,9 @@ public class SoundManager : MonoBehaviour
         GameManager.TriggerGameMusic += PlayGameMusic;
         GameManager.TriggerMenuMusic += PlayMenuMusic;
         
+        InGameStatesHandler.OnPauseGame += PauseMusic;
+        InGameStatesHandler.OnResumeGame+= ResumeMusic;
+        InGameStatesHandler.OnQuitToMainMenu += PlayMenuMusic;
     }
 
     #region Music
@@ -74,6 +80,7 @@ public class SoundManager : MonoBehaviour
 
     private void PlayGameMusic()
     {
+        Debug.Log("Playing Game Music");
         StartCrossFade(gameMusic, menuMusic);
     }
     
@@ -84,6 +91,8 @@ public class SoundManager : MonoBehaviour
             StopCoroutine(crossFade);
         }
         
+        fadeIn.volume = 0;
+        fadeOut.volume = 1;
         crossFade = StartCoroutine(FadeTracks(fadeIn, fadeOut));
     }
 
@@ -104,6 +113,21 @@ public class SoundManager : MonoBehaviour
         fadeIn.volume = 1f;
         fadeOut.volume = 0f;
         fadeOut.Stop();
+    }
+
+    private void PauseMusic()
+    {
+        if (gameMusic.isPlaying)
+        {
+            storedGameMusicTime = gameMusic.time;
+            gameMusic.Pause();
+        }
+    }
+
+    private void ResumeMusic()
+    {
+        gameMusic.time = storedGameMusicTime;
+        gameMusic.Play();
     }
 
     #endregion
@@ -139,11 +163,7 @@ public class SoundManager : MonoBehaviour
     #endregion
 
     #region Buttons
-    public void PlaySubmitButtonSound()
-    {
-        submitButtonSound.Play();
-    }
-
+    
     public void PlayStartButtonSound()
     {
         startButtonSound.Play();
@@ -171,5 +191,8 @@ public class SoundManager : MonoBehaviour
         
         GameManager.TriggerGameMusic -= PlayGameMusic;
         GameManager.TriggerMenuMusic -= PlayMenuMusic;
+        
+        InGameStatesHandler.OnPauseGame -= PauseMusic;
+        InGameStatesHandler.OnResumeGame -= ResumeMusic;
     }
 }

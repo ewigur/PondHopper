@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 public class JumpMechanic : MonoBehaviour
 {
     public static Action OnJump;
@@ -25,6 +26,7 @@ public class JumpMechanic : MonoBehaviour
     private LineDrawer lineDrawer;
     
     private bool isDragging;
+    private bool canReceiveInput = true;
     
     void Awake()
     {
@@ -33,9 +35,25 @@ public class JumpMechanic : MonoBehaviour
         lineDrawer = GetComponentInChildren<LineDrawer>();
     }
 
-    void Update()
+    private void OnEnable()
     {
+        GameManager.onToggleInput += ToggleInput;
+    }
+
+    private void ToggleInput(bool enable)
+    {
+        canReceiveInput = enable;
+    }
+
+    private void Update()
+    {
+        if (!canReceiveInput || EventSystem.current.IsPointerOverGameObject())
+            return;
+        
         HandleInput();
+    }
+    private void FixedUpdate()
+    {
         AdjustGravity();
     }
 
@@ -110,31 +128,35 @@ public class JumpMechanic : MonoBehaviour
 
     private void PerformJump(Vector2 dragVector)
     {
-        
-            float jumpStrength = Mathf.Lerp(minJumpForce, maxJumpForce, dragVector.magnitude / maxJumpInput);
-            Vector2 jumpForce = dragVector.normalized * jumpStrength;
+        float jumpStrength = Mathf.Lerp(minJumpForce, maxJumpForce, dragVector.magnitude / maxJumpInput);
+        Vector2 jumpForce = dragVector.normalized * jumpStrength;
 
-            if (IsGrounded())
-            {
-                jumpForce.y *= upGravityMultiplier;
-                jumpForce.x *= upGravityMultiplier;
-                
-                frogRigidBody.linearVelocity = jumpForce;
-            }
-
-            else
-            {
-                jumpForce.x *= upGravityMultiplier * jumpGravityMultiplier;
-                jumpForce.y *= upGravityMultiplier * jumpGravityMultiplier;
-                
-                frogRigidBody.linearVelocity = jumpForce;
-            }
+        if (IsGrounded())
+        {
+            jumpForce.y *= upGravityMultiplier;
+            jumpForce.x *= upGravityMultiplier;
             
-            OnJump?.Invoke();
+            frogRigidBody.linearVelocity = jumpForce;
+        }
+
+        else
+        {
+            jumpForce.x *= upGravityMultiplier * jumpGravityMultiplier;
+            jumpForce.y *= upGravityMultiplier * jumpGravityMultiplier;
+            
+            frogRigidBody.linearVelocity = jumpForce;
+        }
+        
+        OnJump?.Invoke();
     }
 
     private bool IsGrounded()
     {
         return Mathf.Abs(frogRigidBody.linearVelocity.y) < 0.01f;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.onToggleInput -= ToggleInput;
     }
 }

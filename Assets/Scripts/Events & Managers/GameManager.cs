@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
     public static Action TriggerGameMusic;
     public static Action TriggerPauseMusic;
     
+    public static Action<bool> onToggleInput;
+    
+    
     public enum GameStates
     {
         MainMenu,
@@ -30,7 +33,6 @@ public class GameManager : MonoBehaviour
             gameManagerInstance = this;
             DontDestroyOnLoad(gameObject);
             ChangeState(GameStates.MainMenu);
-            Debug.Log("Started in Main Menu");
         }
     }
 
@@ -42,7 +44,10 @@ public class GameManager : MonoBehaviour
             return;
         
         state = newState;
+        Debug.Log($"Game State Changed: {state}");
+        
         onGameStateChanged?.Invoke(state);
+        onToggleInput?.Invoke(state == GameStates.GamePlay);
         HandleStates(newState);
 
     }
@@ -68,7 +73,6 @@ public class GameManager : MonoBehaviour
             case GameStates.GameOver:
                 Time.timeScale = 0f;
                 break;
-            
         }
     }
 }

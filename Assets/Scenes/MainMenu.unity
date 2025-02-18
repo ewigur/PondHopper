@@ -670,7 +670,6 @@ MonoBehaviour:
   gameOverSound: {fileID: 526473888}
   pickUpSound: {fileID: 727806960}
   jumpSound: {fileID: 557139694}
-  submitButtonSound: {fileID: 350776523}
   startButtonSound: {fileID: 1069524129}
   menuButtonSound: {fileID: 1531821185}
   backButtonSound: {fileID: 1489504541}
@@ -1875,8 +1874,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: af3b7c74b4144a844ad6870f77a7dc61, type: 3}
-  m_Resource: {fileID: 8300000, guid: af3b7c74b4144a844ad6870f77a7dc61, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 32493974634999140a5c456b19f1a6db, type: 3}
+  m_Resource: {fileID: 8300000, guid: 32493974634999140a5c456b19f1a6db, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1884,7 +1883,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 205
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

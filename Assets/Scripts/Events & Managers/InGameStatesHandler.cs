@@ -1,14 +1,18 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class InGameStatesHandler : MonoBehaviour
 {
+    public static Action OnResumeGame;
+    public static Action OnPauseGame;
+    public static Action OnQuitToMainMenu;
+    
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject gameOverMenu;
-    [SerializeField] private GameObject frogLr;
     
     private string currentScene;
-
+    
     private void Start()
     {
         currentScene = SceneManager.GetActiveScene().name;
@@ -25,25 +29,20 @@ public class InGameStatesHandler : MonoBehaviour
     private void StateChanger(GameManager.GameStates state)
     {
         if (state != GameManager.GameStates.GamePlay)
-        {
-            Debug.Log("Game play state is " + state);
             return;
-        }
-        
-        Debug.Log("InGame State");
     }
 
     public void OnPauseClicked()
     {
+        OnPauseGame?.Invoke();
         GameManager.gameManagerInstance.ChangeState(GameManager.GameStates.GamePaused);
-        frogLr.SetActive(false);
         pauseMenu.SetActive(true);
     }
 
     public void OnResumeClicked()
     {
+        OnResumeGame?.Invoke();
         GameManager.gameManagerInstance.ChangeState(GameManager.GameStates.GamePlay);
-        frogLr.SetActive(true);
         pauseMenu.SetActive(false);
     }
 
@@ -51,11 +50,11 @@ public class InGameStatesHandler : MonoBehaviour
     {
         GameManager.gameManagerInstance.ChangeState(GameManager.GameStates.GamePlay);
         SceneManager.LoadScene(currentScene);
-        
     }
 
     public void OnQuitClicked()
     {
+        OnQuitToMainMenu?.Invoke();
         GameManager.gameManagerInstance.ChangeState(GameManager.GameStates.MainMenu);
         SceneManager.LoadScene(0);
     }
@@ -63,7 +62,6 @@ public class InGameStatesHandler : MonoBehaviour
     private void GameOver()
     {
         GameManager.gameManagerInstance.ChangeState(GameManager.GameStates.GameOver);
-        frogLr.SetActive(false);
         gameOverMenu.SetActive(true);
     }
 
