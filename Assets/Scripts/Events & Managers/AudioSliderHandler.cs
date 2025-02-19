@@ -1,10 +1,8 @@
 using System.Collections.Generic;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine;
 
-//TODO: Add bool for music instead
-//TODO: Add slider for button sounds
+//TODO: Make slider stay alive between scene swaps
 
 public class AudioSliderHandler : MonoBehaviour
 {
@@ -22,7 +20,6 @@ public class AudioSliderHandler : MonoBehaviour
         if (adjustmentSlider != null)
         {
             adjustmentSlider.value = startVolume;
-            //adjustmentSlider.onValueChanged.AddListener(delegate { SetVolume(); });
         }
     }
 
@@ -44,17 +41,4 @@ public class AudioSliderHandler : MonoBehaviour
             source.volume = volume;
         }
     }
-
-    /*
-     public void SetVolume()
-    {
-        newVolume = adjustmentSlider.value;
-        ApplyVolume(newVolume, soundsToAdjust);
-        
-        if (Input.GetMouseButtonUp(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended))
-        {
-            valueChangedSound.Play();
-        }
-    }
-    */
 }

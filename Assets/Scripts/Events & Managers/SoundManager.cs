@@ -4,6 +4,7 @@ using Random = UnityEngine.Random;
 
 using static HighScoreManager;
 using static GameManager;
+
 public class SoundManager : MonoBehaviour
 {
     private static SoundManager SoundInstance;
@@ -31,11 +32,13 @@ public class SoundManager : MonoBehaviour
     private const float pitchVarHigh = 1.1f;
     
     private AudioSliderHandler audioHandler;
-    private MusicBool musicBool;
     private Coroutine crossFade;
 
     private void Awake()
     {
+        pauseAmbience.Stop();
+        pauseAmbience.volume = 0.001f;
+        
         var existingSoundInstance = FindFirstObjectByType<SoundManager>();
         
         if (existingSoundInstance != null && existingSoundInstance != this)
@@ -43,8 +46,6 @@ public class SoundManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        
-        musicBool = FindFirstObjectByType<MusicBool>();
 
         audioHandler = FindFirstObjectByType<AudioSliderHandler>();
         
@@ -70,13 +71,22 @@ public class SoundManager : MonoBehaviour
     }
 
     #region Music
-    private void PlayMenuMusic()
+
+    private bool CheckBool()
     {
-        if (musicBool == null)
+        if (MusicBool.Instance == null)
         {
             Debug.LogWarning("Can't find MusicBool");
-            return;
+            return false;
         }
+        
+        Debug.Log("Returning MusicBool");
+        return MusicBool.Instance.musicIsOn;
+    }
+    private void PlayMenuMusic()
+    {
+        if (!CheckBool()) 
+            return;
         
         StartCrossFade(menuMusic, gameMusic);
         pauseAmbience.Stop();
@@ -84,17 +94,31 @@ public class SoundManager : MonoBehaviour
 
     private void PlayGameMusic()
     {
+        if (!CheckBool())
+            return;
+        
+        
         StartCrossFade(gameMusic, menuMusic);
         pauseAmbience.Stop();
     }
     
     private void PlayPauseAmbience()
     {
+        if (!CheckBool())
+            return;
+
+        if (gameManagerInstance.state != GameStates.GamePaused &&
+            gameManagerInstance.state != GameStates.GameOver) return;
+        
         gameMusic.Pause();
         pauseAmbience.Play();
     }
     private void ResumeGameMusic()
     {
+        if (!CheckBool())
+            return;
+        
+        
         gameMusic.UnPause();
         pauseAmbience.Stop();
     }

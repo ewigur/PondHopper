@@ -1,35 +1,53 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
+//TODO: Make toggle stay alive between scene swaps
 public class MusicBool : MonoBehaviour
 {
-    private bool musicOn = true;
+    public static MusicBool Instance { get; private set; }
+    
+    public bool musicIsOn = true;
     
     [SerializeField] private Toggle musicToggle;
     [SerializeField] private List<AudioSource> musicSources;
-    
 
-    public bool ToggleMusic()
+    public bool MusicIsOn => musicIsOn;
+
+    private void Awake()
     {
-        if (musicToggle.isOn)
+        if (Instance == null)
         {
-            foreach (AudioSource source in musicSources)
-            {
-                musicOn = true;
-            }
-            return true;
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-        
-        //else
+        else
         {
-            foreach (AudioSource source in musicSources)
-            {
-                source.Pause();
-                musicOn = false;
-            }
-            return false;
+            Destroy(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        if (musicToggle != null)
+        {
+            musicToggle.isOn = musicIsOn;
+            musicToggle.onValueChanged.AddListener(ToggleMusic);
+        }
+
+        ToggleMusic(musicIsOn);
+    }
+
+    public void ToggleMusic(bool isMusicOn)
+    {
+        musicIsOn = isMusicOn;
+
+        foreach (var source in musicSources)
+        {
+            if (musicIsOn)
+                source.Play();
+            else
+                source.Stop();
         }
     }
 }
