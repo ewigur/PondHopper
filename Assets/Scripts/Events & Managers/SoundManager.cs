@@ -6,6 +6,8 @@ using static HighScoreManager;
 using static GameManager;
 public class SoundManager : MonoBehaviour
 {
+    private static SoundManager SoundInstance;
+    
     [Header("Tracks")]
     [SerializeField]private AudioSource menuMusic;
     [SerializeField]private AudioSource gameMusic;
@@ -29,6 +31,7 @@ public class SoundManager : MonoBehaviour
     private const float pitchVarHigh = 1.1f;
     
     private AudioSliderHandler audioHandler;
+    private MusicBool musicBool;
     private Coroutine crossFade;
 
     private void Awake()
@@ -40,6 +43,8 @@ public class SoundManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        
+        musicBool = FindFirstObjectByType<MusicBool>();
 
         audioHandler = FindFirstObjectByType<AudioSliderHandler>();
         
@@ -67,6 +72,12 @@ public class SoundManager : MonoBehaviour
     #region Music
     private void PlayMenuMusic()
     {
+        if (musicBool == null)
+        {
+            Debug.LogWarning("Can't find MusicBool");
+            return;
+        }
+        
         StartCrossFade(menuMusic, gameMusic);
         pauseAmbience.Stop();
     }
