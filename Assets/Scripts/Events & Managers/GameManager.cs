@@ -78,6 +78,7 @@ public class GameManager : MonoBehaviour
                 break;
             
             case GameStates.GameOver:
+                TriggerPauseMusic?.Invoke();
                 Time.timeScale = 0f;
                 break;
         }

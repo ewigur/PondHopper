@@ -2,9 +2,8 @@ using UnityEngine;
 
 public class ScreenOriantation : MonoBehaviour
 {
-    void Start()
+    void Awake()
     {
         Screen.orientation = ScreenOrientation.LandscapeRight;
     }
-    
 }

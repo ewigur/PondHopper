@@ -1,8 +1,9 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 using Random = UnityEngine.Random;
 
+using static HighScoreManager;
+using static GameManager;
 public class SoundManager : MonoBehaviour
 {
     [Header("Tracks")]
@@ -51,29 +52,40 @@ public class SoundManager : MonoBehaviour
 
     private void OnEnable()
     {
-        HighScoreManager.TriggerHighScoreSound += PlayHighScoreSound;
         PlayerCollision.TriggerPickUpSound += PlayPickUpSound;
         PlayerCollision.OnPlayerDeath += PlayGameOverSound;
         PlayerCollision.OnLifeLost += PlayLifeLostSound;
         JumpMechanic.OnJump += PlayJumpSound;
         
-        GameManager.TriggerGameMusic += PlayGameMusic;
-        GameManager.TriggerMenuMusic += PlayMenuMusic;
-        GameManager.TriggerPauseMusic += PlayPauseAmbience;
-        GameManager.TriggerResumeMusic += ResumeGameMusic;
+        TriggerGameMusic += PlayGameMusic;
+        TriggerMenuMusic += PlayMenuMusic;
+        TriggerPauseMusic += PlayPauseAmbience;
+        TriggerResumeMusic += ResumeGameMusic;
+        TriggerHighScoreSound += PlayHighScoreSound;
     }
 
     #region Music
-
     private void PlayMenuMusic()
     {
-        pauseAmbience.Stop();
         StartCrossFade(menuMusic, gameMusic);
+        pauseAmbience.Stop();
     }
 
     private void PlayGameMusic()
     {
         StartCrossFade(gameMusic, menuMusic);
+        pauseAmbience.Stop();
+    }
+    
+    private void PlayPauseAmbience()
+    {
+        gameMusic.Pause();
+        pauseAmbience.Play();
+    }
+    private void ResumeGameMusic()
+    {
+        gameMusic.UnPause();
+        pauseAmbience.Stop();
     }
     
     private void StartCrossFade(AudioSource fadeIn, AudioSource fadeOut)
@@ -91,7 +103,6 @@ public class SoundManager : MonoBehaviour
         
         crossFade = StartCoroutine(FadeTracks(fadeIn, fadeOut));
     }
-    
 
     private IEnumerator FadeTracks(AudioSource fadeIn, AudioSource fadeOut)
     {
@@ -112,17 +123,6 @@ public class SoundManager : MonoBehaviour
         fadeOut.volume = 0f;
         fadeOut.Stop();
     }
-    private void PlayPauseAmbience()
-    {
-        gameMusic.Pause();
-        pauseAmbience.Play();
-    }
-    private void ResumeGameMusic()
-    {
-        pauseAmbience.Stop();
-        gameMusic.UnPause();
-    }
-    
     #endregion
 
     #region SFX
@@ -176,15 +176,15 @@ public class SoundManager : MonoBehaviour
     
     private void OnDisable()
     {
-        HighScoreManager.TriggerHighScoreSound -= PlayHighScoreSound;
         PlayerCollision.TriggerPickUpSound -= PlayPickUpSound;
         PlayerCollision.OnPlayerDeath -= PlayGameOverSound;
         PlayerCollision.OnLifeLost -= PlayLifeLostSound;
         JumpMechanic.OnJump -= PlayJumpSound;
         
-        GameManager.TriggerGameMusic -= PlayGameMusic;
-        GameManager.TriggerMenuMusic -= PlayMenuMusic;
-        GameManager.TriggerPauseMusic -= PlayPauseAmbience;
-        GameManager.TriggerResumeMusic -= ResumeGameMusic;
+        TriggerGameMusic -= PlayGameMusic;
+        TriggerMenuMusic -= PlayMenuMusic;
+        TriggerPauseMusic -= PlayPauseAmbience;
+        TriggerResumeMusic -= ResumeGameMusic;
+        TriggerHighScoreSound -= PlayHighScoreSound;
     }
 }

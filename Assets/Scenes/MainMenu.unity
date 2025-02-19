@@ -484,6 +484,7 @@ MonoBehaviour:
   - {fileID: 1571189803}
   - {fileID: 727806960}
   - {fileID: 557139694}
+  - {fileID: 1069524129}
   SFXSlider: {fileID: 3184021026742767365}
 --- !u!4 &187664418
 Transform:
