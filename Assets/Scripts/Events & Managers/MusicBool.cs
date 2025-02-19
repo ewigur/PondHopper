@@ -5,14 +5,13 @@ using System.Collections.Generic;
 //TODO: Make toggle stay alive between scene swaps
 public class MusicBool : MonoBehaviour
 {
-    public static MusicBool Instance { get; private set; }
+    public static MusicBool Instance; /*{ get; private set; }*/
     
     public bool musicIsOn = true;
     
-    [SerializeField] private Toggle musicToggle;
+    [Header("Toggler Attributes")]
+    public Toggle musicToggle;
     [SerializeField] private List<AudioSource> musicSources;
-
-    public bool MusicIsOn => musicIsOn;
 
     private void Awake()
     {

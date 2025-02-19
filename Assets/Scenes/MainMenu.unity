@@ -540,7 +540,6 @@ GameObject:
   m_Component:
   - component: {fileID: 187664418}
   - component: {fileID: 187664417}
-  - component: {fileID: 187664419}
   m_Layer: 0
   m_Name: --- VolumeManager ---
   m_TagString: Untagged
@@ -560,14 +559,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9980937cdf11b9409b62bfce531b631, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  adjustmentSlider: {fileID: 3184021026742767365}
-  soundsToAdjust:
+  sfxSlider: {fileID: 3184021026742767365}
+  miscSlider: {fileID: 1675401011}
+  sfxToAdjust:
   - {fileID: 526473888}
   - {fileID: 1696957522}
   - {fileID: 1571189803}
   - {fileID: 727806960}
   - {fileID: 557139694}
-  valueChangedSound: {fileID: 557139694}
+  miscToAdjust:
+  - {fileID: 350776523}
+  - {fileID: 1531821185}
+  - {fileID: 1489504541}
+  - {fileID: 1069524129}
+  valueChangedSfx: {fileID: 557139694}
+  valueChangedMisc: {fileID: 350776523}
 --- !u!4 &187664418
 Transform:
   m_ObjectHideFlags: 0
@@ -583,25 +589,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &187664419
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 187664416}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9980937cdf11b9409b62bfce531b631, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  adjustmentSlider: {fileID: 1675401011}
-  soundsToAdjust:
-  - {fileID: 350776523}
-  - {fileID: 1531821185}
-  - {fileID: 1489504541}
-  - {fileID: 1069524129}
-  valueChangedSound: {fileID: 350776523}
 --- !u!1 &198078212
 GameObject:
   m_ObjectHideFlags: 0
@@ -5014,7 +5001,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1622764187
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5149,7 +5136,7 @@ PrefabInstance:
     - target: {fileID: 7831652975961208793, guid: c635b535dbc2bcf4ba89e121812301c5, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 187664419}
+      objectReference: {fileID: 0}
     - target: {fileID: 7831652975961208793, guid: c635b535dbc2bcf4ba89e121812301c5, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnPointerUp
@@ -5236,7 +5223,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8809833372356915072, guid: c635b535dbc2bcf4ba89e121812301c5, type: 3}
       propertyPath: m_Name
-      value: ButtonsSlider
+      value: MiscSlider
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5282,9 +5269,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 187664419}
+        - m_Target: {fileID: 187664417}
           m_TargetAssemblyTypeName: AudioSliderHandler, Assembly-CSharp
-          m_MethodName: OnPointerUp
+          m_MethodName: OnPointerUpMisc
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -6749,7 +6736,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 187664417}
           m_TargetAssemblyTypeName: AudioSliderHandler, Assembly-CSharp
-          m_MethodName: OnPointerUp
+          m_MethodName: OnPointerUpSFX
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -6764,10 +6751,10 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 394608877}
-  - {fileID: 1911286937}
   - {fileID: 187664418}
   - {fileID: 228321979}
   - {fileID: 1718241263}
   - {fileID: 835892903}
+  - {fileID: 1911286937}
   - {fileID: 2030300895}
   - {fileID: 1304862110}
