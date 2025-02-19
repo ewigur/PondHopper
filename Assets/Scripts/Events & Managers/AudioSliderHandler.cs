@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine;
 
@@ -7,32 +8,30 @@ using UnityEngine;
 
 public class AudioSliderHandler : MonoBehaviour
 {
-    private static AudioSliderHandler instance;
+    [Header("Slider Attributes")]
+    [SerializeField] private Slider adjustmentSlider;
+    [SerializeField] private List<AudioSource> soundsToAdjust;
+    [SerializeField] private AudioSource valueChangedSound;
     
-    [SerializeField] private List<AudioSource> SFX;
-    
-    [SerializeField] private Slider SFXSlider;
 
     private readonly float startVolume = 1f;
-    private float newSFXVolume;
-
-    private void Awake()
-    {
-        if (instance != null && instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        instance = this;
-    }
+    private float newVolume;
 
     private void Start()
     {
-        if (SFXSlider != null)
+        if (adjustmentSlider != null)
         {
-            SFXSlider.value = startVolume;
-            SFXSlider.onValueChanged.AddListener(delegate { SetSFXVolume(); });
+            adjustmentSlider.value = startVolume;
+            //adjustmentSlider.onValueChanged.AddListener(delegate { SetVolume(); });
         }
+    }
+
+    public void OnPointerUp()
+    {
+        newVolume = adjustmentSlider.value;
+        ApplyVolume(newVolume, soundsToAdjust);
+        
+        valueChangedSound.PlayOneShot(valueChangedSound.clip);
     }
 
     private void ApplyVolume(float volume, List<AudioSource> sources)
@@ -46,9 +45,16 @@ public class AudioSliderHandler : MonoBehaviour
         }
     }
 
-    public void SetSFXVolume()
+    /*
+     public void SetVolume()
     {
-        newSFXVolume = SFXSlider.value;
-        ApplyVolume(newSFXVolume, SFX);
+        newVolume = adjustmentSlider.value;
+        ApplyVolume(newVolume, soundsToAdjust);
+        
+        if (Input.GetMouseButtonUp(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended))
+        {
+            valueChangedSound.Play();
+        }
     }
+    */
 }
