@@ -1,20 +1,24 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using Random = UnityEngine.Random;
 
 using static HighScoreManager;
 using static GameManager;
 
+//TODO: Fix AddSource Method (getting nulls)
+
 public class SoundManager : MonoBehaviour
 {
-    private static SoundManager SoundInstance;
-    
-    [Header("Tracks")]
+    private static SoundManager Instance;
+
+    [Header("Tracks")] 
     [SerializeField]private AudioSource menuMusic;
     [SerializeField]private AudioSource gameMusic;
     [SerializeField]private AudioSource pauseAmbience;
-    
-    [Header("Action Sounds")]
+
+    [Header("Action Sounds")] 
     [SerializeField]private AudioSource highScoreSound;
     [SerializeField]private AudioSource lifeLostSound;
     [SerializeField]private AudioSource gameOverSound;
@@ -28,6 +32,10 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField] private float fadeDuration = 1.5f;
     
+    private List<AudioSource> trackSources;
+    private List<AudioSource> sfxSources;
+    private List<AudioSource> uiSources;
+    
     private const float pitchVarLow = 0.9f;
     private const float pitchVarHigh = 1.1f;
     
@@ -39,19 +47,21 @@ public class SoundManager : MonoBehaviour
         pauseAmbience.Stop();
         pauseAmbience.volume = 0.001f;
         
-        var existingSoundInstance = FindFirstObjectByType<SoundManager>();
-        
-        if (existingSoundInstance != null && existingSoundInstance != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
         
+        Instance = this;
+        DontDestroyOnLoad(this);
+    }
+
+    private void Start()
+    {
         menuMusic.volume = 1;
         menuMusic.Play();
         gameMusic.volume = 0;
-        
-        DontDestroyOnLoad(gameObject);
     }
 
     private void OnEnable()
@@ -160,6 +170,66 @@ public class SoundManager : MonoBehaviour
 
     #region SFX
 
+    public List<AudioSource> AddSfxSources()
+    {
+        SfxSources(highScoreSound);
+        SfxSources(lifeLostSound);
+        SfxSources(gameOverSound);
+        SfxSources(pickUpSound);
+        SfxSources(jumpSound);
+        
+        return sfxSources;
+    }
+
+    public void SfxSources(AudioSource source)
+    {
+        if (source != null && !sfxSources.Contains(source))
+        {
+            sfxSources.Add(source);
+        }
+    }
+    
+    /*
+    public void AddSfxSources(AudioSource sources)
+    {
+        if (sfxSources != null && !sfxSources.Contains(sources))
+        {
+            sfxSources.Add(sources);
+        }
+    }
+
+    public void SfxSources(string soundName)
+    {
+        switch (soundName)
+        {
+            case "highScoreSound":
+                AddSfxSources(highScoreSound);
+                break;
+            
+            case "lifeLostSound":
+                AddSfxSources(lifeLostSound);
+                break;
+            
+            case "gameOverSound":
+                AddSfxSources(gameOverSound);
+                break;
+            
+            case "pickUpSound":
+                AddSfxSources(pickUpSound);
+                break;
+            
+            case "jumpSound":
+                AddSfxSources(jumpSound);
+                break;
+            
+            default:
+                Debug.LogWarning("Invalid sound name: " + soundName);
+                break;
+        }
+    }
+    */
+    
+    
     private void PlayJumpSound()
     {
         jumpSound.pitch = Random.Range(pitchVarLow, pitchVarHigh);
