@@ -1,14 +1,14 @@
-using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
+using static GameManager;
+
 //TODO: WHY DOES SLIDERS NOT PERSIST?!?!??!
+//TODO: Change audio?? on ValueChanged
 
 public class AudioSliderHandler : MonoBehaviour
 {
-    public static AudioSliderHandler Instance;
-    
     [Header("Slider Attributes")]
     public Slider sfxSlider;
     public Slider miscSlider;
@@ -22,29 +22,27 @@ public class AudioSliderHandler : MonoBehaviour
     private const float startVolume = 1f;
     private float newVolume;
     
-    private void Awake()
-    { 
-        if (Instance != null)
-        {
-            Destroy(gameObject);
-        }
-        
-        Instance = this;
-        //DontDestroyOnLoad(gameObject);
-    }
-
     private void Start()
     {
-        if (sfxSlider != null && miscSlider != null)
+        if (!Mathf.Approximately(PlayerPrefs.GetFloat("SFXVolume"), newVolume) ||
+            !Mathf.Approximately(PlayerPrefs.GetFloat("MiscVolume"), newVolume))
         {
-            sfxSlider.value = startVolume;
-            miscSlider.value = startVolume;
+            
+            PlayerPrefs.SetFloat("SFXVolume", startVolume);
+            PlayerPrefs.SetFloat("MiscVolume", startVolume);
+            Debug.Log("SFX and Misc Volume:" + PlayerPrefs.GetFloat("SFXVolume") + "," + 
+                                               PlayerPrefs.GetFloat("MiscVolume"));
         }
+        
+        /*sfxSlider.value = startVolume;
+        miscSlider.value = startVolume;*/
     }
 
     public void OnPointerUpSFX()
     {
         newVolume = sfxSlider.value;
+        PlayerPrefs.SetFloat("SFXVolume", newVolume);
+        PlayerPrefs.Save();
         ApplyVolume(newVolume, sfxToAdjust);
         
         valueChangedSfx.PlayOneShot(valueChangedSfx.clip);
@@ -53,6 +51,8 @@ public class AudioSliderHandler : MonoBehaviour
     public void OnPointerUpMisc()
     {
         newVolume = miscSlider.value;
+        PlayerPrefs.SetFloat("MiscVolume", newVolume);
+        PlayerPrefs.Save();
         ApplyVolume(newVolume, miscToAdjust);
         
         valueChangedMisc.PlayOneShot(valueChangedMisc.clip);

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 //TODO: Make toggle stay alive between scene swaps
 public class MusicBool : MonoBehaviour
 {
-    public static MusicBool Instance; /*{ get; private set; }*/
+    public static MusicBool Instance;
     
     public bool musicIsOn = true;
     

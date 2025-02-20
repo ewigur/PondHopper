@@ -425,7 +425,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1974417526821106298, guid: 6f2f2e6889209604ba7ce01e37dac5a9, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4092954648300182708, guid: 6f2f2e6889209604ba7ce01e37dac5a9, type: 3}
       propertyPath: m_Pivot.x
@@ -2638,7 +2638,7 @@ GameObject:
   - component: {fileID: 835892902}
   - component: {fileID: 835892904}
   m_Layer: 5
-  m_Name: --- PanelManager ---
+  m_Name: --- MainMenuManager ---
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6751,10 +6751,10 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 394608877}
+  - {fileID: 835892903}
   - {fileID: 187664418}
   - {fileID: 228321979}
   - {fileID: 1718241263}
-  - {fileID: 835892903}
   - {fileID: 1911286937}
   - {fileID: 2030300895}
   - {fileID: 1304862110}

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+
+// TODO: Remake instance to a static one
 public class HighScoreManager : MonoBehaviour
 {
     public static Action<int> OnNewHighScore;

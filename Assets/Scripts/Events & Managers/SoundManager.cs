@@ -46,8 +46,6 @@ public class SoundManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
-        audioHandler = FindFirstObjectByType<AudioSliderHandler>();
         
         menuMusic.volume = 1;
         menuMusic.Play();
