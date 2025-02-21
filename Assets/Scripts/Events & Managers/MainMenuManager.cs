@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
+    public static event Action OnSettingsActivated;
+    
     [SerializeField] private GameObject menuPanel;
     [SerializeField] private GameObject leaderBoardTable;
     [SerializeField] private GameObject settingsPanel;
@@ -56,6 +59,7 @@ public class MainMenuManager : MonoBehaviour
             menuPanel.SetActive(false);
         
         settingsPanel.SetActive(true);
+        OnSettingsActivated?.Invoke();
     }
 
     public void onCreditsPressed()

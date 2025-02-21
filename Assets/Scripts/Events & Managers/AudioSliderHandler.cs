@@ -35,8 +35,7 @@ public class AudioSliderHandler : MonoBehaviour
             sfxToAdjust = soundManager.AddSfxSources();
             miscToAdjust = soundManager.AddMiscSources();
         }
-
-        // Load saved values or use default (1f)
+        
         float savedSfxVolume = PlayerPrefs.GetFloat(sfxVolume, startVolume);
         float savedMiscVolume = PlayerPrefs.GetFloat(miscVolume, startVolume);
     
@@ -45,8 +44,6 @@ public class AudioSliderHandler : MonoBehaviour
 
         ApplyVolume(savedSfxVolume, sfxToAdjust);
         ApplyVolume(savedMiscVolume, miscToAdjust);
-    
-        Debug.Log("Loaded SFX and Misc Volume: " + savedSfxVolume + ", " + savedMiscVolume);
     }
 
     public void OnPointerUpSFX()
@@ -80,16 +77,15 @@ public class AudioSliderHandler : MonoBehaviour
         foreach (var source in sources)
         {
             source.volume = volume;
-            Debug.Log("Sourced found at volume: " + volume);
         }
     }
-    
-    [Button]
-    private void ClearSavedSounds()
+
+    [Button("Clear Slider Values")]
+    public void ClearSoundsKey()
     {
-        PlayerPrefs.DeleteKey("SFXVolume");
-        PlayerPrefs.DeleteKey("MiscVolume");
+        PlayerPrefs.DeleteKey(sfxVolume);
+        PlayerPrefs.DeleteKey(miscVolume);
         
-        Debug.Log("Sounds cleared" + PlayerPrefs.GetFloat("SFXVolume") + "," + PlayerPrefs.GetFloat("MiscVolume"));
+        Debug.Log("Slider keys cleared");
     }
 }

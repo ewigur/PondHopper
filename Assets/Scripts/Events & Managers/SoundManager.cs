@@ -1,11 +1,12 @@
 using UnityEngine;
 using System.Collections;
+using NaughtyAttributes;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using Random = UnityEngine.Random;
 
 using static HighScoreManager;
 using static GameManager;
+using static MusicBool;
 
 //TODO: Fix AddSource Method (getting nulls)
 
@@ -33,7 +34,7 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField] private float fadeDuration = 1.5f;
     
-    private List<AudioSource> trackSources;
+    private List<AudioSource> musicSources;
     private List<AudioSource> sfxSources;
     private List<AudioSource> miscSources;
     
@@ -58,7 +59,7 @@ public class SoundManager : MonoBehaviour
         DontDestroyOnLoad(this);
         
         sfxSources = new List<AudioSource>();
-        trackSources = new List<AudioSource>();
+        musicSources = new List<AudioSource>();
         miscSources = new List<AudioSource>();
     }
 
@@ -81,20 +82,54 @@ public class SoundManager : MonoBehaviour
         TriggerPauseMusic += PlayPauseAmbience;
         TriggerResumeMusic += ResumeGameMusic;
         TriggerHighScoreSound += PlayHighScoreSound;
+
+        if (musicSources == null || musicSources.Count == 0)
+        {
+            AddMusicSources();
+        }
     }
 
     #region Music
+    
+    public List<AudioSource> AddMusicSources()
+    {
+        MusicSources(menuMusic);
+        MusicSources(gameMusic);
+        MusicSources(pauseAmbience);
+        
+        return musicSources;
+    }
+
+    private void MusicSources(AudioSource source)
+    {
+        if (source == null)
+        {
+            Debug.LogError("Music Source is null", this);
+            return;
+        }
+        
+        if (!musicSources.Contains(source))
+        {
+            musicSources.Add(source);
+        }
+    }
 
     private bool CheckBool()
     {
-        if (MusicBool.Instance == null)
+        if (gameManagerInstance.state != GameStates.MainMenu)
         {
-            Debug.LogWarning("Can't find MusicBool");
+            Debug.LogWarning("Not in Menu. Music toggler standby");
             return false;
         }
-        
+
+        if (MusicBoolInstance == null)
+        {
+            Debug.LogError("Music Bool Not Found, cannot check music state");
+            return false;
+        }
+
         Debug.Log("Returning MusicBool");
-        return MusicBool.Instance.musicIsOn;
+        return MusicBoolInstance.musicIsOn;
     }
     private void PlayMenuMusic()
     {
@@ -121,7 +156,8 @@ public class SoundManager : MonoBehaviour
             return;
 
         if (gameManagerInstance.state != GameStates.GamePaused &&
-            gameManagerInstance.state != GameStates.GameOver) return;
+            gameManagerInstance.state != GameStates.GameOver) 
+            return;
         
         gameMusic.Pause();
         pauseAmbience.Play();
@@ -130,7 +166,6 @@ public class SoundManager : MonoBehaviour
     {
         if (!CheckBool())
             return;
-        
         
         gameMusic.UnPause();
         pauseAmbience.Stop();
@@ -143,7 +178,7 @@ public class SoundManager : MonoBehaviour
             StopCoroutine(crossFade);
         }
 
-        if (audioHandler != null)
+        if (MusicBoolInstance != null)
         {
             fadeIn.volume = 0;
             fadeOut.volume = 1;

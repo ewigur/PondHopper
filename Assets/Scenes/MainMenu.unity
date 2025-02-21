@@ -347,7 +347,7 @@ GameObject:
   - component: {fileID: 147113036}
   - component: {fileID: 147113035}
   m_Layer: 5
-  m_Name: Background
+  m_Name: Toggler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6209,12 +6209,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17a197b06f0d3ea43ab22377628d8fa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicIsOn: 1
   musicToggle: {fileID: 2037045946}
-  musicSources:
-  - {fileID: 432266333}
-  - {fileID: 551183433}
-  - {fileID: 1025006292}
+  musicIsOn: 1
 --- !u!4 &1911286937
 Transform:
   m_ObjectHideFlags: 0
@@ -6594,9 +6590,9 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 883783869}
+  m_TargetGraphic: {fileID: 147113035}
   toggleTransition: 1
-  graphic: {fileID: 0}
+  graphic: {fileID: 883783869}
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
