@@ -3,7 +3,13 @@ using NaughtyAttributes;
 using UnityEngine.UI;
 using UnityEngine;
 
-//TODO: Fix Music volume instance (no value changing with slider)
+/*
+TODO: In Build volume is 0 on first start (1st time opening app),
+     :have a look at the volumes and how they are saved
+
+TODO: Remove all debug messages when I'm sure everything works
+*/
+    
 
 public class AudioSliderHandler : MonoBehaviour
 {
@@ -99,11 +105,6 @@ public class AudioSliderHandler : MonoBehaviour
         if (soundManager != null)
         {
             soundManager.SetMusicVolume(newVolume);
-        }
-
-        else
-        {
-            Debug.LogError("Sound Manager not found");
         }
         
         SavePreferences();

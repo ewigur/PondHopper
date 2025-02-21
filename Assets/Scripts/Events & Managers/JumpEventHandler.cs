@@ -1,8 +1,5 @@
 using UnityEngine;
-/*
- * TODO: JumpParticles
- * TODO: JumpAnimations
- */
+
 public class JumpEventHandler : MonoBehaviour
 {
     private void OnEnable()
@@ -12,7 +9,10 @@ public class JumpEventHandler : MonoBehaviour
     
     private void JumpEvent()
     {
-        
+        /*
+         * TODO: JumpParticles
+         * TODO: JumpAnimations
+         */
     }
     
     private void OnDisable()

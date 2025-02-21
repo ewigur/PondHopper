@@ -6,8 +6,7 @@ using Random = UnityEngine.Random;
 using static HighScoreManager;
 using static GameManager;
 
-//TODO: Fix Music volume instance (no value changing with slider)
-
+// TODO: Remove all debug messages when I'm sure everything works
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;

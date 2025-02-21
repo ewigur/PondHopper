@@ -1,7 +1,7 @@
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// TODO: Remove all debug messages when I'm sure everything works
 public class MainMenuManager : MonoBehaviour
 {
     [SerializeField] private GameObject menuPanel;
