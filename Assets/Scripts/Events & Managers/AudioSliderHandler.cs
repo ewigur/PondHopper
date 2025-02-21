@@ -23,6 +23,10 @@ public class AudioSliderHandler : MonoBehaviour
 
     private const float startVolume = 1f;
     
+    private float savedSfxVolume;
+    private float savedMiscVolume;
+    private float savedMusicVolume;
+    
     private readonly string sfxVolume = "SFXVolume";
     private readonly string miscVolume = "MiscVolume";
     private readonly string musicVolume = "MusicVolume";
@@ -44,10 +48,14 @@ public class AudioSliderHandler : MonoBehaviour
             musicToAdjust = soundManager.AddMusicSources();
         }
         
-        float savedSfxVolume = PlayerPrefs.GetFloat(sfxVolume, startVolume);
-        float savedMiscVolume = PlayerPrefs.GetFloat(miscVolume, startVolume);
-        float savedMusicVolume = PlayerPrefs.GetFloat(musicVolume, startVolume);
-    
+        if(!PlayerPrefs.HasKey(sfxVolume)) PlayerPrefs.SetFloat(sfxVolume, startVolume);
+        if(!PlayerPrefs.HasKey(miscVolume)) PlayerPrefs.SetFloat(miscVolume, startVolume);
+        if(!PlayerPrefs.HasKey(musicVolume)) PlayerPrefs.SetFloat(musicVolume, startVolume);
+        
+        savedSfxVolume = PlayerPrefs.GetFloat(sfxVolume, startVolume);
+        savedMiscVolume = PlayerPrefs.GetFloat(miscVolume, startVolume);
+        savedMusicVolume = PlayerPrefs.GetFloat(musicVolume, startVolume);
+        
         sfxSlider.value = savedSfxVolume;
         miscSlider.value = savedMiscVolume;
         musicSlider.value = savedMusicVolume;
@@ -55,36 +63,50 @@ public class AudioSliderHandler : MonoBehaviour
         ApplyVolume(savedSfxVolume, sfxToAdjust);
         ApplyVolume(savedMiscVolume, miscToAdjust);
         ApplyVolume(savedMusicVolume, musicToAdjust);
+        
+        SavePreferences();
     }
 
     public void OnPointerUpSFX()
     {
         newVolume = sfxSlider.value;
-        PlayerPrefs.SetFloat("SFXVolume", newVolume);
-        PlayerPrefs.Save();
+        PlayerPrefs.SetFloat(sfxVolume, newVolume);
         ApplyVolume(newVolume, sfxToAdjust);
         
         valueChangedSfx.PlayOneShot(valueChangedSfx.clip, newVolume);
+        
+        SavePreferences();
     }
 
     public void OnPointerUpMisc()
     {
         newVolume = miscSlider.value;
-        PlayerPrefs.SetFloat("MiscVolume", newVolume);
-        PlayerPrefs.Save();
+        PlayerPrefs.SetFloat(miscVolume, newVolume);
         ApplyVolume(newVolume, miscToAdjust);
         
         valueChangedMisc.PlayOneShot(valueChangedMisc.clip, newVolume);
+        
+        SavePreferences();
     }
 
     public void OnPointerUpMusic()
     {
         newVolume = musicSlider.value;
-        PlayerPrefs.SetFloat("MusicVolume", newVolume);
-        PlayerPrefs.Save();
-        ApplyVolume(newVolume, musicToAdjust);
+        PlayerPrefs.SetFloat(musicVolume, newVolume);
         
-        valueChangedMisc.PlayOneShot(valueChangedMisc.clip, newVolume);
+        ApplyVolume(newVolume, musicToAdjust);
+
+        if (soundManager != null)
+        {
+            soundManager.SetMusicVolume(newVolume);
+        }
+
+        else
+        {
+            Debug.LogError("Sound Manager not found");
+        }
+        
+        SavePreferences();
     }
 
     private void ApplyVolume(float volume, List<AudioSource> sources)
@@ -97,17 +119,29 @@ public class AudioSliderHandler : MonoBehaviour
         
         foreach (var source in sources)
         {
+            Debug.Log("Applying volume to " + source.name + ": " + volume);
             source.volume = volume;
         }
     }
 
+    private void SavePreferences()
+    {
+        PlayerPrefs.Save();
+        Debug.Log("Saved Preferences");
+    }
+
     [Button("Clear Slider Values")]
-    public void ClearSoundsKey()
+    public void OnApplicationQuit()
     {
         PlayerPrefs.DeleteKey(sfxVolume);
         PlayerPrefs.DeleteKey(miscVolume);
         PlayerPrefs.DeleteKey(musicVolume);
         
-        Debug.Log("Slider keys cleared");
+        PlayerPrefs.SetFloat(sfxVolume, startVolume);
+        PlayerPrefs.SetFloat(miscVolume, startVolume);
+        PlayerPrefs.SetFloat(musicVolume, startVolume);
+        PlayerPrefs.Save();
+        
+        Debug.Log("Slider keys cleared, volumes set to default");
     }
 }

@@ -36,6 +36,7 @@ public class SoundManager : MonoBehaviour
     private List<AudioSource> sfxSources;
     private List<AudioSource> miscSources;
     
+    private readonly float fadeOutVolume = 0.001f;
     private const float pitchVarLow = 0.9f;
     private const float pitchVarHigh = 1.1f;
     
@@ -45,7 +46,6 @@ public class SoundManager : MonoBehaviour
     private void Awake()
     {
         pauseAmbience.Stop();
-        //pauseAmbience.volume = 0.001f;
         
         if (Instance != null && Instance != this)
         {
@@ -63,9 +63,18 @@ public class SoundManager : MonoBehaviour
 
     private void Start()
     {
-        //menuMusic.volume = 1;
+        if (musicSources == null || musicSources.Count == 0)
+        {
+            AddMusicSources();
+        }
+        
+        float savedVolume = PlayerPrefs.GetFloat("MusicVolume");
+        
+        menuMusic.volume = savedVolume;
+        gameMusic.volume = savedVolume;
+        pauseAmbience.volume = savedVolume;
+        
         menuMusic.Play();
-        gameMusic.volume = 0;
     }
     
 
@@ -81,11 +90,6 @@ public class SoundManager : MonoBehaviour
         TriggerPauseMusic += PlayPauseAmbience;
         TriggerResumeMusic += ResumeGameMusic;
         TriggerHighScoreSound += PlayHighScoreSound;
-
-        if (musicSources == null || musicSources.Count == 0)
-        {
-            AddMusicSources();
-        }
     }
 
     #region Music
@@ -110,6 +114,25 @@ public class SoundManager : MonoBehaviour
         if (!musicSources.Contains(source))
         {
             musicSources.Add(source);
+        }
+    }
+
+    public void SetMusicVolume(float volume)
+    {
+        if (musicSources == null || musicSources.Count == 0)
+        {
+            Debug.LogWarning("Music Source list is empty. Trying to reinitialize...");
+            AddMusicSources();
+        }
+        
+        
+        foreach (var source in musicSources)
+        {
+            if (source != null)
+            {
+                Debug.Log("Setting volume for: " + source.name + " to " + volume);
+                source.volume = volume;
+            }
         }
     }
     
@@ -144,11 +167,16 @@ public class SoundManager : MonoBehaviour
     {
         if (crossFade != null)
         {
+            Debug.Log("Stopping crossfade");
             StopCoroutine(crossFade);
         }
         
-        fadeIn.volume = 0;
-        fadeOut.volume = 1;
+        Debug.Log("Starting crossfade");
+        
+        float currentMusicVolume = PlayerPrefs.GetFloat("MusicVolume");
+        
+        fadeIn.volume = currentMusicVolume;
+        fadeOut.volume = fadeOutVolume;
             
         crossFade = StartCoroutine(FadeTracks(fadeIn, fadeOut));
     }
@@ -157,19 +185,20 @@ public class SoundManager : MonoBehaviour
     {
         fadeIn.Play();
         
+        var targetVolume = PlayerPrefs.GetFloat("MusicVolume");
         var timer = 0f;
-
+        
         while (timer < fadeDuration)
         {
             var elapsedTime = timer / fadeDuration;
-            fadeIn.volume = Mathf.Lerp(0, 1f, elapsedTime);
-            fadeOut.volume = Mathf.Lerp(1, 0f, elapsedTime);
+            fadeIn.volume = Mathf.Lerp(fadeOutVolume, targetVolume, elapsedTime);
+            fadeOut.volume = Mathf.Lerp(targetVolume, fadeOutVolume, elapsedTime);
             timer += Time.deltaTime;
             yield return null;
         }
 
-        fadeIn.volume = 1f;
-        fadeOut.volume = 0f;
+        fadeIn.volume = targetVolume;
+        fadeOut.volume = fadeOutVolume;
         fadeOut.Stop();
     }
     #endregion
