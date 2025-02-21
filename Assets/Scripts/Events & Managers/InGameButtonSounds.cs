@@ -1,16 +1,23 @@
 using UnityEngine;
 
+using static SoundManager;
 public class InGameButtonSounds : MonoBehaviour
 {
-    [SerializeField]private AudioSource submitButtonSound;
-    [SerializeField]private AudioSource ButtonSound;
-    public void PlaySubmitButtonSound()
+    private void Start()
     {
-        submitButtonSound.Play();
+        if (Instance == null)
+        {
+            Debug.LogWarning("Cannot find Sound Manager");
+        }
+    }
+
+    public void SubmitButtonSound()
+    {
+        Instance.PlaySubmitButtonSound();
     }
 
     public void MenuButtonSound()
     {
-        ButtonSound.Play();
+        Instance.PlayMenuButtonSound();
     }
 }

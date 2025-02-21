@@ -11,7 +11,7 @@ using static GameManager;
 
 public class SoundManager : MonoBehaviour
 {
-    private static SoundManager Instance;
+    public static SoundManager Instance;
 
     [Header("Tracks")] 
     [SerializeField]private AudioSource menuMusic;
@@ -29,12 +29,13 @@ public class SoundManager : MonoBehaviour
     [SerializeField]private AudioSource startButtonSound;
     [SerializeField]private AudioSource menuButtonSound;
     [SerializeField]private AudioSource backButtonSound;
+    [SerializeField]private AudioSource submitButtonSound;
 
     [SerializeField] private float fadeDuration = 1.5f;
     
     private List<AudioSource> trackSources;
     private List<AudioSource> sfxSources;
-    private List<AudioSource> uiSources;
+    private List<AudioSource> miscSources;
     
     private const float pitchVarLow = 0.9f;
     private const float pitchVarHigh = 1.1f;
@@ -55,6 +56,10 @@ public class SoundManager : MonoBehaviour
         
         Instance = this;
         DontDestroyOnLoad(this);
+        
+        sfxSources = new List<AudioSource>();
+        trackSources = new List<AudioSource>();
+        miscSources = new List<AudioSource>();
     }
 
     private void Start()
@@ -181,55 +186,13 @@ public class SoundManager : MonoBehaviour
         return sfxSources;
     }
 
-    public void SfxSources(AudioSource source)
+    private void SfxSources(AudioSource source)
     {
         if (source != null && !sfxSources.Contains(source))
         {
             sfxSources.Add(source);
         }
     }
-    
-    /*
-    public void AddSfxSources(AudioSource sources)
-    {
-        if (sfxSources != null && !sfxSources.Contains(sources))
-        {
-            sfxSources.Add(sources);
-        }
-    }
-
-    public void SfxSources(string soundName)
-    {
-        switch (soundName)
-        {
-            case "highScoreSound":
-                AddSfxSources(highScoreSound);
-                break;
-            
-            case "lifeLostSound":
-                AddSfxSources(lifeLostSound);
-                break;
-            
-            case "gameOverSound":
-                AddSfxSources(gameOverSound);
-                break;
-            
-            case "pickUpSound":
-                AddSfxSources(pickUpSound);
-                break;
-            
-            case "jumpSound":
-                AddSfxSources(jumpSound);
-                break;
-            
-            default:
-                Debug.LogWarning("Invalid sound name: " + soundName);
-                break;
-        }
-    }
-    */
-    
-    
     private void PlayJumpSound()
     {
         jumpSound.pitch = Random.Range(pitchVarLow, pitchVarHigh);
@@ -259,6 +222,29 @@ public class SoundManager : MonoBehaviour
     #endregion
 
     #region Buttons
+    
+    public List<AudioSource> AddMiscSources()
+    {
+        MiscSources(startButtonSound);
+        MiscSources(menuButtonSound);
+        MiscSources(backButtonSound);
+        MiscSources(submitButtonSound);
+        
+        return miscSources;
+    }
+
+    private void MiscSources(AudioSource source)
+    {
+        if (source != null && !miscSources.Contains(source))
+        {
+            miscSources.Add(source);
+        }
+    }
+
+    public void PlaySubmitButtonSound()
+    {
+        submitButtonSound.Play();
+    }
     
     public void PlayStartButtonSound()
     {

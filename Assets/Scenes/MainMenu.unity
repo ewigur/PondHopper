@@ -724,6 +724,7 @@ MonoBehaviour:
   startButtonSound: {fileID: 1069524129}
   menuButtonSound: {fileID: 1531821185}
   backButtonSound: {fileID: 1489504541}
+  submitButtonSound: {fileID: 350776523}
   fadeDuration: 2
 --- !u!1 &249533618
 GameObject:
@@ -6699,7 +6700,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2069212915}
   m_Layer: 0
-  m_Name: ButtonSounds
+  m_Name: UISounds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,9 +1,7 @@
 using System.Collections.Generic;
+using NaughtyAttributes;
 using UnityEngine.UI;
 using UnityEngine;
-
-//TODO: WHY DOES SLIDERS NOT PERSIST?!?!??!
-//TODO: Change audio?? on ValueChanged
 
 public class AudioSliderHandler : MonoBehaviour
 {
@@ -20,8 +18,8 @@ public class AudioSliderHandler : MonoBehaviour
     private SoundManager soundManager;
 
     private const float startVolume = 1f;
-    private string sfxVolume = "SFXVolume";
-    private string miscVolume = "MiscVolume";
+    private readonly string sfxVolume = "SFXVolume";
+    private readonly string miscVolume = "MiscVolume";
     private float newVolume;
     
     private void Start()
@@ -32,27 +30,23 @@ public class AudioSliderHandler : MonoBehaviour
         {
             Debug.LogError("Sound Manager not found");
         }
-
         else
         {
-            sfxToAdjust= soundManager.AddSfxSources();
-            Debug.Log("Sound Manager found, sounds added: " + sfxToAdjust.Count);
+            sfxToAdjust = soundManager.AddSfxSources();
+            miscToAdjust = soundManager.AddMiscSources();
         }
-        
-        
-        if (!Mathf.Approximately(PlayerPrefs.GetFloat(sfxVolume), newVolume) ||
-            !Mathf.Approximately(PlayerPrefs.GetFloat(miscVolume), newVolume))
-        {
-            
-            PlayerPrefs.SetFloat(sfxVolume, startVolume);
-            PlayerPrefs.SetFloat(miscVolume, startVolume);
-            
-            Debug.Log("SFX and Misc Volume:" + PlayerPrefs.GetFloat(sfxVolume) + "," + 
-                                               PlayerPrefs.GetFloat(miscVolume));
-        }
-        
-        /*sfxSlider.value = startVolume;
-        miscSlider.value = startVolume;*/
+
+        // Load saved values or use default (1f)
+        float savedSfxVolume = PlayerPrefs.GetFloat(sfxVolume, startVolume);
+        float savedMiscVolume = PlayerPrefs.GetFloat(miscVolume, startVolume);
+    
+        sfxSlider.value = savedSfxVolume;
+        miscSlider.value = savedMiscVolume;
+
+        ApplyVolume(savedSfxVolume, sfxToAdjust);
+        ApplyVolume(savedMiscVolume, miscToAdjust);
+    
+        Debug.Log("Loaded SFX and Misc Volume: " + savedSfxVolume + ", " + savedMiscVolume);
     }
 
     public void OnPointerUpSFX()
@@ -89,10 +83,13 @@ public class AudioSliderHandler : MonoBehaviour
             Debug.Log("Sourced found at volume: " + volume);
         }
     }
-
-    private void OnDestroy()
+    
+    [Button]
+    private void ClearSavedSounds()
     {
         PlayerPrefs.DeleteKey("SFXVolume");
         PlayerPrefs.DeleteKey("MiscVolume");
+        
+        Debug.Log("Sounds cleared" + PlayerPrefs.GetFloat("SFXVolume") + "," + PlayerPrefs.GetFloat("MiscVolume"));
     }
 }
