@@ -1,14 +1,12 @@
 using UnityEngine;
 using System.Collections;
-using NaughtyAttributes;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
 
 using static HighScoreManager;
 using static GameManager;
-using static MusicBool;
 
-//TODO: Fix AddSource Method (getting nulls)
+//TODO: Fix Music volume instance (no value changing with slider)
 
 public class SoundManager : MonoBehaviour
 {
@@ -47,7 +45,7 @@ public class SoundManager : MonoBehaviour
     private void Awake()
     {
         pauseAmbience.Stop();
-        pauseAmbience.volume = 0.001f;
+        //pauseAmbience.volume = 0.001f;
         
         if (Instance != null && Instance != this)
         {
@@ -65,10 +63,11 @@ public class SoundManager : MonoBehaviour
 
     private void Start()
     {
-        menuMusic.volume = 1;
+        //menuMusic.volume = 1;
         menuMusic.Play();
         gameMusic.volume = 0;
     }
+    
 
     private void OnEnable()
     {
@@ -113,48 +112,21 @@ public class SoundManager : MonoBehaviour
             musicSources.Add(source);
         }
     }
-
-    private bool CheckBool()
-    {
-        if (gameManagerInstance.state != GameStates.MainMenu)
-        {
-            Debug.LogWarning("Not in Menu. Music toggler standby");
-            return false;
-        }
-
-        if (MusicBoolInstance == null)
-        {
-            Debug.LogError("Music Bool Not Found, cannot check music state");
-            return false;
-        }
-
-        Debug.Log("Returning MusicBool");
-        return MusicBoolInstance.musicIsOn;
-    }
+    
     private void PlayMenuMusic()
     {
-        if (!CheckBool()) 
-            return;
-        
         StartCrossFade(menuMusic, gameMusic);
         pauseAmbience.Stop();
     }
 
     private void PlayGameMusic()
     {
-        if (!CheckBool())
-            return;
-        
-        
         StartCrossFade(gameMusic, menuMusic);
         pauseAmbience.Stop();
     }
     
     private void PlayPauseAmbience()
     {
-        if (!CheckBool())
-            return;
-
         if (gameManagerInstance.state != GameStates.GamePaused &&
             gameManagerInstance.state != GameStates.GameOver) 
             return;
@@ -164,9 +136,6 @@ public class SoundManager : MonoBehaviour
     }
     private void ResumeGameMusic()
     {
-        if (!CheckBool())
-            return;
-        
         gameMusic.UnPause();
         pauseAmbience.Stop();
     }
@@ -177,13 +146,10 @@ public class SoundManager : MonoBehaviour
         {
             StopCoroutine(crossFade);
         }
-
-        if (MusicBoolInstance != null)
-        {
-            fadeIn.volume = 0;
-            fadeOut.volume = 1;
-        }
         
+        fadeIn.volume = 0;
+        fadeOut.volume = 1;
+            
         crossFade = StartCoroutine(FadeTracks(fadeIn, fadeOut));
     }
 

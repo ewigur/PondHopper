@@ -36,10 +36,7 @@ public class MusicBool : MonoBehaviour
 
     private void OnEnable()
     {
-        if (gameManagerInstance.state == GameStates.MainMenu)
-        {
-            MainMenuManager.OnSettingsActivated += FindToggle;
-        }
+
     }
 
     private void FindToggle()
@@ -86,7 +83,6 @@ public class MusicBool : MonoBehaviour
 
     private void OnDisable()
     {
-        MainMenuManager.OnSettingsActivated -= FindToggle;
     }
 
     /*private void OnDestroy()

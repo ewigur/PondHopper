@@ -3,14 +3,18 @@ using NaughtyAttributes;
 using UnityEngine.UI;
 using UnityEngine;
 
+//TODO: Fix Music volume instance (no value changing with slider)
+
 public class AudioSliderHandler : MonoBehaviour
 {
     [Header("Slider Attributes")]
     public Slider sfxSlider;
     public Slider miscSlider;
+    public Slider musicSlider;
     
     [SerializeField] private List<AudioSource> sfxToAdjust = new();
     [SerializeField] private List<AudioSource> miscToAdjust = new();
+    [SerializeField] private List<AudioSource> musicToAdjust = new();
     
     [SerializeField] private AudioSource valueChangedSfx;
     [SerializeField] private AudioSource valueChangedMisc;
@@ -18,8 +22,11 @@ public class AudioSliderHandler : MonoBehaviour
     private SoundManager soundManager;
 
     private const float startVolume = 1f;
+    
     private readonly string sfxVolume = "SFXVolume";
     private readonly string miscVolume = "MiscVolume";
+    private readonly string musicVolume = "MusicVolume";
+    
     private float newVolume;
     
     private void Start()
@@ -34,16 +41,20 @@ public class AudioSliderHandler : MonoBehaviour
         {
             sfxToAdjust = soundManager.AddSfxSources();
             miscToAdjust = soundManager.AddMiscSources();
+            musicToAdjust = soundManager.AddMusicSources();
         }
         
         float savedSfxVolume = PlayerPrefs.GetFloat(sfxVolume, startVolume);
         float savedMiscVolume = PlayerPrefs.GetFloat(miscVolume, startVolume);
+        float savedMusicVolume = PlayerPrefs.GetFloat(musicVolume, startVolume);
     
         sfxSlider.value = savedSfxVolume;
         miscSlider.value = savedMiscVolume;
-
+        musicSlider.value = savedMusicVolume;
+        
         ApplyVolume(savedSfxVolume, sfxToAdjust);
         ApplyVolume(savedMiscVolume, miscToAdjust);
+        ApplyVolume(savedMusicVolume, musicToAdjust);
     }
 
     public void OnPointerUpSFX()
@@ -62,6 +73,16 @@ public class AudioSliderHandler : MonoBehaviour
         PlayerPrefs.SetFloat("MiscVolume", newVolume);
         PlayerPrefs.Save();
         ApplyVolume(newVolume, miscToAdjust);
+        
+        valueChangedMisc.PlayOneShot(valueChangedMisc.clip, newVolume);
+    }
+
+    public void OnPointerUpMusic()
+    {
+        newVolume = musicSlider.value;
+        PlayerPrefs.SetFloat("MusicVolume", newVolume);
+        PlayerPrefs.Save();
+        ApplyVolume(newVolume, musicToAdjust);
         
         valueChangedMisc.PlayOneShot(valueChangedMisc.clip, newVolume);
     }
@@ -85,6 +106,7 @@ public class AudioSliderHandler : MonoBehaviour
     {
         PlayerPrefs.DeleteKey(sfxVolume);
         PlayerPrefs.DeleteKey(miscVolume);
+        PlayerPrefs.DeleteKey(musicVolume);
         
         Debug.Log("Slider keys cleared");
     }
