@@ -1,13 +1,12 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
 public class UITimer : MonoBehaviour
 {
-    private float delay = 4f;
-    private float fadeInDuration = 1f;
+    private readonly float fadeInDuration = 1f;
+    private readonly float delay = 4f;
     
-    [SerializeField] private CanvasGroup[] elementsToFadeIn; //Migh want to add other stuff in here, keep as array for now
+    [SerializeField] private CanvasGroup[] elementsToFadeIn; //Might want to add other stuff in here, keep as array for now
 
     private void Start()
     {

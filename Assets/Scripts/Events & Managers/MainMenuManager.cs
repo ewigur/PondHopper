@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-// TODO: Remove all debug messages when I'm sure everything works
+// TODO: Animate the panels, and keep the settingspanel active for sounds to work!
 public class MainMenuManager : MonoBehaviour
 {
     [SerializeField] private GameObject menuPanel;
@@ -24,8 +24,6 @@ public class MainMenuManager : MonoBehaviour
         if (state != GameManager.GameStates.MainMenu) 
             return;
         
-        Debug.Log("Change to MainMenu State");
-        
         UiToggle();
     }
     
@@ -33,8 +31,8 @@ public class MainMenuManager : MonoBehaviour
     {
         menuPanel.SetActive(true);
         leaderBoardTable.SetActive(false);
-        settingsPanel.SetActive(false);
         creditsPanel.SetActive(false);
+        settingsPanel.transform.localScale = Vector2.zero;
     }
 
     public void onStartPressed()
@@ -56,7 +54,7 @@ public class MainMenuManager : MonoBehaviour
         if(menuPanel.activeSelf)
             menuPanel.SetActive(false);
         
-        settingsPanel.SetActive(true);
+        settingsPanel.transform.localScale = Vector2.one;
     }
 
     public void onCreditsPressed()
@@ -80,8 +78,8 @@ public class MainMenuManager : MonoBehaviour
         if(leaderBoardTable.activeSelf)
             leaderBoardTable.SetActive(false);
         
-        if(settingsPanel.activeSelf)
-            settingsPanel.SetActive(false);
+        if(settingsPanel.transform.localScale is { x: > 0.1f, y: > 0.1f })
+            settingsPanel.transform.localScale = Vector2.zero; 
         
         if(creditsPanel.activeSelf)
             creditsPanel.SetActive(false);

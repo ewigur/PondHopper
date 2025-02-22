@@ -6,8 +6,8 @@ public class EnterNameManager : MonoBehaviour
 {
     public static Action<string> OnNameEntered;
     
-    [SerializeField] private GameObject namePrompt;
     [SerializeField] private TMP_InputField nameInputField;
+    [SerializeField] private GameObject namePrompt;
     [SerializeField] private Button doneButton;
     
     private const int maxNameLength = 10;
@@ -17,6 +17,7 @@ public class EnterNameManager : MonoBehaviour
     private void Start()
     {
         namePrompt.SetActive(false);
+        
         nameInputField.characterLimit = maxNameLength;
         doneButton.interactable = false;
     }

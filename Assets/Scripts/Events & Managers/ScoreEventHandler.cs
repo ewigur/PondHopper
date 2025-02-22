@@ -15,12 +15,6 @@ public class ScoreManager : MonoBehaviour
     private void Start()
     {
         HsManager = FindFirstObjectByType<HighScoreManager>();
-        
-        if (HsManager == null)
-        {
-            Debug.LogError("No High Score Manager");
-            return;
-        }
     }
 
     private void OnEnable()

@@ -1,8 +1,5 @@
 using UnityEngine;
-/*
- * TODO: Find out how to make a better type of indication for jump force
- * TODO: Fix Line to correspond with jump
- */
+
 [RequireComponent(typeof(LineRenderer))]
 public class LineDrawer : MonoBehaviour
 {

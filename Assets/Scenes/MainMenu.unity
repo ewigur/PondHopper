@@ -344,23 +344,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1712020971055337291, guid: c635b535dbc2bcf4ba89e121812301c5, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1712020971055337291, guid: c635b535dbc2bcf4ba89e121812301c5, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5469065270935794049, guid: c635b535dbc2bcf4ba89e121812301c5, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5469065270935794049, guid: c635b535dbc2bcf4ba89e121812301c5, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5469065270935794049, guid: c635b535dbc2bcf4ba89e121812301c5, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5469065270935794049, guid: c635b535dbc2bcf4ba89e121812301c5, type: 3}
       propertyPath: m_LocalScale.x
@@ -845,18 +845,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0e00524ef7e37b47962db737d0609e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseAmbience: {fileID: 432266333}
   menuMusic: {fileID: 1025006292}
   gameMusic: {fileID: 551183433}
-  pauseAmbience: {fileID: 432266333}
   highScoreSound: {fileID: 1696957522}
   lifeLostSound: {fileID: 1571189803}
   gameOverSound: {fileID: 526473888}
   pickUpSound: {fileID: 727806960}
   jumpSound: {fileID: 557139694}
+  submitButtonSound: {fileID: 350776523}
   startButtonSound: {fileID: 1069524129}
   menuButtonSound: {fileID: 1531821185}
   backButtonSound: {fileID: 1489504541}
-  submitButtonSound: {fileID: 350776523}
   fadeDuration: 2
 --- !u!1 &249533618
 GameObject:
@@ -1414,6 +1414,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 228321982}
     - target: {fileID: 8702466207279062456, guid: 8d424edd8154c0b42adc5dba82bc5f77, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8702466207279062456, guid: 8d424edd8154c0b42adc5dba82bc5f77, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 835892902}
@@ -1421,6 +1425,22 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 228321982}
+    - target: {fileID: 8702466207279062456, guid: 8d424edd8154c0b42adc5dba82bc5f77, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: onStartPressed
+      objectReference: {fileID: 0}
+    - target: {fileID: 8702466207279062456, guid: 8d424edd8154c0b42adc5dba82bc5f77, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayStartButtonSound
+      objectReference: {fileID: 0}
+    - target: {fileID: 8702466207279062456, guid: 8d424edd8154c0b42adc5dba82bc5f77, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MainMenuManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8702466207279062456, guid: 8d424edd8154c0b42adc5dba82bc5f77, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2469,7 +2489,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &671196800
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3193,7 +3213,7 @@ GameObject:
   - component: {fileID: 1020238535}
   - component: {fileID: 1020238534}
   m_Layer: 5
-  m_Name: MiscSliderText
+  m_Name: ButtonsSliderText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3810,7 +3830,7 @@ GameObject:
   - component: {fileID: 1214253493}
   - component: {fileID: 1214253494}
   m_Layer: 5
-  m_Name: ValueChangeMisc
+  m_Name: ValueChangeButtons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4874,25 +4894,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sfxSlider: {fileID: 3184021026742767365}
-  miscSlider: {fileID: 1675401011}
   musicSlider: {fileID: 77212945}
+  buttonsSlider: {fileID: 1675401011}
   sfxToAdjust:
   - {fileID: 526473888}
   - {fileID: 1696957522}
   - {fileID: 1571189803}
   - {fileID: 727806960}
   - {fileID: 557139694}
-  miscToAdjust:
-  - {fileID: 350776523}
-  - {fileID: 1531821185}
-  - {fileID: 1489504541}
-  - {fileID: 1069524129}
   musicToAdjust:
   - {fileID: 432266333}
   - {fileID: 551183433}
   - {fileID: 1025006292}
+  buttonsToAdjust: []
   valueChangedSfx: {fileID: 1351949290}
-  valueChangedMisc: {fileID: 1214253494}
+  valueChangedButtons: {fileID: 1214253494}
 --- !u!1 &1531821183
 GameObject:
   m_ObjectHideFlags: 0
@@ -5408,23 +5424,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1712020971055337291, guid: c635b535dbc2bcf4ba89e121812301c5, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1712020971055337291, guid: c635b535dbc2bcf4ba89e121812301c5, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5469065270935794049, guid: c635b535dbc2bcf4ba89e121812301c5, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5469065270935794049, guid: c635b535dbc2bcf4ba89e121812301c5, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5469065270935794049, guid: c635b535dbc2bcf4ba89e121812301c5, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5469065270935794049, guid: c635b535dbc2bcf4ba89e121812301c5, type: 3}
       propertyPath: m_LocalScale.x
@@ -5536,7 +5552,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8809833372356915072, guid: c635b535dbc2bcf4ba89e121812301c5, type: 3}
       propertyPath: m_Name
-      value: MiscSlider
+      value: ButtonsSlider
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5584,7 +5600,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1515864914}
           m_TargetAssemblyTypeName: AudioSliderHandler, Assembly-CSharp
-          m_MethodName: OnPointerUpMisc
+          m_MethodName: OnPointerUpButtons
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -6870,23 +6886,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1712020971055337291, guid: c635b535dbc2bcf4ba89e121812301c5, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1712020971055337291, guid: c635b535dbc2bcf4ba89e121812301c5, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5469065270935794049, guid: c635b535dbc2bcf4ba89e121812301c5, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5469065270935794049, guid: c635b535dbc2bcf4ba89e121812301c5, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5469065270935794049, guid: c635b535dbc2bcf4ba89e121812301c5, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5469065270935794049, guid: c635b535dbc2bcf4ba89e121812301c5, type: 3}
       propertyPath: m_LocalScale.x

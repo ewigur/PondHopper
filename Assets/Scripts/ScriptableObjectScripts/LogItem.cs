@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [CreateAssetMenu(menuName = "ScriptableObjects/LogItem", order = 2)]
 public class LogItem : ScriptableObject

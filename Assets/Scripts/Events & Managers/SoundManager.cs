@@ -6,15 +6,16 @@ using Random = UnityEngine.Random;
 using static HighScoreManager;
 using static GameManager;
 
-// TODO: Remove all debug messages when I'm sure everything works
+// TODO: Find out why the buttons doesn't play when you go from gamescene back to main menu?
+//     : Probably button click events loosing sounds on reload?
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
 
     [Header("Tracks")] 
+    [SerializeField]private AudioSource pauseAmbience;
     [SerializeField]private AudioSource menuMusic;
     [SerializeField]private AudioSource gameMusic;
-    [SerializeField]private AudioSource pauseAmbience;
 
     [Header("Action Sounds")] 
     [SerializeField]private AudioSource highScoreSound;
@@ -24,20 +25,20 @@ public class SoundManager : MonoBehaviour
     [SerializeField]private AudioSource jumpSound;
     
     [Header("UI sounds")]
+    [SerializeField]private AudioSource submitButtonSound;
     [SerializeField]private AudioSource startButtonSound;
     [SerializeField]private AudioSource menuButtonSound;
     [SerializeField]private AudioSource backButtonSound;
-    [SerializeField]private AudioSource submitButtonSound;
 
     [SerializeField] private float fadeDuration = 1.5f;
     
-    private List<AudioSource> musicSources;
     private List<AudioSource> sfxSources;
-    private List<AudioSource> miscSources;
+    private List<AudioSource> musicSources;
+    private List<AudioSource> buttonsSources;
     
     private readonly float fadeOutVolume = 0.001f;
-    private const float pitchVarLow = 0.9f;
     private const float pitchVarHigh = 1.1f;
+    private const float pitchVarLow = 0.9f;
     
     private AudioSliderHandler audioHandler;
     private Coroutine crossFade;
@@ -57,7 +58,7 @@ public class SoundManager : MonoBehaviour
         
         sfxSources = new List<AudioSource>();
         musicSources = new List<AudioSource>();
-        miscSources = new List<AudioSource>();
+        buttonsSources = new List<AudioSource>();
     }
 
     private void Start()
@@ -67,15 +68,8 @@ public class SoundManager : MonoBehaviour
             AddMusicSources();
         }
         
-        float savedVolume = PlayerPrefs.GetFloat("MusicVolume");
-        
-        menuMusic.volume = savedVolume;
-        gameMusic.volume = savedVolume;
-        pauseAmbience.volume = savedVolume;
-        
         menuMusic.Play();
     }
-    
 
     private void OnEnable()
     {
@@ -106,7 +100,6 @@ public class SoundManager : MonoBehaviour
     {
         if (source == null)
         {
-            Debug.LogError("Music Source is null", this);
             return;
         }
         
@@ -120,17 +113,17 @@ public class SoundManager : MonoBehaviour
     {
         if (musicSources == null || musicSources.Count == 0)
         {
-            Debug.LogWarning("Music Source list is empty. Trying to reinitialize...");
             AddMusicSources();
         }
-        
-        
-        foreach (var source in musicSources)
+
+        else //REMOVE THIS ABOMINATION???
         {
-            if (source != null)
+            foreach (var source in musicSources)
             {
-                Debug.Log("Setting volume for: " + source.name + " to " + volume);
-                source.volume = volume;
+                if (source != null)
+                {
+                    source.volume = volume;
+                }
             }
         }
     }
@@ -166,11 +159,8 @@ public class SoundManager : MonoBehaviour
     {
         if (crossFade != null)
         {
-            Debug.Log("Stopping crossfade");
             StopCoroutine(crossFade);
         }
-        
-        Debug.Log("Starting crossfade");
         
         float currentMusicVolume = PlayerPrefs.GetFloat("MusicVolume");
         
@@ -252,21 +242,21 @@ public class SoundManager : MonoBehaviour
 
     #region Buttons
     
-    public List<AudioSource> AddMiscSources()
+    public List<AudioSource> AddButtonsSources()
     {
-        MiscSources(startButtonSound);
-        MiscSources(menuButtonSound);
-        MiscSources(backButtonSound);
-        MiscSources(submitButtonSound);
+        ButtonSources(startButtonSound);
+        ButtonSources(menuButtonSound);
+        ButtonSources(backButtonSound);
+        ButtonSources(submitButtonSound);
         
-        return miscSources;
+        return buttonsSources;
     }
 
-    private void MiscSources(AudioSource source)
+    private void ButtonSources(AudioSource source)
     {
-        if (source != null && !miscSources.Contains(source))
+        if (source != null && !buttonsSources.Contains(source))
         {
-            miscSources.Add(source);
+            buttonsSources.Add(source);
         }
     }
 

@@ -1,41 +1,32 @@
 using System.Collections.Generic;
-using NaughtyAttributes;
 using UnityEngine.UI;
 using UnityEngine;
-
-/*
-TODO: In Build volume is 0 on first start (1st time opening app),
-     :have a look at the volumes and how they are saved
-
-TODO: Remove all debug messages when I'm sure everything works
-*/
-    
 
 public class AudioSliderHandler : MonoBehaviour
 {
     [Header("Slider Attributes")]
     public Slider sfxSlider;
-    public Slider miscSlider;
     public Slider musicSlider;
+    public Slider buttonsSlider;
     
     [SerializeField] private List<AudioSource> sfxToAdjust = new();
-    [SerializeField] private List<AudioSource> miscToAdjust = new();
     [SerializeField] private List<AudioSource> musicToAdjust = new();
+    [SerializeField] private List<AudioSource> buttonsToAdjust = new();
     
     [SerializeField] private AudioSource valueChangedSfx;
-    [SerializeField] private AudioSource valueChangedMisc;
+    [SerializeField] private AudioSource valueChangedButtons;
     
     private SoundManager soundManager;
 
     private const float startVolume = 1f;
     
     private float savedSfxVolume;
-    private float savedMiscVolume;
     private float savedMusicVolume;
+    private float savedButtonsVolume;
     
     private readonly string sfxVolume = "SFXVolume";
-    private readonly string miscVolume = "MiscVolume";
     private readonly string musicVolume = "MusicVolume";
+    private readonly string buttonsVolume = "ButtonsVolume";
     
     private float newVolume;
     
@@ -43,34 +34,33 @@ public class AudioSliderHandler : MonoBehaviour
     {
         soundManager = FindFirstObjectByType<SoundManager>();
 
-        if (soundManager == null)
-        {
-            Debug.LogError("Sound Manager not found");
-        }
-        else
-        {
-            sfxToAdjust = soundManager.AddSfxSources();
-            miscToAdjust = soundManager.AddMiscSources();
-            musicToAdjust = soundManager.AddMusicSources();
-        }
+        if (soundManager == null) 
+            return;
         
+        sfxToAdjust = soundManager.AddSfxSources();
+        musicToAdjust = soundManager.AddMusicSources();
+        buttonsToAdjust = soundManager.AddButtonsSources();
+            
+        SetVolume();
+    }
+
+    private void SetVolume()
+    {
         if(!PlayerPrefs.HasKey(sfxVolume)) PlayerPrefs.SetFloat(sfxVolume, startVolume);
-        if(!PlayerPrefs.HasKey(miscVolume)) PlayerPrefs.SetFloat(miscVolume, startVolume);
         if(!PlayerPrefs.HasKey(musicVolume)) PlayerPrefs.SetFloat(musicVolume, startVolume);
+        if(!PlayerPrefs.HasKey(buttonsVolume)) PlayerPrefs.SetFloat(buttonsVolume, startVolume);
         
         savedSfxVolume = PlayerPrefs.GetFloat(sfxVolume, startVolume);
-        savedMiscVolume = PlayerPrefs.GetFloat(miscVolume, startVolume);
         savedMusicVolume = PlayerPrefs.GetFloat(musicVolume, startVolume);
+        savedButtonsVolume = PlayerPrefs.GetFloat(buttonsVolume, startVolume);
         
         sfxSlider.value = savedSfxVolume;
-        miscSlider.value = savedMiscVolume;
         musicSlider.value = savedMusicVolume;
+        buttonsSlider.value = savedButtonsVolume;
         
         ApplyVolume(savedSfxVolume, sfxToAdjust);
-        ApplyVolume(savedMiscVolume, miscToAdjust);
         ApplyVolume(savedMusicVolume, musicToAdjust);
-        
-        SavePreferences();
+        ApplyVolume(savedButtonsVolume, buttonsToAdjust);
     }
 
     public void OnPointerUpSFX()
@@ -84,13 +74,13 @@ public class AudioSliderHandler : MonoBehaviour
         SavePreferences();
     }
 
-    public void OnPointerUpMisc()
+    public void OnPointerUpButtons()
     {
-        newVolume = miscSlider.value;
-        PlayerPrefs.SetFloat(miscVolume, newVolume);
-        ApplyVolume(newVolume, miscToAdjust);
+        newVolume = buttonsSlider.value;
+        PlayerPrefs.SetFloat(buttonsVolume, newVolume);
+        ApplyVolume(newVolume, buttonsToAdjust);
         
-        valueChangedMisc.PlayOneShot(valueChangedMisc.clip, newVolume);
+        valueChangedButtons.PlayOneShot(valueChangedButtons.clip, newVolume);
         
         SavePreferences();
     }
@@ -113,14 +103,11 @@ public class AudioSliderHandler : MonoBehaviour
     private void ApplyVolume(float volume, List<AudioSource> sources)
     {
         if (sources == null || sources.Count == 0)
-        {
-            Debug.LogWarning("No audio sources assigned to AudioSliderHandler");
             return;
-        }
+        
         
         foreach (var source in sources)
         {
-            Debug.Log("Applying volume to " + source.name + ": " + volume);
             source.volume = volume;
         }
     }
@@ -128,21 +115,5 @@ public class AudioSliderHandler : MonoBehaviour
     private void SavePreferences()
     {
         PlayerPrefs.Save();
-        Debug.Log("Saved Preferences");
-    }
-
-    [Button("Clear Slider Values")]
-    public void OnApplicationQuit()
-    {
-        PlayerPrefs.DeleteKey(sfxVolume);
-        PlayerPrefs.DeleteKey(miscVolume);
-        PlayerPrefs.DeleteKey(musicVolume);
-        
-        PlayerPrefs.SetFloat(sfxVolume, startVolume);
-        PlayerPrefs.SetFloat(miscVolume, startVolume);
-        PlayerPrefs.SetFloat(musicVolume, startVolume);
-        PlayerPrefs.Save();
-        
-        Debug.Log("Slider keys cleared, volumes set to default");
     }
 }

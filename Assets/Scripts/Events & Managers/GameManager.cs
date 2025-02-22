@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using NaughtyAttributes;
 
 public class GameManager : MonoBehaviour
 {
@@ -82,5 +83,15 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 0f;
                 break;
         }
+    }
+    
+    [Button("Clear Audio Slider Values")]
+    public void OnApplicationQuit()
+    {
+        PlayerPrefs.DeleteKey("SFXVolume");
+        PlayerPrefs.DeleteKey("ButtonsVolume");
+        PlayerPrefs.DeleteKey("MusicVolume");
+        
+        Debug.Log("Slider keys cleared, volumes set to default");
     }
 }

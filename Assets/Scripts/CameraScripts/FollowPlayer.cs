@@ -10,13 +10,11 @@ public class FollowPlayer : MonoBehaviour
     
     [SerializeField] private Vector2 minBounds;
     [SerializeField] private Vector2 maxBounds;
-    
-    //[SerializeField] private float verticalDeadZone = 1.5f;
 
-    private Vector3 camVelocity;
-    private Camera cam;
     private float camHalfWidth, camHalfHeight;
-    private float originalY;
+    private Vector3 camVelocity;
+    private float originalY; //Remove this?
+    private Camera cam;
 
     private void Start()
     {
@@ -27,18 +25,11 @@ public class FollowPlayer : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (target == null) return;
+        if (target == null)
+            return;
         
         float targetX = target.position.x + offsetX;
         float targetY = transform.position.y  + offsetY;
-        
-
-        /*if (Mathf.Abs(target.position.y - originalY) > verticalDeadZone)
-        {
-            targetY = target.position.y + offsetY;
-            originalY = target.position.y;
-        }
-        */
 
         Vector3 targetPos = new Vector3(targetX, targetY, -10);
         

@@ -14,10 +14,7 @@ public class LeaderBoardTable : MonoBehaviour
         highScoreManager = FindFirstObjectByType<HighScoreManager>();
 
         if (highScoreManager == null)
-        {
-            Debug.LogError("No High Score Manager found");
             return;
-        }
 
         DisplayLeaderBoard();
     }
