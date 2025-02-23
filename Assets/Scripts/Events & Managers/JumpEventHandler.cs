@@ -1,5 +1,8 @@
 using UnityEngine;
-
+/*
+ * TODO: JumpParticles
+ * TODO: JumpAnimations
+ */
 public class JumpEventHandler : MonoBehaviour
 {
     [SerializeField] private Animator frogAnimator;
@@ -12,24 +15,23 @@ public class JumpEventHandler : MonoBehaviour
     
     private void FrogIdle()
     {
+        if (frogAnimator == null)
+        {
+            Debug.Log("Can't find animator");
+            return;
+        }
+        
         frogAnimator.Play("Idle");
-        Debug.Log("Frog Idle");
     }
 
     private void PreJump()
     {
         frogAnimator.Play("PreJump");
-        Debug.Log("Waiting for jump action");
     }
     
     private void JumpEvent()
     {
         frogAnimator.Play("InAir");
-        Debug.Log("Jump action executed");
-        /*
-         * TODO: JumpParticles
-         * TODO: JumpAnimations
-         */
     }
     
     private void OnDisable()

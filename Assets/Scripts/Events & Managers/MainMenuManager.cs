@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+using static SoundManager;
+
 // TODO: Animate the panels, and keep the settingspanel active for sounds to work!
 public class MainMenuManager : MonoBehaviour
 {
@@ -8,8 +10,12 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private GameObject leaderBoardTable;
     [SerializeField] private GameObject settingsPanel;
     [SerializeField] private GameObject creditsPanel;
-
+    
     private void Awake()
+    {
+    }
+
+    private void Start()
     {
         UiToggle();
     }
@@ -26,9 +32,11 @@ public class MainMenuManager : MonoBehaviour
         
         UiToggle();
     }
-    
-    public void UiToggle()
+
+    private void UiToggle()
     {
+        Debug.Log("Toggle UI");
+        
         menuPanel.SetActive(true);
         leaderBoardTable.SetActive(false);
         creditsPanel.SetActive(false);
@@ -38,11 +46,14 @@ public class MainMenuManager : MonoBehaviour
     public void onStartPressed()
     {
         GameManager.gameManagerInstance.ChangeState(GameManager.GameStates.GameLoop);
+        Instance.PlayStartButtonSound();
         SceneManager.LoadScene(1);
     }
 
     public void onHighScorePressed()
     {
+        Instance.PlayMenuButtonSound();
+        
         if(menuPanel.activeSelf)
             menuPanel.SetActive(false);
         
@@ -51,6 +62,8 @@ public class MainMenuManager : MonoBehaviour
 
     public void onSettingsPressed()
     {
+        Instance.PlayMenuButtonSound();
+        
         if(menuPanel.activeSelf)
             menuPanel.SetActive(false);
         
@@ -59,6 +72,8 @@ public class MainMenuManager : MonoBehaviour
 
     public void onCreditsPressed()
     {
+        Instance.PlayMenuButtonSound();
+        
         if(menuPanel.activeSelf)
             menuPanel.SetActive(false);
         
@@ -67,12 +82,16 @@ public class MainMenuManager : MonoBehaviour
 
     public void onQuitPressed()
     {
+        Instance.PlayMenuButtonSound();
+        
         Application.Quit();
         Debug.Log("Quit was pressed");
     }
 
     public void onReturnPressed()
     {
+        Instance.PlayBackButtonSound();
+        
         menuPanel.SetActive(true);
         
         if(leaderBoardTable.activeSelf)
