@@ -8,7 +8,6 @@ TagManager:
   - DirectionTrigger
   - DeathGround
   - PickUp
-  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -20,7 +19,7 @@ TagManager:
   - 
   - Ground
   - Background
-  - Enemy
+  - 
   - PickUp
   - DeathGround
   - 

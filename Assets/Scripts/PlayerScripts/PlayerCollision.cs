@@ -9,6 +9,7 @@ public class PlayerCollision : MonoBehaviour
     public static Action TriggerPickUpSound;
     public static Action OnPlayerDeath;
     public static Action OnLifeLost;
+    public static Action OnPlatform;
     
     private PlayerHealth playerHealth;
 
@@ -31,6 +32,11 @@ public class PlayerCollision : MonoBehaviour
         {
             //TakeDamage(playerHealth.damageTaken);
             OnPlayerDeath?.Invoke();
+        }
+
+        if (other.gameObject.CompareTag("Ground"))
+        {
+            OnPlatform?.Invoke();
         }
     }
 

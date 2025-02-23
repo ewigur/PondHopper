@@ -274,10 +274,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2544816099309393117, guid: 30ce4e098fe3641479c5975c3bd9da9d, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6114129143692378585, guid: 30ce4e098fe3641479c5975c3bd9da9d, type: 3}
       propertyPath: m_Name
       value: Frog

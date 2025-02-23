@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 public class JumpMechanic : MonoBehaviour
 {
+    public static Action OnPreJump;
     public static Action OnJump;
 
     [Header("Jump Settings")]
@@ -100,6 +101,8 @@ public class JumpMechanic : MonoBehaviour
     {
         isDragging = true;
         dragStartPos = mCamera.ScreenToWorldPoint(Input.mousePosition);
+        
+        OnPreJump?.Invoke();
     }
 
     private void UpdateDrag()
@@ -151,7 +154,7 @@ public class JumpMechanic : MonoBehaviour
         
         OnJump?.Invoke();
     }
-
+    
     private bool IsGrounded()
     {
         return Mathf.Abs(frogRigidBody.linearVelocity.y) < 0.01f;

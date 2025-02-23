@@ -1507,8 +1507,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c56d024d658df3428f00f70cb14d09f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  namePrompt: {fileID: 3074257461936774024}
   nameInputField: {fileID: 3074257461936774023}
+  namePrompt: {fileID: 3074257461936774024}
   doneButton: {fileID: 3074257461936774022}
 --- !u!1 &1421253280
 GameObject:
@@ -2350,6 +2350,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1132252342}
     m_Modifications:
+    - target: {fileID: 2880395618980358434, guid: ae1f2f1e45701d447aa89585e7840e44, type: 3}
+      propertyPath: frogAnimator
+      value: 
+      objectReference: {fileID: 836032492871099515}
     - target: {fileID: 3530029756894904400, guid: ae1f2f1e45701d447aa89585e7840e44, type: 3}
       propertyPath: m_Name
       value: JumpEvent
@@ -3625,6 +3629,11 @@ PrefabInstance:
 --- !u!4 &836032492871099514 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8492984397814902994, guid: 30ce4e098fe3641479c5975c3bd9da9d, type: 3}
+  m_PrefabInstance: {fileID: 836032492871099513}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &836032492871099515 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 462527558420233420, guid: 30ce4e098fe3641479c5975c3bd9da9d, type: 3}
   m_PrefabInstance: {fileID: 836032492871099513}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2967865317311222372
