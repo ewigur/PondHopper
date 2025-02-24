@@ -10,25 +10,31 @@ public class LogBehaviour : MonoBehaviour
     private SpriteRenderer sr;
     private Rigidbody2D rb;
     private LogItem logItemData;
-    private LogSpawner logSpawner;
+    private LogPool logPool;
     private readonly float minBounds = -15f;
     
-    private float speedIncreaseInterval = 5f;
-    private float speedIncrease = 0.5f;
+    private readonly float speedIncreaseInterval = 20f;
+    private readonly float speedIncrease = 0.25f;
     private float speedTimer;
-    
+    private void Start()
+    {
+        speed = logItemData.logSpeed;
+    }
+
     public void Initialize(LogItem data)
     {
         logItemData = data;
         
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
-        logSpawner = FindFirstObjectByType<LogSpawner>();
+        logPool = FindFirstObjectByType<LogPool>();
+
+        float[] spawnVariations = { minStartPos, maxStartPos };
+        var randomVariation = Random.Range(0, spawnVariations.Length);
         
-        float spawnPositionY = Random.Range(minStartPos, maxStartPos);
+        var spawnPositionY = spawnVariations[randomVariation];
+        
         rb.position = new Vector2(rb.position.x, spawnPositionY);
-        
-        //speed = logItemData.logSpeed;
 
         SetScale(spawnPositionY);
         SetSortingOrder(spawnPositionY);
@@ -45,11 +51,26 @@ public class LogBehaviour : MonoBehaviour
 
     private void SetScale(float yPos)
     {
-        Vector2 depthIllusion = new Vector2(0.9f, 0.9f);
-
-        if (yPos <= minStartPos)
+        float depthIllusionBackground = -0.7f;
+        float depthIllusionForeground = -1f;
+        
+        Vector2 smallScaleBG = new Vector2(0.9f, 0.9f);
+        Vector2 bigScaleBG = new Vector2(1.1f, 1.1f);
+        
+        Vector2 ScaleFG = new Vector2(1.2f, 1.2f);
+    
+        if (yPos >= depthIllusionBackground) 
         {
-            transform.localScale *= depthIllusion;
+            transform.localScale = smallScaleBG;
+        }
+        else if (yPos < depthIllusionBackground && yPos > depthIllusionForeground) 
+        {
+            transform.localScale = bigScaleBG;
+        }
+
+        else //if(yPos <= depthIllusionForeground)
+        {
+            transform.localScale = ScaleFG;
         }
     }
 
@@ -62,16 +83,12 @@ public class LogBehaviour : MonoBehaviour
     private void IncreaseSpeedOverTime()
     {
         speedTimer += Time.deltaTime;
-        speed = logItemData.logSpeed;
         
         if (speedTimer >= speedIncreaseInterval && speed < logItemData.absoluteMaxSpeed)
         {
             speedTimer = 0;
             
             speed += speedIncrease;
-            //speed = Mathf.Min(speed, logItemData.absoluteMaxSpeed);
-            
-            Debug.Log(speed);
         }
         
         rb.linearVelocity = Vector2.left * speed;
@@ -81,7 +98,7 @@ public class LogBehaviour : MonoBehaviour
     {
         if (transform.position.x <= minBounds)
         {
-            logSpawner.ReturnLogToPool(gameObject, logItemData);
+            logPool.ReturnLogToPool(gameObject, logItemData);
         }
     }
 }

@@ -6,10 +6,8 @@ public class LogItem : ScriptableObject
     public string typeOfLog;
     
     public float absoluteMaxSpeed = 5f;
-    public float logSpeed;
-    //public float MinLogSpeed;
     public GameObject prefab;
-    
+    public float logSpeed;
     
     [Range(0, 1)]
     public float spawnPercent;

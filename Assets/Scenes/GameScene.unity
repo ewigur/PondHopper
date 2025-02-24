@@ -3089,11 +3089,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7730320150027654565, guid: 93abf9ea2e6596640b9ef715632c68ba, type: 3}
       propertyPath: maxActiveLogs
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7730320150027654565, guid: 93abf9ea2e6596640b9ef715632c68ba, type: 3}
       propertyPath: timeBetweenLogs
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7730320150027654565, guid: 93abf9ea2e6596640b9ef715632c68ba, type: 3}
       propertyPath: maxTimeBetweenLogs
@@ -3520,8 +3520,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3817866205505584570, guid: 613816afaff428d4787315a851fdebc4, type: 3}
+      propertyPath: defaultCapacity
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3817866205505584570, guid: 613816afaff428d4787315a851fdebc4, type: 3}
       propertyPath: maxActivePickUps
-      value: 5
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 3817866205505584570, guid: 613816afaff428d4787315a851fdebc4, type: 3}
       propertyPath: timeBetweenSpawns

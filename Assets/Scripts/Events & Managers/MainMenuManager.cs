@@ -35,8 +35,6 @@ public class MainMenuManager : MonoBehaviour
 
     private void UiToggle()
     {
-        Debug.Log("Toggle UI");
-        
         menuPanel.SetActive(true);
         leaderBoardTable.SetActive(false);
         creditsPanel.SetActive(false);

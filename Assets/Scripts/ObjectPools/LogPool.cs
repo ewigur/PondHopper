@@ -1,15 +1,12 @@
+using Random = UnityEngine.Random;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LogSpawner : MonoBehaviour
+public class LogPool : MonoBehaviour
 {
     [SerializeField] private float timeBetweenLogs = 3f;
     [SerializeField] private List<LogItem> logItems;
     [SerializeField] private Transform spawnPoint;
-    
-    /*[SerializeField] private float minTimeBetweenLogs = 1.5f;
-    [SerializeField] private float maxTimeBetweenLogs = 2f;
-    */
 
     [SerializeField] private int poolSizePerLog = 5;
     [SerializeField] private int maxActiveLogs = 5;
@@ -26,8 +23,6 @@ public class LogSpawner : MonoBehaviour
         CalculateTotalSpawnRate();
 
         InvokeRepeating(nameof(SpawnLogs), startSpawnTime, timeBetweenLogs);
-            
-        //Old spawn init time: Random.Range(minTimeBetweenLogs, maxTimeBetweenLogs), timeBetweenLogs);
     }
 
     private void InitializePool()
@@ -44,7 +39,7 @@ public class LogSpawner : MonoBehaviour
                 log.SetActive(false);
                 logQueue.Enqueue(log);
             }
-
+            
             logItemPool[logItem] = logQueue;
         }
     }

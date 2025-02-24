@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Random = UnityEngine.Random;
 
-public class PickUpSpawner : MonoBehaviour
+public class PickUpPool : MonoBehaviour
 {
     [SerializeField] private List<PickUpItem> pickUpItems;
     [SerializeField] private int defaultCapacity = 5;
