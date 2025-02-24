@@ -4,9 +4,12 @@ using UnityEngine;
 public class LogItem : ScriptableObject
 {
     public string typeOfLog;
-    public float MaxLogSpeed;
-    public float MinLogSpeed;
+    
+    public float absoluteMaxSpeed = 5f;
+    public float logSpeed;
+    //public float MinLogSpeed;
     public GameObject prefab;
+    
     
     [Range(0, 1)]
     public float spawnPercent;

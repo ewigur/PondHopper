@@ -3088,16 +3088,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7730320150027654565, guid: 93abf9ea2e6596640b9ef715632c68ba, type: 3}
-      propertyPath: timeBetweenLogs
-      value: 2
+      propertyPath: maxActiveLogs
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7730320150027654565, guid: 93abf9ea2e6596640b9ef715632c68ba, type: 3}
-      propertyPath: maxTimeBetweenLogs
+      propertyPath: timeBetweenLogs
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7730320150027654565, guid: 93abf9ea2e6596640b9ef715632c68ba, type: 3}
+      propertyPath: maxTimeBetweenLogs
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7730320150027654565, guid: 93abf9ea2e6596640b9ef715632c68ba, type: 3}
       propertyPath: minTimeBetweenLogs
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7730320150027654565, guid: 93abf9ea2e6596640b9ef715632c68ba, type: 3}
       propertyPath: 'logItems.Array.data[0]'
@@ -3512,12 +3516,16 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3817866205505584570, guid: 613816afaff428d4787315a851fdebc4, type: 3}
+      propertyPath: startSpawnTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3817866205505584570, guid: 613816afaff428d4787315a851fdebc4, type: 3}
       propertyPath: maxActivePickUps
-      value: 12
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3817866205505584570, guid: 613816afaff428d4787315a851fdebc4, type: 3}
       propertyPath: timeBetweenSpawns
-      value: 0.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5328728016202839988, guid: 613816afaff428d4787315a851fdebc4, type: 3}
       propertyPath: m_LocalPosition.x

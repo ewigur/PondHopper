@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Fly
   prefab: {fileID: 4782697800001587379, guid: 00890cc18709798439408fa56b9dbba7, type: 3}
   value: 5
-  spawnAmount: 6
+  spawnAmount: 5
   flockMovement: 1
   pickUpAnimator: {fileID: 8434008613543460594, guid: 00890cc18709798439408fa56b9dbba7, type: 3}
-  spawnProbability: 0.6
+  spawnProbability: 0.8

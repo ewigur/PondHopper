@@ -5,12 +5,17 @@ public class LogBehaviour : MonoBehaviour
 {
     [SerializeField] private float minStartPos;
     [SerializeField] private float maxStartPos;
+    [SerializeField] private float speed;
 
     private SpriteRenderer sr;
     private Rigidbody2D rb;
     private LogItem logItemData;
     private LogSpawner logSpawner;
     private readonly float minBounds = -15f;
+    
+    private float speedIncreaseInterval = 5f;
+    private float speedIncrease = 0.5f;
+    private float speedTimer;
     
     public void Initialize(LogItem data)
     {
@@ -23,8 +28,7 @@ public class LogBehaviour : MonoBehaviour
         float spawnPositionY = Random.Range(minStartPos, maxStartPos);
         rb.position = new Vector2(rb.position.x, spawnPositionY);
         
-        float randomSpeed = Random.Range(logItemData.MinLogSpeed, logItemData.MaxLogSpeed);
-        rb.linearVelocity = Vector2.left * randomSpeed;
+        //speed = logItemData.logSpeed;
 
         SetScale(spawnPositionY);
         SetSortingOrder(spawnPositionY);
@@ -52,6 +56,25 @@ public class LogBehaviour : MonoBehaviour
     private void Update()
     {
         CheckBounds();
+        IncreaseSpeedOverTime();
+    }
+
+    private void IncreaseSpeedOverTime()
+    {
+        speedTimer += Time.deltaTime;
+        speed = logItemData.logSpeed;
+        
+        if (speedTimer >= speedIncreaseInterval && speed < logItemData.absoluteMaxSpeed)
+        {
+            speedTimer = 0;
+            
+            speed += speedIncrease;
+            //speed = Mathf.Min(speed, logItemData.absoluteMaxSpeed);
+            
+            Debug.Log(speed);
+        }
+        
+        rb.linearVelocity = Vector2.left * speed;
     }
 
     private void CheckBounds()

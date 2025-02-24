@@ -3,26 +3,31 @@ using UnityEngine;
 
 public class LogSpawner : MonoBehaviour
 {
-    [SerializeField] private Transform spawnPoint;
-    [SerializeField] private List<LogItem> logItems;
     [SerializeField] private float timeBetweenLogs = 3f;
-    [SerializeField] private float minTimeBetweenLogs = 1.5f;
+    [SerializeField] private List<LogItem> logItems;
+    [SerializeField] private Transform spawnPoint;
+    
+    /*[SerializeField] private float minTimeBetweenLogs = 1.5f;
     [SerializeField] private float maxTimeBetweenLogs = 2f;
+    */
 
     [SerializeField] private int poolSizePerLog = 5;
     [SerializeField] private int maxActiveLogs = 5;
-
+    
+    private readonly float startSpawnTime = 1f;
+    private int currentActiveLogs;
     private float totalSpawnRate;
-    private int currentActiveLogs = 0;
+    
     private Dictionary<LogItem, Queue<GameObject>> logItemPool;
 
     void Start()
     {
         InitializePool();
         CalculateTotalSpawnRate();
-        
-        InvokeRepeating(nameof(SpawnLogs),
-            Random.Range(minTimeBetweenLogs, maxTimeBetweenLogs), timeBetweenLogs);
+
+        InvokeRepeating(nameof(SpawnLogs), startSpawnTime, timeBetweenLogs);
+            
+        //Old spawn init time: Random.Range(minTimeBetweenLogs, maxTimeBetweenLogs), timeBetweenLogs);
     }
 
     private void InitializePool()
@@ -59,22 +64,25 @@ public class LogSpawner : MonoBehaviour
             return;
 
         LogItem selectedLog = SelectRandomLog();
+        
         if (selectedLog == null || !logItemPool.ContainsKey(selectedLog))
             return;
 
         GameObject log = GetLogFromPool(selectedLog);
+        
         if (log == null)
             return;
-
+        
         log.transform.position = spawnPoint.position;
         log.SetActive(true);
 
         var logBehaviour = log.GetComponent<LogBehaviour>();
-        if (logBehaviour != null)
-        {
-            currentActiveLogs++;
-            logBehaviour.Initialize(selectedLog);
-        }
+
+        if (logBehaviour == null) 
+            return;
+        
+        logBehaviour.Initialize(selectedLog);
+        currentActiveLogs++;
     }
 
     private LogItem SelectRandomLog()
