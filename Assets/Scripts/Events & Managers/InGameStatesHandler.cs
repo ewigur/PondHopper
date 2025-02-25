@@ -6,6 +6,7 @@ public class InGameStatesHandler : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject gameOverMenu;
+    [SerializeField] private GameObject pauseButton;
     
     private string currentScene;
     
@@ -13,6 +14,7 @@ public class InGameStatesHandler : MonoBehaviour
     {
         pauseMenu.SetActive(false);
         gameOverMenu.SetActive(false);
+        pauseButton.SetActive(true);
         currentScene = SceneManager.GetActiveScene().name;
     }
 
@@ -24,12 +26,14 @@ public class InGameStatesHandler : MonoBehaviour
     {
         gameManagerInstance.ChangeState(GameStates.GamePaused);
         pauseMenu.SetActive(true);
+        pauseButton.SetActive(false);
     }
 
     public void OnResumeClicked()
     {
         gameManagerInstance.ChangeState(GameStates.GameResumed);
         pauseMenu.SetActive(false);
+        pauseButton.SetActive(true);
     }
 
     public void onRetryClicked()

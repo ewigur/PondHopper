@@ -86,8 +86,6 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 0f;
                 break;
         }
-        Debug.Log($"Game State Changed: {state}");
-        Debug.Log($"Can Receive Input: {JumpMechanic.canReceiveInput}");  // This will show if input is allowed
     }
     
     [Button("Clear Audio Slider Values")]
@@ -96,7 +94,5 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.DeleteKey("SFXVolume");
         PlayerPrefs.DeleteKey("ButtonsVolume");
         PlayerPrefs.DeleteKey("MusicVolume");
-        
-        Debug.Log("Slider keys cleared, volumes set to default");
     }
 }

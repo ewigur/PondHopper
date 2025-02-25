@@ -30,13 +30,14 @@ public class JumpMechanic : MonoBehaviour
     private bool isDragging;
     private bool isGrounded;
     private bool canDoubleJump;
-    public static bool canReceiveInput = true;
+    public static bool canReceiveInput;
     
     private void Start()
     {
         mCamera = Camera.main;
         frogRigidBody = GetComponent<Rigidbody2D>();
         ToggleInput(canReceiveInput);
+        canReceiveInput = true;
     }
 
     private void OnEnable()

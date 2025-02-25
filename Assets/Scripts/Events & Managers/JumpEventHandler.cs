@@ -7,7 +7,12 @@ using UnityEngine;
 public class JumpEventHandler : MonoBehaviour
 {
     [SerializeField] private Animator frogAnimator;
-    
+
+    private void Start()
+    {
+        FrogIdle();
+    }
+
     private void OnEnable()
     {
         PlayerCollision.OnPlatform += FrogIdle;
@@ -18,11 +23,8 @@ public class JumpEventHandler : MonoBehaviour
     private void FrogIdle()
     {
         if (frogAnimator == null)
-        {
-            Debug.Log("Can't find animator");
             return;
-        }
-        
+
         frogAnimator.Play("Idle");
     }
 
