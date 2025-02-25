@@ -11,30 +11,15 @@ public class InGameStatesHandler : MonoBehaviour
     
     private void Start()
     {
-        currentScene = SceneManager.GetActiveScene().name;
         pauseMenu.SetActive(false);
         gameOverMenu.SetActive(false);
+        currentScene = SceneManager.GetActiveScene().name;
     }
 
     private void OnEnable()
     {
         PlayerCollision.OnPlayerDeath += GameOver;
-        onGameStateChanged += StateChanger;
     }
-
-    
-    private void StateChanger(GameStates state)
-    {
-        if (state == GameStates.GameLoop)
-        {
-            if (gameManagerInstance.state != GameStates.GamePaused)
-            {
-                OnPauseClicked();
-            }
-        }
-    }
-    
-
     public void OnPauseClicked()
     {
         gameManagerInstance.ChangeState(GameStates.GamePaused);
@@ -44,7 +29,6 @@ public class InGameStatesHandler : MonoBehaviour
     public void OnResumeClicked()
     {
         gameManagerInstance.ChangeState(GameStates.GameResumed);
-        JumpMechanic.canReceiveInput = true;
         pauseMenu.SetActive(false);
     }
 
@@ -69,6 +53,5 @@ public class InGameStatesHandler : MonoBehaviour
     private void OnDisable()
     {
         PlayerCollision.OnPlayerDeath -= GameOver;
-        onGameStateChanged -= StateChanger;
     }
 }

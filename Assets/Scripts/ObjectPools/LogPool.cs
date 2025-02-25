@@ -11,7 +11,7 @@ public class LogPool : MonoBehaviour
     [SerializeField] private int poolSizePerLog = 5;
     [SerializeField] private int maxActiveLogs = 5;
     
-    private readonly float startSpawnTime = 1f;
+    private readonly float startSpawnTime = 0.5f;
     private int currentActiveLogs;
     private float totalSpawnRate;
     

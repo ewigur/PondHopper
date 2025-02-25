@@ -214,8 +214,12 @@ public class SoundManager : MonoBehaviour
     }
     private void PlayJumpSound()
     {
-        jumpSound.pitch = Random.Range(pitchVarLow, pitchVarHigh);
-        jumpSound.Play();
+        if (gameManagerInstance.state == GameStates.GameLoop || 
+            gameManagerInstance.state == GameStates.GameResumed)
+        {
+            jumpSound.pitch = Random.Range(pitchVarLow, pitchVarHigh);
+            jumpSound.Play();
+        }
     }
     private void PlayHighScoreSound()
     {

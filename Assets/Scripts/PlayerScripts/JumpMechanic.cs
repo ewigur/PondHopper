@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+
+using static GameManager;
 public class JumpMechanic : MonoBehaviour
 {
     public static Action OnPreJump;
@@ -17,49 +19,49 @@ public class JumpMechanic : MonoBehaviour
     [SerializeField] private float downGravityMultiplier = 3f;
     [SerializeField] private float jumpGravityMultiplier = 0.5f;
     
-    [Header("Line drag Settings")]
+    [Header("How much you can drag (with Input)")]
     [SerializeField] private float maxJumpInput = 15f;
 
     private Rigidbody2D frogRigidBody;
     private Camera mCamera;
 
     private Vector2 dragStartPos;
-    private LineDrawer lineDrawer;
     
     private bool isDragging;
+    private bool isGrounded;
+    private bool canDoubleJump;
     public static bool canReceiveInput = true;
     
-    void Awake()
+    private void Start()
     {
         mCamera = Camera.main;
         frogRigidBody = GetComponent<Rigidbody2D>();
-        lineDrawer = GetComponentInChildren<LineDrawer>();
-        
-        canReceiveInput = true;
+        ToggleInput(canReceiveInput);
     }
 
     private void OnEnable()
     {
-        GameManager.onToggleInput += ToggleInput;
+        onToggleInput += ToggleInput;
     }
+    
 
-    private void ToggleInput(bool enable)
+    private void ToggleInput(bool isOn)
     {
-        canReceiveInput = enable;
+        canReceiveInput = isOn;
     }
 
     private void Update()
     {
-        if (!canReceiveInput || EventSystem.current.IsPointerOverGameObject())
+        if (EventSystem.current.IsPointerOverGameObject() || !canReceiveInput)
             return;
-        
+
         HandleInput();
     }
     private void FixedUpdate()
     {
         AdjustGravity();
     }
-
+    
     private void HandleInput()
     {
         if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 
@@ -67,10 +69,11 @@ public class JumpMechanic : MonoBehaviour
         {
             StartDrag();
         }
+        
         else if ((Input.GetMouseButton(0)) || (Input.touchCount > 0 
                && Input.GetTouch(0).phase == TouchPhase.Stationary))
         {
-            UpdateDrag();
+            UpdateDrag(dragStartPos);
         }
         else if (Input.GetMouseButtonUp(0) || (Input.touchCount > 0 
               && Input.GetTouch(0).phase == TouchPhase.Ended))
@@ -78,7 +81,7 @@ public class JumpMechanic : MonoBehaviour
             ReleaseDrag();
         }
     }
-
+    
     private void AdjustGravity()
     {
         if (frogRigidBody.linearVelocity.y > 0)
@@ -101,11 +104,11 @@ public class JumpMechanic : MonoBehaviour
     {
         isDragging = true;
         dragStartPos = mCamera.ScreenToWorldPoint(Input.mousePosition);
-        
+    
         OnPreJump?.Invoke();
     }
 
-    private void UpdateDrag()
+    private void UpdateDrag(Vector2 vector)
     {
         if (isDragging)
         {
@@ -116,19 +119,18 @@ public class JumpMechanic : MonoBehaviour
             
             float jumpStrength = Mathf.Lerp(minJumpForce, maxJumpForce, dragVector.magnitude / maxJumpInput);
             
-            lineDrawer.DrawLine(dragVector, jumpStrength);
+            Vector2.ClampMagnitude(vector, jumpStrength);
         }
     }
 
     private void ReleaseDrag()
     {
-        isDragging = false;
+            isDragging = false;
         
-        Vector2 dragVector = (Vector2)mCamera.ScreenToWorldPoint(Input.mousePosition) - dragStartPos;
-        dragVector = Vector2.ClampMagnitude(dragVector, maxJumpInput);
+            Vector2 dragVector = (Vector2)mCamera.ScreenToWorldPoint(Input.mousePosition) - dragStartPos;
+            dragVector = Vector2.ClampMagnitude(dragVector, maxJumpInput);
         
-        PerformJump(dragVector);
-        lineDrawer.ClearLine();
+            PerformJump(dragVector);
     }
 
     private void PerformJump(Vector2 dragVector)
@@ -138,30 +140,40 @@ public class JumpMechanic : MonoBehaviour
 
         if (IsGrounded())
         {
+            canDoubleJump = true;
             jumpForce.y *= upGravityMultiplier;
             jumpForce.x *= upGravityMultiplier;
             
             frogRigidBody.linearVelocity = jumpForce;
+            OnJump?.Invoke();
         }
 
-        else
+        else if(canDoubleJump)
         {
+            canDoubleJump = false;
             jumpForce.x *= upGravityMultiplier * jumpGravityMultiplier;
             jumpForce.y *= upGravityMultiplier * jumpGravityMultiplier;
             
             frogRigidBody.linearVelocity = jumpForce;
+            OnJump?.Invoke();
         }
         
-        OnJump?.Invoke();
     }
     
     private bool IsGrounded()
     {
-        return Mathf.Abs(frogRigidBody.linearVelocity.y) < 0.01f;
+        isGrounded = Mathf.Abs(frogRigidBody.linearVelocity.y) < 0.01f;
+        
+        if (isGrounded)
+        {
+            canDoubleJump = true;
+        }
+        
+        return isGrounded;
     }
 
     private void OnDisable()
     {
-        GameManager.onToggleInput -= ToggleInput;
+        onToggleInput -= ToggleInput;
     }
 }

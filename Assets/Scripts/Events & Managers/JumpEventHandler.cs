@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 /*
  * TODO: JumpParticles
@@ -6,6 +7,7 @@ using UnityEngine;
 public class JumpEventHandler : MonoBehaviour
 {
     [SerializeField] private Animator frogAnimator;
+    
     private void OnEnable()
     {
         PlayerCollision.OnPlatform += FrogIdle;

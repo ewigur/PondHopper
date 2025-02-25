@@ -45,11 +45,10 @@ public class GameManager : MonoBehaviour
         if(state == newState)
             return;
         
+        
         state = newState;
-        Debug.Log($"Game State Changed: {state}");
         
         onGameStateChanged?.Invoke(state);
-        onToggleInput?.Invoke(state == GameStates.GameLoop);
         HandleStates(newState);
 
     }
@@ -65,24 +64,30 @@ public class GameManager : MonoBehaviour
             
             case GameStates.GameLoop:
                 TriggerGameMusic?.Invoke();
+                onToggleInput?.Invoke(true);
                 Time.timeScale = 1f;
                 break;
             
             case GameStates.GamePaused:
                 TriggerPauseMusic?.Invoke();
                 Time.timeScale = 0f;
+                onToggleInput?.Invoke(false);
                 break;
             
             case GameStates.GameResumed:
                 TriggerResumeMusic?.Invoke();
                 Time.timeScale = 1f;
+                onToggleInput?.Invoke(true);
                 break;
             
             case GameStates.GameOver:
                 TriggerPauseMusic?.Invoke();
+                onToggleInput?.Invoke(false);
                 Time.timeScale = 0f;
                 break;
         }
+        Debug.Log($"Game State Changed: {state}");
+        Debug.Log($"Can Receive Input: {JumpMechanic.canReceiveInput}");  // This will show if input is allowed
     }
     
     [Button("Clear Audio Slider Values")]
