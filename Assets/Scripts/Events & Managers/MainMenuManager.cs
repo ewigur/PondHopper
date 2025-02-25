@@ -3,17 +3,14 @@ using UnityEngine.SceneManagement;
 
 using static SoundManager;
 
-// TODO: Animate the panels, and keep the settingspanel active for sounds to work!
+// TODO: Animate the panels
 public class MainMenuManager : MonoBehaviour
 {
     [SerializeField] private GameObject menuPanel;
     [SerializeField] private GameObject leaderBoardTable;
     [SerializeField] private GameObject settingsPanel;
     [SerializeField] private GameObject creditsPanel;
-    
-    private void Awake()
-    {
-    }
+    [SerializeField] private GameObject musicCreditsPanel;
 
     private void Start()
     {
@@ -38,6 +35,7 @@ public class MainMenuManager : MonoBehaviour
         menuPanel.SetActive(true);
         leaderBoardTable.SetActive(false);
         creditsPanel.SetActive(false);
+        musicCreditsPanel.SetActive(false);
         settingsPanel.transform.localScale = Vector2.zero;
     }
 
@@ -78,6 +76,24 @@ public class MainMenuManager : MonoBehaviour
         creditsPanel.SetActive(true);
     }
 
+    public void OnMusicCreditsPressed()
+    {
+        Instance.PlayMenuButtonSound();
+        
+        if(creditsPanel.activeSelf)
+            creditsPanel.SetActive(false);
+        
+        musicCreditsPanel.SetActive(true);
+    }
+
+    public void OnReturnMusicPanel()
+    {
+        if(musicCreditsPanel.activeSelf)
+            musicCreditsPanel.SetActive(false);
+        
+        creditsPanel.SetActive(true);
+    }
+
     public void onQuitPressed()
     {
         Instance.PlayMenuButtonSound();
@@ -88,8 +104,6 @@ public class MainMenuManager : MonoBehaviour
 
     public void onReturnPressed()
     {
-        Instance.PlayBackButtonSound();
-        
         menuPanel.SetActive(true);
         
         if(leaderBoardTable.activeSelf)

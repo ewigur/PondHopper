@@ -51,6 +51,7 @@ public class InGameStatesHandler : MonoBehaviour
     private void GameOver()
     {
         gameManagerInstance.ChangeState(GameStates.GameOver);
+        pauseButton.SetActive(false);
         gameOverMenu.SetActive(true);
     }
 
