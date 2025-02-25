@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class LeaderBoardTable : MonoBehaviour
 {
-    [SerializeField] private float tempHeight = 25.2f;
+    [SerializeField] private float tempHeight = 30f;
     [SerializeField] private Transform entryContainer;
     [SerializeField] private Transform entryTemplate;
     
