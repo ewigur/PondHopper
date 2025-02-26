@@ -20,10 +20,13 @@ public class LineDrawer : MonoBehaviour
         lineRenderer.SetPosition(1, new Vector2(end.x, end.y));
 
         lineRenderer.enabled = true;
+        
+        Debug.Log("Drawing Line");
     }
 
     public void ClearLine()
     {
+        Debug.Log("Clearing Line");
         lineRenderer.enabled = false;
     }
 }
