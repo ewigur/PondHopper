@@ -20,16 +20,18 @@ public class JumpMechanic : MonoBehaviour
     [Header("Gravity Settings")]
     [SerializeField] private float upGravityMultiplier = 1.2f;
     [SerializeField] private float downGravityMultiplier = 3f;
-    [SerializeField] private float jumpGravityMultiplier = 0.5f;
+    [SerializeField] private float DJGravityMultiplier = 0.5f;
     
     [Header("How much you can drag (with Input)")]
     [SerializeField] private float maxJumpInput = 15f;
 
     private Rigidbody2D frogRigidBody;
+    private LineDrawer lineDrawer;
     private Camera mCamera;
 
     private Vector2 dragStartPos;
-    private LineDrawer lineDrawer;
+
+    private readonly float lineMagnitude = 4f;
     
     private bool isDragging;
     private bool isGrounded;
@@ -58,9 +60,8 @@ public class JumpMechanic : MonoBehaviour
 
     private void Update()
     {
-        /*if (EventSystem.current.IsPointerOverGameObject() || !canReceiveInput)
+        if (EventSystem.current.IsPointerOverGameObject() || !canReceiveInput)
             return;
-            */
 
         HandleInput();
     }
@@ -117,18 +118,17 @@ public class JumpMechanic : MonoBehaviour
 
     private void UpdateDrag(Vector2 vector)
     {
-        if (isDragging)
+        if (isDragging && IsGrounded())
         {
             Vector2 endPos = mCamera.ScreenToWorldPoint(Input.mousePosition);
             Vector2 dragVector = endPos - dragStartPos;
 
-            dragVector = Vector2.ClampMagnitude(dragVector, maxJumpInput);
+            dragVector = Vector2.ClampMagnitude(dragVector, lineMagnitude);
             
             float jumpStrength = Mathf.Lerp(minJumpForce, maxJumpForce, dragVector.magnitude / maxJumpInput);
             
+            lineDrawer.DrawLine(dragVector);
             Vector2.ClampMagnitude(vector, jumpStrength);
-            
-            lineDrawer.DrawLine(dragVector, jumpStrength);
         }
     }
 
@@ -162,8 +162,8 @@ public class JumpMechanic : MonoBehaviour
         else if(canDoubleJump)
         {
             canDoubleJump = false;
-            jumpForce.x *= upGravityMultiplier * jumpGravityMultiplier;
-            jumpForce.y *= upGravityMultiplier * jumpGravityMultiplier;
+            jumpForce.x *= DJGravityMultiplier;
+            jumpForce.y *= DJGravityMultiplier;
             
             frogRigidBody.linearVelocity = jumpForce;
             OnJump?.Invoke();
