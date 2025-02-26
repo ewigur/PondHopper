@@ -16,7 +16,7 @@ TagManager:
   - Player
   - Water
   - UI
-  - 
+  - WaterSplash
   - 
   - Ground
   - Background
@@ -45,6 +45,12 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: WaterSplash
+    uniqueID: 3065223831
+    locked: 0
+  - name: Ground
+    uniqueID: 1410813067
     locked: 0
   m_RenderingLayers:
   - Default
