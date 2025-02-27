@@ -12,7 +12,7 @@ public class ScoreManager : MonoBehaviour
 
     private void Start()
     {
-        if (gameManagerInstance.state == GameStates.GameRestarted)
+        if (GMInstance.state == GameStates.GameRestarted)
         {
             SavedScore();
         }

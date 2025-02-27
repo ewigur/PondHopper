@@ -29,21 +29,21 @@ public class InGameStatesHandler : MonoBehaviour
 
     public void OnPauseClicked()
     {
-        gameManagerInstance.ChangeState(GameStates.GamePaused);
+        GMInstance.ChangeState(GameStates.GamePaused);
         pauseMenu.SetActive(true);
         pauseButton.SetActive(false);
     }
 
     public void OnResumeClicked()
     {
-        gameManagerInstance.ChangeState(GameStates.GameResumed);
+        GMInstance.ChangeState(GameStates.GameResumed);
         pauseMenu.SetActive(false);
         pauseButton.SetActive(true);
     }
     
     private void GameRestart()
     {
-        gameManagerInstance.ChangeState(GameStates.GameRestarted);
+        GMInstance.ChangeState(GameStates.GameRestarted);
         SceneManager.LoadScene(currentScene);
         remainingLives = PlayerPrefs.GetInt("remainingLives", PHInstance.maxLives);
         HMInstance.RestoreHealthUI();
@@ -51,19 +51,19 @@ public class InGameStatesHandler : MonoBehaviour
 
     public void onRetryClicked()
     {
-        gameManagerInstance.ChangeState(GameStates.GameLoop);
+        GMInstance.ChangeState(GameStates.GameLoop);
         SceneManager.LoadScene(currentScene);
     }
 
     public void OnQuitClicked()
     {
-        gameManagerInstance.ChangeState(GameStates.MainMenu);
+        GMInstance.ChangeState(GameStates.MainMenu);
         SceneManager.LoadScene(0);
     }
 
     private void GameOver()
     {
-        gameManagerInstance.ChangeState(GameStates.GameOver);
+        GMInstance.ChangeState(GameStates.GameOver);
         pauseButton.SetActive(false);
         gameOverMenu.SetActive(true);
     }

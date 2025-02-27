@@ -5,11 +5,11 @@ public class InGameButtonSounds : MonoBehaviour
 {
     public void SubmitButtonSound()
     {
-        Instance.PlaySubmitButtonSound();
+        SMInstance.PlaySubmitButtonSound();
     }
 
     public void MenuButtonSound()
     {
-        Instance.PlayMenuButtonSound();
+        SMInstance.PlayMenuButtonSound();
     }
 }

@@ -41,14 +41,14 @@ public class MainMenuManager : MonoBehaviour
 
     public void onStartPressed()
     {
-        gameManagerInstance.ChangeState(GameStates.GameLoop);
-        Instance.PlayStartButtonSound();
+        GMInstance.ChangeState(GameStates.GameLoop);
+        SMInstance.PlayStartButtonSound();
         SceneManager.LoadScene(1);
     }
 
     public void onHighScorePressed()
     {
-        Instance.PlayMenuButtonSound();
+        SMInstance.PlayMenuButtonSound();
         
         if(menuPanel.activeSelf)
             menuPanel.SetActive(false);
@@ -58,7 +58,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void onSettingsPressed()
     {
-        Instance.PlayMenuButtonSound();
+        SMInstance.PlayMenuButtonSound();
         
         if(menuPanel.activeSelf)
             menuPanel.SetActive(false);
@@ -68,7 +68,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void onCreditsPressed()
     {
-        Instance.PlayMenuButtonSound();
+        SMInstance.PlayMenuButtonSound();
         
         if(menuPanel.activeSelf)
             menuPanel.SetActive(false);
@@ -78,7 +78,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void OnMusicCreditsPressed()
     {
-        Instance.PlayMenuButtonSound();
+        SMInstance.PlayMenuButtonSound();
         
         if(creditsPanel.activeSelf)
             creditsPanel.SetActive(false);
@@ -97,9 +97,9 @@ public class MainMenuManager : MonoBehaviour
     public void onQuitPressed()
     {
         Debug.Log("Quit was pressed");
-        Instance.PlayMenuButtonSound();
+        SMInstance.PlayMenuButtonSound();
         
-        gameManagerInstance.OnApplicationQuit();
+        GMInstance.OnApplicationQuit();
     }
 
     public void onReturnPressed()

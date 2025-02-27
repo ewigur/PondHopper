@@ -3,14 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
 
-using static InGameStatesHandler;
 using static HighScoreManager;
 using static PlayerHealth;
 using static GameManager;
 
 public class SoundManager : MonoBehaviour
 {
-    public static SoundManager Instance;
+    public static SoundManager SMInstance;
 
     [Header("Tracks")] 
     [SerializeField]private AudioSource pauseAmbience;
@@ -49,13 +48,13 @@ public class SoundManager : MonoBehaviour
     {
         pauseAmbience.Stop();
         
-        if (Instance != null && Instance != this)
+        if (SMInstance != null && SMInstance != this)
         {
             Destroy(gameObject);
             return;
         }
         
-        Instance = this;
+        SMInstance = this;
         DontDestroyOnLoad(this);
         
         sfxSources = new List<AudioSource>();
@@ -146,8 +145,8 @@ public class SoundManager : MonoBehaviour
     
     private void PlayPauseAmbience()
     {
-        if (gameManagerInstance.state != GameStates.GamePaused &&
-            gameManagerInstance.state != GameStates.GameOver) 
+        if (GMInstance.state != GameStates.GamePaused &&
+            GMInstance.state != GameStates.GameOver) 
             return;
         
         gameMusic.Pause();
@@ -200,6 +199,8 @@ public class SoundManager : MonoBehaviour
 
     public List<AudioSource> AddSfxSources()
     {
+        SfxSources(specialPickUpSound);
+        SfxSources(frogCroakSound);
         SfxSources(highScoreSound);
         SfxSources(lifeLostSound);
         SfxSources(gameOverSound);
@@ -218,8 +219,8 @@ public class SoundManager : MonoBehaviour
     }
     private void PlayJumpSound()
     {
-        if (gameManagerInstance.state == GameStates.GameLoop || 
-            gameManagerInstance.state == GameStates.GameResumed)
+        if (GMInstance.state == GameStates.GameLoop || 
+            GMInstance.state == GameStates.GameResumed)
         {
             jumpSound.pitch = Random.Range(pitchVarLow, pitchVarHigh);
             jumpSound.Play();

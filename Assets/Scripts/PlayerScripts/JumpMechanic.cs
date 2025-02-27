@@ -1,11 +1,8 @@
 using System;
 using UnityEngine;
-using UnityEngine.Android;
 using UnityEngine.EventSystems;
 
 using static GameManager;
-
-// TODO: UNCOMMENT THINGS
 public class JumpMechanic : MonoBehaviour
 {
     public static Action OnPreJump;
@@ -36,15 +33,15 @@ public class JumpMechanic : MonoBehaviour
     private bool isDragging;
     private bool isGrounded;
     private bool canDoubleJump;
-    public static bool canReceiveInput;
+    private bool canReceiveInput = true;
     
     private void Start()
     {
+        ToggleInput(canReceiveInput);
+        
         mCamera = Camera.main;
         frogRigidBody = GetComponent<Rigidbody2D>();
         lineDrawer = GetComponentInChildren<LineDrawer>();
-        ToggleInput(canReceiveInput);
-        canReceiveInput = true;
     }
 
     private void OnEnable()
@@ -134,14 +131,14 @@ public class JumpMechanic : MonoBehaviour
 
     private void ReleaseDrag()
     {
-            isDragging = false;
+        isDragging = false;
+    
+        Vector2 dragVector = (Vector2)mCamera.ScreenToWorldPoint(Input.mousePosition) - dragStartPos;
+        dragVector = Vector2.ClampMagnitude(dragVector, maxJumpInput);
+    
+        PerformJump(dragVector);
         
-            Vector2 dragVector = (Vector2)mCamera.ScreenToWorldPoint(Input.mousePosition) - dragStartPos;
-            dragVector = Vector2.ClampMagnitude(dragVector, maxJumpInput);
-        
-            PerformJump(dragVector);
-            
-            lineDrawer.ClearLine();
+        lineDrawer.ClearLine();
     }
 
     private void PerformJump(Vector2 dragVector)

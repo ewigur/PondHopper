@@ -27,12 +27,12 @@ public class PlayerHealth : MonoBehaviour
 
     private void Start()
     {
-        if (gameManagerInstance.state == GameStates.GameLoop)
+        if (GMInstance.state == GameStates.GameLoop)
         {
             remainingLives = maxLives;
             PlayerPrefs.SetInt("remainingLives", remainingLives);
         }
-        else if (gameManagerInstance.state == GameStates.GameRestarted)
+        else if (GMInstance.state == GameStates.GameRestarted)
         {
             remainingLives = PlayerPrefs.GetInt("remainingLives", maxLives);
         }

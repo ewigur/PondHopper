@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
+using static SoundManager;
 public class AudioSliderHandler : MonoBehaviour
 {
     [Header("Slider Attributes")]
@@ -15,8 +16,6 @@ public class AudioSliderHandler : MonoBehaviour
     
     [SerializeField] private AudioSource valueChangedSfx;
     [SerializeField] private AudioSource valueChangedButtons;
-    
-    private SoundManager soundManager;
 
     private const float startVolume = 1f;
     
@@ -32,14 +31,12 @@ public class AudioSliderHandler : MonoBehaviour
     
     private void Start()
     {
-        soundManager = FindFirstObjectByType<SoundManager>();
-
-        if (soundManager == null) 
+        if (SMInstance == null) 
             return;
         
-        sfxToAdjust = soundManager.AddSfxSources();
-        musicToAdjust = soundManager.AddMusicSources();
-        buttonsToAdjust = soundManager.AddButtonsSources();
+        sfxToAdjust = SMInstance.AddSfxSources();
+        musicToAdjust = SMInstance.AddMusicSources();
+        buttonsToAdjust = SMInstance.AddButtonsSources();
             
         SetVolume();
     }
@@ -92,9 +89,9 @@ public class AudioSliderHandler : MonoBehaviour
         
         ApplyVolume(newVolume, musicToAdjust);
 
-        if (soundManager != null)
+        if (SMInstance != null)
         {
-            soundManager.SetMusicVolume(newVolume);
+            SMInstance.SetMusicVolume(newVolume);
         }
         
         SavePreferences();
