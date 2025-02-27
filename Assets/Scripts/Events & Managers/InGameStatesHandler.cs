@@ -1,7 +1,10 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+using static HealthManager;
 using static GameManager;
+using static PlayerHealth;
+
 public class InGameStatesHandler : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenu;
@@ -20,8 +23,10 @@ public class InGameStatesHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerCollision.OnPlayerDeath += GameOver;
+        OnLifeLost += GameRestart;
+        PlayerHasDied += GameOver;
     }
+
     public void OnPauseClicked()
     {
         gameManagerInstance.ChangeState(GameStates.GamePaused);
@@ -34,6 +39,14 @@ public class InGameStatesHandler : MonoBehaviour
         gameManagerInstance.ChangeState(GameStates.GameResumed);
         pauseMenu.SetActive(false);
         pauseButton.SetActive(true);
+    }
+    
+    private void GameRestart()
+    {
+        gameManagerInstance.ChangeState(GameStates.GameRestarted);
+        SceneManager.LoadScene(currentScene);
+        remainingLives = PlayerPrefs.GetInt("remainingLives", PHInstance.maxLives);
+        HMInstance.RestoreHealthUI();
     }
 
     public void onRetryClicked()
@@ -57,6 +70,7 @@ public class InGameStatesHandler : MonoBehaviour
 
     private void OnDisable()
     {
-        PlayerCollision.OnPlayerDeath -= GameOver;
+        OnLifeLost -= GameRestart;
+        PlayerHasDied -= GameOver;
     }
 }

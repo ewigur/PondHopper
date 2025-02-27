@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using NaughtyAttributes;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,9 +19,11 @@ public class GameManager : MonoBehaviour
         GameLoop,
         GamePaused,
         GameResumed,
+        GameRestarted,
         GameOver,
     }
 
+    public GameStates state;
     private void Awake()
     {
         if (gameManagerInstance != null)
@@ -38,19 +39,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public GameStates state;
-
     public void ChangeState(GameStates newState)
     {
         if(state == newState)
             return;
-        
-        
+
         state = newState;
-        
         onGameStateChanged?.Invoke(state);
         HandleStates(newState);
-
     }
 
     private void HandleStates(GameStates newState)
@@ -63,6 +59,7 @@ public class GameManager : MonoBehaviour
                 break;
             
             case GameStates.GameLoop:
+                PlayerPrefs.SetInt("currentScore", 0);
                 TriggerGameMusic?.Invoke();
                 onToggleInput?.Invoke(true);
                 Time.timeScale = 1f;
@@ -80,6 +77,12 @@ public class GameManager : MonoBehaviour
                 onToggleInput?.Invoke(true);
                 break;
             
+            case GameStates.GameRestarted:
+                TriggerGameMusic?.Invoke();
+                Time.timeScale = 1f;
+                onToggleInput?.Invoke(true);
+                break;
+            
             case GameStates.GameOver:
                 TriggerPauseMusic?.Invoke();
                 onToggleInput?.Invoke(false);
@@ -88,11 +91,14 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    [Button("Clear Audio Slider Values")]
     public void OnApplicationQuit()
     {
         PlayerPrefs.DeleteKey("SFXVolume");
         PlayerPrefs.DeleteKey("ButtonsVolume");
         PlayerPrefs.DeleteKey("MusicVolume");
+        PlayerPrefs.DeleteKey("currentHealth");
+        PlayerPrefs.DeleteKey("currentScore");
+        
+        Application.Quit();
     }
 }

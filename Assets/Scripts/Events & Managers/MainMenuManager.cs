@@ -2,8 +2,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 using static SoundManager;
+using static GameManager;
 
-// TODO: Animate the panels
 public class MainMenuManager : MonoBehaviour
 {
     [SerializeField] private GameObject menuPanel;
@@ -19,12 +19,12 @@ public class MainMenuManager : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.onGameStateChanged += HandleStateChange;
+        onGameStateChanged += HandleStateChange;
     }
 
-    private void HandleStateChange(GameManager.GameStates state)
+    private void HandleStateChange(GameStates state)
     {
-        if (state != GameManager.GameStates.MainMenu) 
+        if (state != GameStates.MainMenu) 
             return;
         
         UiToggle();
@@ -41,7 +41,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void onStartPressed()
     {
-        GameManager.gameManagerInstance.ChangeState(GameManager.GameStates.GameLoop);
+        gameManagerInstance.ChangeState(GameStates.GameLoop);
         Instance.PlayStartButtonSound();
         SceneManager.LoadScene(1);
     }
@@ -96,10 +96,10 @@ public class MainMenuManager : MonoBehaviour
 
     public void onQuitPressed()
     {
+        Debug.Log("Quit was pressed");
         Instance.PlayMenuButtonSound();
         
-        Application.Quit();
-        Debug.Log("Quit was pressed");
+        gameManagerInstance.OnApplicationQuit();
     }
 
     public void onReturnPressed()

@@ -4,11 +4,12 @@ using UnityEngine;
 public class PickUpItem : ScriptableObject
 {
     public string itemName;
-    public GameObject prefab;
-    public int value;
-    public int spawnAmount;
-    public float flockMovement;
+    
     public Animator pickUpAnimator;
+    public float flockMovement;
+    public GameObject prefab;
+    public int spawnAmount;
+    public int value;
     
     [Range(0f, 1f)]
     public float spawnProbability;

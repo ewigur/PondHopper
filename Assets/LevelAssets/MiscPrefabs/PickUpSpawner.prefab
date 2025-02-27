@@ -47,7 +47,11 @@ MonoBehaviour:
   pickUpItems:
   - {fileID: 11400000, guid: 78fb18e043f7a834986705d5f4279f0d, type: 2}
   - {fileID: 11400000, guid: 15a08d1ac93b2cd4985132098b386946, type: 2}
-  defaultCapacity: 5
-  maxActivePickUps: 7
-  timeBetweenSpawns: 4
-  startSpawnTime: 0.2
+  defaultCapacity: 9
+  maxActivePickUps: 10
+  timeBetweenSpawns: 2
+  startSpawnTime: 1
+  minX: -9
+  maxX: 9
+  minY: 7
+  maxY: 6

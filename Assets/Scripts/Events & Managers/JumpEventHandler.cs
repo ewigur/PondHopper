@@ -1,6 +1,6 @@
-using System;
 using UnityEngine;
 /*
+ * NOTE: FX to be implemented in the future
  * TODO: JumpParticles
  * TODO: JumpAnimations
  */

@@ -1,50 +1,63 @@
 using TMPro;
 using UnityEngine;
 
-// TODO: Add effects when player gets on HS -leaderboard
-
+using static HighScoreManager;
+using static PlayerHealth;
+using static GameManager;
 public class ScoreManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI scoreText;
-
-    private int score;
-    private string playerName;
     
-    private HighScoreManager HsManager;
+    private int score;
 
     private void Start()
     {
-        HsManager = FindFirstObjectByType<HighScoreManager>();
+        if (gameManagerInstance.state == GameStates.GameRestarted)
+        {
+            SavedScore();
+        }
+
+        else
+        {
+            PlayerPrefs.SetInt("currentScore", 0);
+            score = PlayerPrefs.GetInt("currentScore", score);
+        }
+
+        scoreText.text = "Score: " + score;
     }
 
     private void OnEnable()
     {
         PlayerCollision.OnScoreCollected += ScoreCollected;
-        PlayerCollision.OnPlayerDeath += FinalScore;
+        PlayerHasDied += FinalScore;
+        OnLifeLost += SavedScore;
     }
-    
+
     private void ScoreCollected(PickUpItem pickUpItem)
     {
         score += pickUpItem.value;
+        scoreText.text = "Score: " + score;
+        PlayerPrefs.SetInt("currentScore", score);
+    }
+
+    private void SavedScore()
+    {
+        score = PlayerPrefs.GetInt("currentScore", 0);
         scoreText.text = "Score: " + score;
     }
 
     private void FinalScore()
     {
-        if (HsManager != null)
+        if ( HSInstance != null)
         {
-            HsManager.AddHighScore(score);
+            HSInstance.AddHighScore(score);
         }
-    }
-
-    public int GetScore()
-    {
-        return score;
     }
 
     private void OnDisable()
     {
         PlayerCollision.OnScoreCollected -= ScoreCollected;
-        PlayerCollision.OnPlayerDeath -= FinalScore;
+        PlayerHasDied -= FinalScore;
+        OnLifeLost -= SavedScore;
     }
 }

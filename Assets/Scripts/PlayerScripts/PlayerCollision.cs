@@ -2,21 +2,14 @@ using System;
 using UnityEngine;
 using NaughtyAttributes;
 
-// TODO: Add list of Lives instead of health bar, deathground triggers lives lost
+using static PlayerHealth;
+using static InGameStatesHandler;
 public class PlayerCollision : MonoBehaviour
 {  
     public static Action<PickUpItem> OnScoreCollected;
+    public static Action TriggerSpecialPickUpSound;
     public static Action TriggerPickUpSound;
-    public static Action OnPlayerDeath;
-    public static Action OnLifeLost;
     public static Action OnPlatform;
-    
-    private PlayerHealth playerHealth;
-
-    private void Start()
-    {
-        playerHealth = GetComponent<PlayerHealth>();
-    }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -28,12 +21,26 @@ public class PlayerCollision : MonoBehaviour
             AddingScore(pickUpBehaviour.itemData);
         }
 
-        if (other.gameObject.CompareTag("DeathGround") && playerHealth != null)
+        if (other.gameObject.CompareTag($"FireFly") && pickUpBehaviour != null)
         {
-            //TakeDamage(playerHealth.damageTaken);
-            OnPlayerDeath?.Invoke();
+            TriggerSpecialPickUpSound?.Invoke();
+            AddingScore(pickUpBehaviour.itemData);
         }
 
+
+        if (other.gameObject.CompareTag("DeathGround"))
+        {
+            if (remainingLives > 0)
+            {
+                PHInstance.TakeDamage();
+            }
+
+            if (remainingLives <= 0)
+            {
+                PHInstance.PlayerDies();
+            }
+        }
+        
         if (other.gameObject.CompareTag("Ground"))
         {
             OnPlatform?.Invoke();
@@ -43,17 +50,5 @@ public class PlayerCollision : MonoBehaviour
     private void AddingScore(PickUpItem item)
     {
         OnScoreCollected?.Invoke(item);
-    }
-    
-    [Button]
-    public void TestDamageTaken()
-    {
-        TakeDamage(playerHealth.damageTaken);
-    }
-    
-    public void TakeDamage(int damage)
-    {
-        PlayerHealth.currentHealth -= damage;
-        OnLifeLost.Invoke();
     }
 }

@@ -1,11 +1,12 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+using System.Collections.Generic;
 
-// TODO: Remake instance to a static one
 public class HighScoreManager : MonoBehaviour
 {
+    public static HighScoreManager HSInstance;
+    
     public static Action<int> OnNewHighScore;
     public static Action TriggerHighScoreSound;
     
@@ -15,13 +16,13 @@ public class HighScoreManager : MonoBehaviour
     
     private void Awake()
     {
-        HighScoreManager existingInstance = FindFirstObjectByType<HighScoreManager>();
-        
-        if (existingInstance != null && existingInstance != this)
+        if (HSInstance != null && HSInstance != this)
         {
             Destroy(gameObject);
             return;
         }
+        
+        HSInstance = this;
         
         DontDestroyOnLoad(gameObject);
         

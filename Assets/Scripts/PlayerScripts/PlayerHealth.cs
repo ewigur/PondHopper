@@ -1,16 +1,63 @@
+using System;
 using UnityEngine;
 
-// TODO: Make lives instead of health bar
-// TODO: death == -1 life
+using static GameManager;
 public class PlayerHealth : MonoBehaviour
 {
-    [HideInInspector] public int maxHealth = 100;
-    [HideInInspector] public int damageTaken = 10;
+    public static PlayerHealth PHInstance;
     
-    public static int currentHealth;
+    public static Action PlayerHasDied;
+    public static Action OnLifeLost;
+
+    public readonly int maxLives = 3;
+    private readonly int damageTaken = 1;
     
-    void Start()
+    public static int remainingLives;
+    
+    void Awake()
     {
-        currentHealth = maxHealth;
+        if (PHInstance != null && PHInstance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        
+        PHInstance = this;
+    }
+
+    private void Start()
+    {
+        if (gameManagerInstance.state == GameStates.GameLoop)
+        {
+            remainingLives = maxLives;
+            PlayerPrefs.SetInt("remainingLives", remainingLives);
+        }
+        else if (gameManagerInstance.state == GameStates.GameRestarted)
+        {
+            remainingLives = PlayerPrefs.GetInt("remainingLives", maxLives);
+        }
+    }
+    
+    public void TakeDamage()
+    {
+        remainingLives -= damageTaken;
+        
+        if (remainingLives > 0)
+        {
+            PlayerPrefs.SetInt("remainingLives", remainingLives);
+            OnLifeLost?.Invoke();
+        }
+        else
+        {
+            PlayerDies();
+        }
+    }
+
+    public void PlayerDies()
+    {
+        if (remainingLives <= 0)
+        {
+            PlayerHasDied?.Invoke();
+        }
     }
 }

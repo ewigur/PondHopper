@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
 
+using static InGameStatesHandler;
 using static HighScoreManager;
+using static PlayerHealth;
 using static GameManager;
 
-// TODO: Find out why the buttons doesn't play when you go from gamescene back to main menu?
-//     : Probably button click events loosing sounds on reload?
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
@@ -17,14 +17,16 @@ public class SoundManager : MonoBehaviour
     [SerializeField]private AudioSource menuMusic;
     [SerializeField]private AudioSource gameMusic;
 
-    [Header("Action Sounds")] 
+    [Header("SFX Sounds")] 
+    [SerializeField]private AudioSource specialPickUpSound;
+    [SerializeField]private AudioSource frogCroakSound;
     [SerializeField]private AudioSource highScoreSound;
     [SerializeField]private AudioSource lifeLostSound;
     [SerializeField]private AudioSource gameOverSound;
     [SerializeField]private AudioSource pickUpSound;
     [SerializeField]private AudioSource jumpSound;
     
-    [Header("UI sounds")]
+    [Header("Button sounds")]
     [SerializeField]private AudioSource submitButtonSound;
     [SerializeField]private AudioSource startButtonSound;
     [SerializeField]private AudioSource menuButtonSound;
@@ -73,16 +75,18 @@ public class SoundManager : MonoBehaviour
 
     private void OnEnable()
     {
+        PlayerCollision.TriggerSpecialPickUpSound += PlaySpecialPickUpSound;
         PlayerCollision.TriggerPickUpSound += PlayPickUpSound;
-        PlayerCollision.OnPlayerDeath += PlayGameOverSound;
-        PlayerCollision.OnLifeLost += PlayLifeLostSound;
+        JumpMechanic.OnPreJump += PlayCroakSound;
         JumpMechanic.OnJump += PlayJumpSound;
         
-        TriggerGameMusic += PlayGameMusic;
-        TriggerMenuMusic += PlayMenuMusic;
+        TriggerHighScoreSound += PlayHighScoreSound;
         TriggerPauseMusic += PlayPauseAmbience;
         TriggerResumeMusic += ResumeGameMusic;
-        TriggerHighScoreSound += PlayHighScoreSound;
+        TriggerMenuMusic += PlayMenuMusic;
+        TriggerGameMusic += PlayGameMusic;
+        PlayerHasDied += PlayGameOverSound;
+        OnLifeLost += PlayLifeLostSound;
     }
 
     #region Music
@@ -242,6 +246,18 @@ public class SoundManager : MonoBehaviour
         pickUpSound.Play();
     }
     
+    private void PlaySpecialPickUpSound()
+    {
+        specialPickUpSound.pitch = Random.Range(pitchVarLow, pitchVarHigh);
+        specialPickUpSound.Play();
+    }
+    
+    private void PlayCroakSound()
+    {
+        frogCroakSound.pitch = Random.Range(pitchVarLow, pitchVarHigh);
+        frogCroakSound.Play();
+    }
+
     #endregion
 
     #region Buttons
@@ -288,15 +304,17 @@ public class SoundManager : MonoBehaviour
     
     private void OnDisable()
     {
+        PlayerCollision.TriggerSpecialPickUpSound -= PlaySpecialPickUpSound;
         PlayerCollision.TriggerPickUpSound -= PlayPickUpSound;
-        PlayerCollision.OnPlayerDeath -= PlayGameOverSound;
-        PlayerCollision.OnLifeLost -= PlayLifeLostSound;
+        JumpMechanic.OnPreJump -= PlayCroakSound;
         JumpMechanic.OnJump -= PlayJumpSound;
         
-        TriggerGameMusic -= PlayGameMusic;
-        TriggerMenuMusic -= PlayMenuMusic;
+        TriggerHighScoreSound -= PlayHighScoreSound;
         TriggerPauseMusic -= PlayPauseAmbience;
         TriggerResumeMusic -= ResumeGameMusic;
-        TriggerHighScoreSound -= PlayHighScoreSound;
+        TriggerMenuMusic -= PlayMenuMusic;
+        TriggerGameMusic -= PlayGameMusic;
+        PlayerHasDied -= PlayGameOverSound;
+        OnLifeLost -= PlayLifeLostSound;
     }
 }

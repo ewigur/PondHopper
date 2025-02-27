@@ -1,8 +1,8 @@
-using UnityEngine;
-using UnityEngine.Pool;
-using System.Collections.Generic;
-using System.Linq;
 using Random = UnityEngine.Random;
+using System.Collections.Generic;
+using UnityEngine.Pool;
+using UnityEngine;
+using System.Linq;
 
 public class PickUpPool : MonoBehaviour
 {
@@ -33,8 +33,7 @@ public class PickUpPool : MonoBehaviour
         foreach (var item in pickUpItems)
         {
             pickUpPools[item] = CreatePoolForItem(item);
-
-            // Preload objects into the pool
+            
             for (int i = 0; i < defaultCapacity; i++)
             {
                 var pickUp = pickUpPools[item].Get();
