@@ -5,20 +5,16 @@ public class LineDrawer : MonoBehaviour
 {
     private LineRenderer lineRenderer;
     
-    void Awake()
+    void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 2;
     }
 
-    public void DrawLine(Vector2 direction)
+    public void DrawLine(Vector2 start, Vector2 end)
     {
-        Vector2 start = transform.position;
-        lineRenderer.SetPosition(0, new Vector2(start.x, start.y));
-        
-        Vector2 end = start + direction;
-        lineRenderer.SetPosition(1, new Vector2(end.x, end.y));
-        
+        lineRenderer.SetPosition(0, start);
+        lineRenderer.SetPosition(1, end);
         lineRenderer.enabled = true;
     }
 

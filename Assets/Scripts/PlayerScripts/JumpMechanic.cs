@@ -27,18 +27,21 @@ public class JumpMechanic : MonoBehaviour
     private Camera mCamera;
 
     private Vector2 dragStartPos;
+    private Vector2 dragVector;
 
-    private readonly float lineMagnitude = 4f;
-    
+    private float lineMagnitude;
     private bool isDragging;
     private bool isGrounded;
     private bool canDoubleJump;
     private bool canReceiveInput = true;
     
+    private float currentLineLength;
+    private const float lineLerpSpeed = 5f;
+
     private void Start()
     {
         ToggleInput(canReceiveInput);
-        
+
         mCamera = Camera.main;
         frogRigidBody = GetComponent<Rigidbody2D>();
         lineDrawer = GetComponentInChildren<LineDrawer>();
@@ -59,6 +62,7 @@ public class JumpMechanic : MonoBehaviour
     {
         if (EventSystem.current.IsPointerOverGameObject() || !canReceiveInput)
             return;
+            
 
         HandleInput();
     }
@@ -69,24 +73,20 @@ public class JumpMechanic : MonoBehaviour
     
     private void HandleInput()
     {
-        if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 
-            && Input.GetTouch(0).phase == TouchPhase.Began))
+        if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
         {
             StartDrag();
         }
-        
-        else if ((Input.GetMouseButton(0)) || (Input.touchCount > 0 
-               && Input.GetTouch(0).phase == TouchPhase.Stationary))
+        else if (Input.GetMouseButton(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved))
         {
-            UpdateDrag(dragStartPos);
+            UpdateDrag();
         }
-        else if (Input.GetMouseButtonUp(0) || (Input.touchCount > 0 
-              && Input.GetTouch(0).phase == TouchPhase.Ended))
+        else if (Input.GetMouseButtonUp(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended))
         {
             ReleaseDrag();
         }
     }
-    
+
     private void AdjustGravity()
     {
         if (frogRigidBody.linearVelocity.y > 0)
@@ -108,24 +108,24 @@ public class JumpMechanic : MonoBehaviour
     private void StartDrag()
     {
         isDragging = true;
-        dragStartPos = mCamera.ScreenToWorldPoint(Input.mousePosition);
-    
+
         OnPreJump?.Invoke();
     }
+    
 
-    private void UpdateDrag(Vector2 vector)
+    private void UpdateDrag()
     {
         if (isDragging && IsGrounded())
         {
-            Vector2 endPos = mCamera.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 dragVector = endPos - dragStartPos;
-
-            dragVector = Vector2.ClampMagnitude(dragVector, lineMagnitude);
+            dragStartPos = transform.position;
+            dragVector = mCamera.ScreenToWorldPoint(Input.mousePosition) - (Vector3)dragStartPos;
+            dragVector = Vector2.ClampMagnitude(dragVector, maxJumpInput);
             
-            float jumpStrength = Mathf.Lerp(minJumpForce, maxJumpForce, dragVector.magnitude / maxJumpInput);
+            float targetLineLength = Mathf.Lerp(minJumpForce, maxJumpForce, dragVector.magnitude / maxJumpInput);
+            currentLineLength = Mathf.Lerp(currentLineLength, targetLineLength, Time.deltaTime * lineLerpSpeed);
+            Vector2 displayVector = dragVector.normalized * currentLineLength;
             
-            lineDrawer.DrawLine(dragVector);
-            Vector2.ClampMagnitude(vector, jumpStrength);
+            lineDrawer.DrawLine(dragStartPos, dragStartPos + displayVector);
         }
     }
 
@@ -133,7 +133,7 @@ public class JumpMechanic : MonoBehaviour
     {
         isDragging = false;
     
-        Vector2 dragVector = (Vector2)mCamera.ScreenToWorldPoint(Input.mousePosition) - dragStartPos;
+        dragVector = (Vector2)mCamera.ScreenToWorldPoint(Input.mousePosition) - dragStartPos;
         dragVector = Vector2.ClampMagnitude(dragVector, maxJumpInput);
     
         PerformJump(dragVector);
@@ -141,10 +141,10 @@ public class JumpMechanic : MonoBehaviour
         lineDrawer.ClearLine();
     }
 
-    private void PerformJump(Vector2 dragVector)
+    private void PerformJump(Vector2 vector)
     {
-        float jumpStrength = Mathf.Lerp(minJumpForce, maxJumpForce, dragVector.magnitude / maxJumpInput);
-        Vector2 jumpForce = dragVector.normalized * jumpStrength;
+        float jumpStrength = Mathf.Lerp(minJumpForce, maxJumpForce, vector.magnitude / maxJumpInput);
+        Vector2 jumpForce = vector.normalized * jumpStrength;
 
         if (IsGrounded())
         {
@@ -165,7 +165,6 @@ public class JumpMechanic : MonoBehaviour
             frogRigidBody.linearVelocity = jumpForce;
             OnJump?.Invoke();
         }
-        
     }
     
     private bool IsGrounded()
