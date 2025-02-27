@@ -52,7 +52,6 @@ public class JumpMechanic : MonoBehaviour
         onToggleInput += ToggleInput;
     }
     
-
     private void ToggleInput(bool isOn)
     {
         canReceiveInput = isOn;
@@ -62,8 +61,7 @@ public class JumpMechanic : MonoBehaviour
     {
         if (EventSystem.current.IsPointerOverGameObject() || !canReceiveInput)
             return;
-            
-
+        
         HandleInput();
     }
     private void FixedUpdate()

@@ -6,7 +6,7 @@ public class UITimer : MonoBehaviour
     private readonly float fadeInDuration = 1f;
     private readonly float delay = 4f;
     
-    [SerializeField] private CanvasGroup[] elementsToFadeIn; //Might want to add other stuff in here, keep as array for now
+    [SerializeField] private CanvasGroup[] elementsToFadeIn;
 
     private void Start()
     {

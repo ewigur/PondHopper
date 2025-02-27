@@ -13,14 +13,13 @@ public class FollowPlayer : MonoBehaviour
 
     private float camHalfWidth, camHalfHeight;
     private Vector3 camVelocity;
-    private float originalY; //Remove this?
+    private float originalY;
     private Camera cam;
 
     private void Start()
     {
         cam = Camera.main;
         UpdateCameraBounds();
-        originalY = target.position.y;
     }
 
     private void LateUpdate()

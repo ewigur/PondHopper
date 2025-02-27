@@ -10,6 +10,7 @@ public class InGameStatesHandler : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject gameOverMenu;
     [SerializeField] private GameObject pauseButton;
+    [SerializeField] private GameObject livesDisplay;
     
     private string currentScene;
     
@@ -18,6 +19,7 @@ public class InGameStatesHandler : MonoBehaviour
         pauseMenu.SetActive(false);
         gameOverMenu.SetActive(false);
         pauseButton.SetActive(true);
+        livesDisplay.SetActive(true);
         currentScene = SceneManager.GetActiveScene().name;
     }
 
@@ -64,6 +66,7 @@ public class InGameStatesHandler : MonoBehaviour
     private void GameOver()
     {
         GMInstance.ChangeState(GameStates.GameOver);
+        livesDisplay.SetActive(false);
         pauseButton.SetActive(false);
         gameOverMenu.SetActive(true);
     }

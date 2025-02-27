@@ -68,7 +68,7 @@ public class LogBehaviour : MonoBehaviour
             transform.localScale = bigScaleBG;
         }
 
-        else //if(yPos <= depthIllusionForeground)
+        else
         {
             transform.localScale = ScaleFG;
         }

@@ -1,8 +1,6 @@
 using UnityEngine;
 using Vector2 = UnityEngine.Vector2;
 
-//TODO: Add better movement in FixedUpdate when I have a clearer view of what animations I should have
-//TODO: Code Cleanup
 public delegate void Return(PickUpBehaviour pickUp);
 public class PickUpBehaviour : MonoBehaviour
 {
@@ -44,13 +42,16 @@ public class PickUpBehaviour : MonoBehaviour
     private void FixedUpdate()
     {
             transform.position = Vector2.MoveTowards(transform.position, targetPosition,
-                Time.fixedDeltaTime * itemData.flockMovement);
+                    Time.fixedDeltaTime * itemData.flockMovement);
 
         if((Vector2)transform.position == targetPosition)
         {
-            targetPosition = new Vector2(Random.Range(minMoveRangeX, maxMoveRangeX), Random.Range(minMoveRangeY, maxMoveRangeY));
+            targetPosition = new Vector2(Random.Range(minMoveRangeX, maxMoveRangeX), 
+                                         Random.Range(minMoveRangeY, maxMoveRangeY));
             DirectionFlipper(targetPosition);
-            transform.position = Vector2.MoveTowards(transform.position, targetPosition, Time.fixedDeltaTime * itemData.flockMovement);
+            
+            transform.position = Vector2.MoveTowards(transform.position, targetPosition,
+                    Time.fixedDeltaTime * itemData.flockMovement);
         }
 
         CheckOutOfBounds();

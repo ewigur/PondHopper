@@ -119,14 +119,11 @@ public class SoundManager : MonoBehaviour
             AddMusicSources();
         }
 
-        else //REMOVE THIS ABOMINATION???
+        else
         {
             foreach (var source in musicSources)
             {
-                if (source != null)
-                {
-                    source.volume = volume;
-                }
+                source.volume = volume;
             }
         }
     }

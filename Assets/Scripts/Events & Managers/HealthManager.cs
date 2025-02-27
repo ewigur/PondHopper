@@ -26,7 +26,7 @@ public class HealthManager : MonoBehaviour
 
     private void Start()
     {
-        RestoreHealthUI(); // ✅ Call Restore UI on Start
+        RestoreHealthUI();
     }
 
     public void UpdateHealth()

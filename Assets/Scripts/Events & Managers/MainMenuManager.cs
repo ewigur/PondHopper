@@ -96,7 +96,6 @@ public class MainMenuManager : MonoBehaviour
 
     public void onQuitPressed()
     {
-        Debug.Log("Quit was pressed");
         SMInstance.PlayMenuButtonSound();
         
         GMInstance.OnApplicationQuit();
