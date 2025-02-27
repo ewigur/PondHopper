@@ -216,7 +216,7 @@ MonoBehaviour:
   maxJumpForce: 20
   upGravityMultiplier: 1.5
   downGravityMultiplier: 3.5
-  DJGravityMultiplier: 1.3
+  DJGravityMultiplier: 0.5
   maxJumpInput: 50
 --- !u!114 &2484953718745782016
 MonoBehaviour:

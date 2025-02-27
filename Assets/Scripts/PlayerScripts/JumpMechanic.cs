@@ -73,15 +73,18 @@ public class JumpMechanic : MonoBehaviour
     
     private void HandleInput()
     {
-        if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
+        if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && 
+            Input.GetTouch(0).phase == TouchPhase.Began))
         {
             StartDrag();
         }
-        else if (Input.GetMouseButton(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved))
+        else if (Input.GetMouseButton(0) || (Input.touchCount > 0 && 
+                 Input.GetTouch(0).phase == TouchPhase.Moved))
         {
             UpdateDrag();
         }
-        else if (Input.GetMouseButtonUp(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended))
+        else if (Input.GetMouseButtonUp(0) || (Input.touchCount > 0 && 
+                 Input.GetTouch(0).phase == TouchPhase.Ended))
         {
             ReleaseDrag();
         }
@@ -159,8 +162,8 @@ public class JumpMechanic : MonoBehaviour
         else if(canDoubleJump)
         {
             canDoubleJump = false;
-            jumpForce.x *= DJGravityMultiplier;
-            jumpForce.y *= DJGravityMultiplier;
+            jumpForce.x *= upGravityMultiplier * DJGravityMultiplier;
+            jumpForce.y *= upGravityMultiplier * DJGravityMultiplier;
             
             frogRigidBody.linearVelocity = jumpForce;
             OnJump?.Invoke();
