@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour
             
             case GameStates.GameRestarted:
                 onToggleInput?.Invoke(true);
-                TriggerGameMusic?.Invoke();
+                TriggerResumeMusic?.Invoke();
                 Time.timeScale = 1f;
                 break;
             
