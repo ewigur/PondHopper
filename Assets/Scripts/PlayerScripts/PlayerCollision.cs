@@ -1,9 +1,7 @@
 using System;
 using UnityEngine;
-using NaughtyAttributes;
 
 using static PlayerHealth;
-using static InGameStatesHandler;
 public class PlayerCollision : MonoBehaviour
 {  
     public static Action<PickUpItem> OnScoreCollected;

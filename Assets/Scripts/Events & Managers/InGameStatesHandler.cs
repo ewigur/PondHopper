@@ -47,8 +47,6 @@ public class InGameStatesHandler : MonoBehaviour
     {
         GMInstance.ChangeState(GameStates.GameRestarted);
         SceneManager.LoadScene(currentScene);
-        remainingLives = PlayerPrefs.GetInt("remainingLives", PHInstance.maxLives);
-        HMInstance.RestoreHealthUI();
     }
 
     public void onRetryClicked()
@@ -60,6 +58,7 @@ public class InGameStatesHandler : MonoBehaviour
     public void OnQuitClicked()
     {
         GMInstance.ChangeState(GameStates.MainMenu);
+        PlayerPrefs.DeleteKey("remainingLives");
         SceneManager.LoadScene(0);
     }
 

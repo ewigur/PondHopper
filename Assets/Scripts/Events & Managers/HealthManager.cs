@@ -26,22 +26,12 @@ public class HealthManager : MonoBehaviour
 
     private void Start()
     {
-        RestoreHealthUI();
+        UpdateHealth();
     }
 
     public void UpdateHealth()
     {
-        int savedLives = PlayerPrefs.GetInt("remainingLives", healthImage.Length);
-
-        for (int i = 0; i < healthImage.Length; i++)
-        {
-            healthImage[i].gameObject.SetActive(i < savedLives);
-        }
-    }
-
-    public void RestoreHealthUI()
-    {
-        int savedLives = PlayerPrefs.GetInt("remainingLives", healthImage.Length);
+        int savedLives = remainingLives;
 
         for (int i = 0; i < healthImage.Length; i++)
         {

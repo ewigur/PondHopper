@@ -6,12 +6,12 @@ public class GameManager : MonoBehaviour
     public static GameManager GMInstance;
     
     public static Action<GameStates> onGameStateChanged;
+    public static Action<bool> onToggleInput;
     public static Action TriggerMenuMusic;
     public static Action TriggerGameMusic;
     public static Action TriggerPauseMusic;
     public static Action TriggerResumeMusic;
     
-    public static Action<bool> onToggleInput;
     
     public enum GameStates
     {
@@ -93,10 +93,14 @@ public class GameManager : MonoBehaviour
     
     public void OnApplicationQuit()
     {
+        #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+        #endif
+        
         PlayerPrefs.DeleteKey("SFXVolume");
         PlayerPrefs.DeleteKey("ButtonsVolume");
         PlayerPrefs.DeleteKey("MusicVolume");
-        PlayerPrefs.DeleteKey("currentHealth");
+        PlayerPrefs.DeleteKey("remainingLives");
         PlayerPrefs.DeleteKey("currentScore");
         
         Debug.Log("Keys restored");

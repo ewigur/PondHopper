@@ -11,7 +11,8 @@ public class PlayerHealth : MonoBehaviour
 
     public readonly int maxLives = 3;
     private readonly int damageTaken = 1;
-    
+
+    public string savedHealth = "remainingLives";
     public static int remainingLives;
     
     void Awake()
@@ -30,11 +31,20 @@ public class PlayerHealth : MonoBehaviour
         if (GMInstance.state == GameStates.GameLoop)
         {
             remainingLives = maxLives;
-            PlayerPrefs.SetInt("remainingLives", remainingLives);
+            PlayerPrefs.SetInt(savedHealth, maxLives);
+            PlayerPrefs.Save();
         }
         else if (GMInstance.state == GameStates.GameRestarted)
         {
-            remainingLives = PlayerPrefs.GetInt("remainingLives", maxLives);
+            if (PlayerPrefs.HasKey(savedHealth))
+            {
+                remainingLives = PlayerPrefs.GetInt(savedHealth);
+            }
+
+            else
+            {
+                remainingLives = maxLives;
+            }
         }
     }
     
@@ -44,7 +54,8 @@ public class PlayerHealth : MonoBehaviour
         
         if (remainingLives > 0)
         {
-            PlayerPrefs.SetInt("remainingLives", remainingLives);
+            PlayerPrefs.SetInt(savedHealth, remainingLives);
+            PlayerPrefs.Save();
             OnLifeLost?.Invoke();
         }
         else
@@ -58,6 +69,9 @@ public class PlayerHealth : MonoBehaviour
         if (remainingLives <= 0)
         {
             PlayerHasDied?.Invoke();
+            
+            PlayerPrefs.SetInt(savedHealth, maxLives);
+            PlayerPrefs.Save();
         }
     }
 }

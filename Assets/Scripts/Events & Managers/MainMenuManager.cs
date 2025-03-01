@@ -117,6 +117,6 @@ public class MainMenuManager : MonoBehaviour
 
     private void OnDisable()
     {
-        GameManager.onGameStateChanged -= HandleStateChange;
+        onGameStateChanged -= HandleStateChange;
     }
 }

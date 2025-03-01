@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using NaughtyAttributes;
 using System.Collections.Generic;
 
 public class HighScoreManager : MonoBehaviour
@@ -35,7 +34,8 @@ public class HighScoreManager : MonoBehaviour
     }
     
 
-    [Button("Clear High Scores")]
+
+    /*
     public void ClearHighScores()
     {
         PlayerPrefs.DeleteKey("ScoreCount");
@@ -50,6 +50,7 @@ public class HighScoreManager : MonoBehaviour
         highScores.Clear();
         Debug.Log("High Score Cleared");
     }
+    */
 
     public void AddHighScore(int newScore)
     {
